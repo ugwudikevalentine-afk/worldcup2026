@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Cup Booking 2026 - Plan Your Trip</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-trophy trophy-icon"></i>
+                <span data-i18n="nav_brand">World Cup 2026 Travel</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link active" data-i18n="nav_home">Home</a></li>
+                <li><a href="#matches" class="nav-link" data-i18n="nav_matches">Matches</a></li>
+                <li><a href="travel.html" class="nav-link" data-i18n="nav_travel">Travel</a></li>
+                <li><a href="hotel.html" class="nav-link" data-i18n="nav_hotel">Hotels</a></li>
+                <li><a href="ticket.html" class="nav-link" data-i18n="nav_ticket">Tickets</a></li>
+                <li><a href="extras.html" class="nav-link" data-i18n="nav_extras">Extras</a></li>
+                <li><a href="payments.html" class="nav-link" data-i18n="nav_payments">Payments</a></li>
+                <li><a href="support.html" class="nav-link" data-i18n="nav_support">Support</a></li>
+                <li><a href="faq.html" class="nav-link" data-i18n="nav_faq">FAQ</a></li>
+                <li><a href="account.html" class="nav-link" data-i18n="nav_account">My Account</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="login.html" class="btn-signin" data-i18n="nav_signin">Sign In</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION WITH ROTATING BANNERS -->
+    <section class="hero" id="home">
+        <div class="banner-container">
+            <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=1920&q=80" alt="World Cup Stadium" class="banner-slide active">
+            <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=1920&q=80" alt="Football Match" class="banner-slide">
+            <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=1920&q=80" alt="Stadium Crowd" class="banner-slide">
+            <img src="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=1920&q=80" alt="Football Fans" class="banner-slide">
+            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1920&q=80" alt="World Cup Trophy" class="banner-slide">
+            <img src="https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=1920&q=80" alt="Football Stadium" class="banner-slide">
+
+            <div class="banner-dots">
+                <span class="dot active" onclick="currentSlide(0)"></span>
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+                <span class="dot" onclick="currentSlide(5)"></span>
+            </div>
+        </div>
+
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <i class="fas fa-trophy hero-trophy"></i>
+                <h1 data-i18n="hero_title">PLAN YOUR WORLD CUP 2026 TRIP</h1>
+                <p data-i18n="hero_subtitle">Compare and book tickets, flights, hotels, and extras — all in one place</p>
+
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="document.getElementById('matches').scrollIntoView({behavior: 'smooth'})" data-i18n="hero_book_now">
+                        EXPLORE OPTIONS
+                    </button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('matches').scrollIntoView({behavior: 'smooth'})" data-i18n="hero_view_matches">
+                        VIEW MATCHES
+                    </button>
+                </div>
+
+                <!-- COUNTDOWN SECTION -->
+                <div class="hero-countdowns">
+                    <div class="countdown-box">
+                        <h3><i class="fas fa-globe"></i> <span data-i18n="countdown_worldcup">World Cup Starts In</span></h3>
+                        <div class="countdown-grid" id="worldCupCountdown">
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="wc-days">00</span>
+                                <span class="countdown-label" data-i18n="countdown_days">Days</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="wc-hours">00</span>
+                                <span class="countdown-label" data-i18n="countdown_hours">Hours</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="wc-minutes">00</span>
+                                <span class="countdown-label" data-i18n="countdown_minutes">Minutes</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="wc-seconds">00</span>
+                                <span class="countdown-label" data-i18n="countdown_seconds">Seconds</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="countdown-box">
+                        <h3><i class="fas fa-futbol"></i> <span data-i18n="countdown_nextmatch">Next Match Starts In</span></h3>
+                        <div class="next-match-info" id="nextMatchInfo">
+                            <p><strong id="nextMatchTeams" data-i18n="countdown_loading">Loading next match...</strong></p>
+                            <p id="nextMatchStadium"></p>
+                            <p id="nextMatchDate"></p>
+                        </div>
+                        <div class="countdown-grid" id="nextMatchCountdown">
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="match-days">00</span>
+                                <span class="countdown-label" data-i18n="countdown_days">Days</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="match-hours">00</span>
+                                <span class="countdown-label" data-i18n="countdown_hours">Hours</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="match-minutes">00</span>
+                                <span class="countdown-label" data-i18n="countdown_minutes">Minutes</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="match-seconds">00</span>
+                                <span class="countdown-label" data-i18n="countdown_seconds">Seconds</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END COUNTDOWN SECTION -->
+            </div>
+        </div>
+    </section>
+
+    <!-- QUICK BOOKING SECTION -->
+    <section class="quick-booking">
+        <div class="container">
+            <h2 data-i18n="quick_booking">WHAT WOULD YOU LIKE TO BOOK?</h2>
+            <div class="booking-cards">
+                <div class="booking-card">
+                    <div class="card-icon"><i class="fas fa-ticket-alt"></i></div>
+                    <h3 data-i18n="booking_tickets">Match Tickets</h3>
+                    <p data-i18n="booking_tickets_sub">Browse available seating options</p>
+                    <a href="ticket.html" class="card-link"><span data-i18n="book_now">Explore Options</span> <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="booking-card">
+                    <div class="card-icon"><i class="fas fa-plane"></i></div>
+                    <h3 data-i18n="booking_flights">Flights</h3>
+                    <p data-i18n="booking_flights_sub">Search flights to host cities</p>
+                    <a href="travel.html" class="card-link"><span data-i18n="book_now">Explore Options</span> <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="booking-card">
+                    <div class="card-icon"><i class="fas fa-hotel"></i></div>
+                    <h3 data-i18n="booking_hotels">Hotels</h3>
+                    <p data-i18n="booking_hotels_sub">Find accommodation near venues</p>
+                    <a href="hotel.html" class="card-link"><span data-i18n="book_now">Explore Options</span> <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="booking-card">
+                    <div class="card-icon"><i class="fas fa-parking"></i></div>
+                    <h3 data-i18n="booking_parking">Parking & Extras</h3>
+                    <p data-i18n="booking_parking_sub">Add parking and other services</p>
+                    <a href="extras.html" class="card-link"><span data-i18n="book_now">Explore Options</span> <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHOOSE YOUR COUNTRY SECTION -->
+    <section class="choose-country">
+        <div class="container">
+            <h2><i class="fas fa-globe"></i> <span data-i18n="choose_country">PERSONALISE YOUR EXPERIENCE</span></h2>
+            <p data-i18n="choose_country_sub">Select your home country to see relevant travel packages and flight options</p>
+            <div class="country-selector">
+                <select id="countrySelect" class="country-dropdown">
+                    <option value="" data-i18n="country_select_placeholder">Select Your Country</option>
+                    <option value="argentina">Argentina</option>
+                    <option value="brazil">Brazil</option>
+                    <option value="france">France</option>
+                    <option value="germany">Germany</option>
+                    <option value="spain">Spain</option>
+                    <option value="england">England</option>
+                    <option value="usa">USA</option>
+                    <option value="mexico">Mexico</option>
+                    <option value="canada">Canada</option>
+                </select>
+                <button class="btn btn-primary" data-i18n="country_continue">CONTINUE</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ALL-IN-ONE PACKAGE SECTION -->
+    <section class="all-in-one">
+        <div class="container">
+            <h2><i class="fas fa-box-open"></i> <span data-i18n="allinone_title">ALL-IN-ONE WORLD CUP TRAVEL PLANNING</span></h2>
+            <div class="package-items">
+                <div class="package-item">
+                    <div class="package-icon"><i class="fas fa-ticket-alt"></i></div>
+                    <h3 data-i18n="allinone_tickets">Match Tickets</h3>
+                    <p data-i18n="allinone_tickets_sub">VIP & Standard Seating Options</p>
+                </div>
+                <div class="package-item">
+                    <div class="package-icon"><i class="fas fa-plane"></i></div>
+                    <h3 data-i18n="allinone_flights">Flights</h3>
+                    <p data-i18n="allinone_flights_sub">International Flight Search</p>
+                </div>
+                <div class="package-item">
+                    <div class="package-icon"><i class="fas fa-hotel"></i></div>
+                    <h3 data-i18n="allinone_hotels">Hotel Booking</h3>
+                    <p data-i18n="allinone_hotels_sub">Accommodation Near Venues</p>
+                </div>
+                <div class="package-item">
+                    <div class="package-icon"><i class="fas fa-car"></i></div>
+                    <h3 data-i18n="allinone_parking">Parking & More</h3>
+                    <p data-i18n="allinone_parking_sub">Additional Travel Services</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CRYPTO PAYMENTS SECTION -->
+    <section class="crypto-section">
+        <div class="container">
+            <div class="crypto-content">
+                <div class="crypto-icon"><i class="fab fa-bitcoin"></i></div>
+                <h3 data-i18n="crypto_title">CRYPTOCURRENCY PAYMENTS SUPPORTED</h3>
+                <p data-i18n="crypto_sub">Pay using Bitcoin, Ethereum, and more</p>
+                <p class="crypto-subtitle" data-i18n="crypto_subtitle">Secure and transparent digital transactions accepted</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SUPPORT SECTION -->
+    <section class="support-section">
+        <div class="container">
+            <div class="support-content">
+                <div class="support-icon"><i class="fas fa-headset"></i></div>
+                <h3 data-i18n="support_title">CUSTOMER SUPPORT AVAILABLE</h3>
+                <p data-i18n="support_sub">Reach us via WhatsApp or Email</p>
+                <p class="support-subtitle" data-i18n="support_subtitle">Our team is available to assist you throughout your booking journey</p>
+                <a href="support.html" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i> <span data-i18n="support_contact">CONTACT US</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE CHAT FLOATING BUTTON -->
+    <button class="live-chat-toggle" id="liveChatToggle" onclick="toggleLiveChat()">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <!-- LIVE CHAT BOX -->
+    <div class="live-chat-box" id="liveChatBox">
+        <div class="live-chat-header">
+            <div class="live-chat-title">
+                <i class="fas fa-headset"></i>
+                <span data-i18n="chat_title">Support Chat</span>
+            </div>
+            <button class="live-chat-close" onclick="toggleLiveChat()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="live-chat-body" id="liveChatBody">
+            <div class="chat-message bot-message">
+                <p data-i18n="chat_greeting">Hi there! How can we help you today? You can reach us through the options below or contact us directly.</p>
+                <p class="chat-contact-info">
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_whatsapp_label">WhatsApp:</span> <a href="https://wa.me/16154145082" target="_blank">+1 (615) 414-5082</a><br>
+                    <i class="fas fa-envelope"></i> <span data-i18n="chat_email_label">Email:</span> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a>
+                </p>
+            </div>
+
+            <div class="chat-options">
+                <button onclick="sendQuickChat('tickets')" data-i18n="chat_btn_tickets">Tickets</button>
+                <button onclick="sendQuickChat('travel')" data-i18n="chat_btn_travel">Travel</button>
+                <button onclick="sendQuickChat('hotels')" data-i18n="chat_btn_hotels">Hotels</button>
+                <button onclick="sendQuickChat('payments')" data-i18n="chat_btn_payments">Payments</button>
+                <button onclick="window.open('https://wa.me/16154145082', '_blank')">
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_btn_whatsapp">Chat on WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 data-i18n="footer_about">Company</h4>
+                    <ul>
+                        <li><a href="about.html" data-i18n="footer_about_link">About</a></li>
+                        <li><a href="blog.html" data-i18n="footer_blog">Blog</a></li>
+                        <li><a href="careers.html" data-i18n="footer_careers">Work With Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_support">Help</h4>
+                    <ul>
+                        <li><a href="faq.html" data-i18n="footer_faq">FAQ</a></li>
+                        <li><a href="support.html" data-i18n="footer_contact_us">Contact Us</a></li>
+                        <li><a href="#" onclick="toggleLiveChat(); return false;" data-i18n="footer_live_chat">Live Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_legal">Legal</h4>
+                    <ul>
+                        <li><a href="terms.html" data-i18n="footer_terms">Terms & Conditions</a></li>
+                        <li><a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
+                        <li><a href="cookies.html" data-i18n="footer_cookies">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_contact">Get in Touch</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a></p>
+                        <div class="social-links">
+                            <a href="https://wa.me/16154145082" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">© 2026 World Cup Travel Platform. Independent booking assistance service.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS LOADED IN CORRECT ORDER -->
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Email - World Cup 2026 Travel Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-trophy trophy-icon"></i>
+                <span data-i18n="nav_brand">World Cup 2026 Travel</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+                <li><a href="index.html#matches" class="nav-link" data-i18n="nav_matches">Matches</a></li>
+                <li><a href="travel.html" class="nav-link" data-i18n="nav_travel">Travel</a></li>
+                <li><a href="hotel.html" class="nav-link" data-i18n="nav_hotel">Hotels</a></li>
+                <li><a href="ticket.html" class="nav-link" data-i18n="nav_ticket">Tickets</a></li>
+                <li><a href="extras.html" class="nav-link" data-i18n="nav_extras">Extras</a></li>
+                <li><a href="payments.html" class="nav-link" data-i18n="nav_payments">Payments</a></li>
+                <li><a href="support.html" class="nav-link" data-i18n="nav_support">Support</a></li>
+                <li><a href="faq.html" class="nav-link" data-i18n="nav_faq">FAQ</a></li>
+                <li><a href="account.html" class="nav-link" data-i18n="nav_account">My Account</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="login.html" class="btn-signin" data-i18n="nav_signin">Sign In</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="container">
+            <h1><i class="fas fa-envelope-open-text"></i> <span data-i18n="verify_hero_title">Verify Your Email Address</span></h1>
+            <p data-i18n="verify_hero_subtitle">Enter the 6-digit code sent to your inbox</p>
+        </div>
+    </section>
+
+    <section class="page-content">
+        <div class="container">
+            <div class="auth-form">
+
+                <div class="verification-info">
+                    <div class="verification-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h2 data-i18n="verify_title">Check Your Inbox</h2>
+                    <p data-i18n="verify_desc">
+                        A 6-digit verification code has been sent to:
+                    </p>
+                    <p class="user-email" id="userEmail">your-email@example.com</p>
+                </div>
+
+                <form id="verifyEmailForm" novalidate>
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-key"></i>
+                            <span data-i18n="verify_code_label">Verification Code</span>
+                        </label>
+                        <div class="code-input-container">
+                            <input type="text" id="digit1" class="code-digit" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="off" required>
+                            <input type="text" id="digit2" class="code-digit" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="off" required>
+                            <input type="text" id="digit3" class="code-digit" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="off" required>
+                            <input type="text" id="digit4" class="code-digit" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="off" required>
+                            <input type="text" id="digit5" class="code-digit" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="off" required>
+                            <input type="text" id="digit6" class="code-digit" maxlength="1" pattern="[0-9]" inputmode="numeric" autocomplete="off" required>
+                        </div>
+                        <small class="form-error" id="codeError"></small>
+                    </div>
+
+                    <button type="submit" class="btn btn-gold btn-full" id="verifyBtn">
+                        <i class="fas fa-check-circle"></i>
+                        <span data-i18n="verify_btn_verify">Verify Email Address</span>
+                    </button>
+                </form>
+
+                <div class="resend-section">
+                    <p data-i18n="verify_no_code">Did not receive the code?</p>
+                    <button
+                        type="button"
+                        class="btn-resend"
+                        id="resendBtn"
+                        onclick="resendVerificationCode()"
+                    >
+                        <i class="fas fa-redo"></i>
+                        <span data-i18n="verify_btn_resend">Resend Code</span>
+                    </button>
+                    <p class="resend-timer" id="resendTimer"></p>
+                </div>
+
+                <div class="verification-help">
+                    <p>
+                        <i class="fas fa-info-circle"></i>
+                        <span data-i18n="verify_expires">This code expires after 15 minutes.</span>
+                    </p>
+                    <p>
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span data-i18n="verify_check_spam">If you cannot find the email, check your spam or junk folder.</span>
+                    </p>
+                    <p>
+                        <i class="fas fa-headset"></i>
+                        If you continue to have trouble, please
+                        <a href="support.html" style="color: var(--light-blue); font-weight: 600;">contact our support team</a>.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE CHAT FLOATING BUTTON -->
+    <button class="live-chat-toggle" id="liveChatToggle" onclick="toggleLiveChat()">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <!-- LIVE CHAT BOX -->
+    <div class="live-chat-box" id="liveChatBox">
+        <div class="live-chat-header">
+            <div class="live-chat-title">
+                <i class="fas fa-headset"></i>
+                <span data-i18n="chat_title">Support Chat</span>
+            </div>
+            <button class="live-chat-close" onclick="toggleLiveChat()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="live-chat-body" id="liveChatBody">
+            <div class="chat-message bot-message">
+                <p data-i18n="chat_greeting">Hi there! How can we help you today? You can reach us through the options below or contact us directly.</p>
+                <p class="chat-contact-info">
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_whatsapp_label">WhatsApp:</span> <a href="https://wa.me/16154145082" target="_blank">+1 (615) 414-5082</a><br>
+                    <i class="fas fa-envelope"></i> <span data-i18n="chat_email_label">Email:</span> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a>
+                </p>
+            </div>
+            <div class="chat-options">
+                <button onclick="sendQuickChat('tickets')" data-i18n="chat_btn_tickets">Tickets</button>
+                <button onclick="sendQuickChat('travel')" data-i18n="chat_btn_travel">Travel</button>
+                <button onclick="sendQuickChat('hotels')" data-i18n="chat_btn_hotels">Hotels</button>
+                <button onclick="sendQuickChat('payments')" data-i18n="chat_btn_payments">Payments</button>
+                <button onclick="window.open('https://wa.me/16154145082', '_blank')">
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_btn_whatsapp">Chat on WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 data-i18n="footer_about">Company</h4>
+                    <ul>
+                        <li><a href="about.html" data-i18n="footer_about_link">About</a></li>
+                        <li><a href="blog.html" data-i18n="footer_blog">Blog</a></li>
+                        <li><a href="careers.html" data-i18n="footer_careers">Work With Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_support">Help</h4>
+                    <ul>
+                        <li><a href="faq.html" data-i18n="footer_faq">FAQ</a></li>
+                        <li><a href="support.html" data-i18n="footer_contact_us">Contact Us</a></li>
+                        <li><a href="#" onclick="toggleLiveChat(); return false;" data-i18n="footer_live_chat">Live Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_legal">Legal</h4>
+                    <ul>
+                        <li><a href="terms.html" data-i18n="footer_terms">Terms & Conditions</a></li>
+                        <li><a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
+                        <li><a href="cookies.html" data-i18n="footer_cookies">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_contact">Get in Touch</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a></p>
+                        <div class="social-links">
+                            <a href="https://wa.me/16154145082" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">© 2026 World Cup Travel Platform. Independent booking assistance service.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

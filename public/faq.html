@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - World Cup 2026 Travel Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-trophy trophy-icon"></i>
+                <span data-i18n="nav_brand">World Cup 2026 Travel</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+                <li><a href="index.html#matches" class="nav-link" data-i18n="nav_matches">Matches</a></li>
+                <li><a href="travel.html" class="nav-link" data-i18n="nav_travel">Travel</a></li>
+                <li><a href="hotel.html" class="nav-link" data-i18n="nav_hotel">Hotels</a></li>
+                <li><a href="ticket.html" class="nav-link" data-i18n="nav_ticket">Tickets</a></li>
+                <li><a href="extras.html" class="nav-link" data-i18n="nav_extras">Extras</a></li>
+                <li><a href="payments.html" class="nav-link" data-i18n="nav_payments">Payments</a></li>
+                <li><a href="support.html" class="nav-link" data-i18n="nav_support">Support</a></li>
+                <li><a href="faq.html" class="nav-link" data-i18n="nav_faq">FAQ</a></li>
+                <li><a href="account.html" class="nav-link" data-i18n="nav_account">My Account</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="login.html" class="btn-signin" data-i18n="nav_signin">Sign In</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="container">
+            <h1><i class="fas fa-question-circle"></i> <span data-i18n="faq_hero_title">Frequently Asked Questions</span></h1>
+            <p data-i18n="faq_hero_subtitle">Find answers to common questions about bookings, travel, payments, and support</p>
+        </div>
+    </section>
+
+    <section class="page-content">
+        <div class="container">
+            <div class="faq-list">
+
+                <div class="faq-item faq-accordion">
+                    <button class="faq-question">
+                        <span><i class="fas fa-ticket-alt"></i> <span data-i18n="faq_q1">How do I book tickets through this platform?</span></span>
+                        <i class="fas fa-chevron-down faq-toggle-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a1">
+                            Navigate to the Tickets page, select the match you are interested in, choose
+                            your preferred seating category, and follow the steps to complete your booking
+                            request.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item faq-accordion">
+                    <button class="faq-question">
+                        <span><i class="fas fa-qrcode"></i> <span data-i18n="faq_q2">Are the tickets listed on this platform digital?</span></span>
+                        <i class="fas fa-chevron-down faq-toggle-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a2">
+                            Yes. Ticket listings on this platform are for digital tickets. If your booking
+                            is confirmed, you will receive an electronic ticket or entry code that can be
+                            used for admission.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item faq-accordion">
+                    <button class="faq-question">
+                        <span><i class="fas fa-random"></i> <span data-i18n="faq_q3">Can I transfer my ticket to someone else?</span></span>
+                        <i class="fas fa-chevron-down faq-toggle-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a3">
+                            Transfer options depend on the ticket category and the conditions set by the
+                            event organiser. Details on transferability will be shown in your account once
+                            the feature is supported.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item faq-accordion">
+                    <button class="faq-question">
+                        <span><i class="fas fa-credit-card"></i> <span data-i18n="faq_q4">What payment methods are accepted?</span></span>
+                        <i class="fas fa-chevron-down faq-toggle-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a4">
+                            We plan to accept credit cards, debit cards, and cryptocurrency payments
+                            including Bitcoin, Ethereum, and USDT. Additional payment methods may be
+                            added before launch.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item faq-accordion">
+                    <button class="faq-question">
+                        <span><i class="fab fa-bitcoin"></i> <span data-i18n="faq_q5">Is cryptocurrency accepted as a payment method?</span></span>
+                        <i class="fas fa-chevron-down faq-toggle-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a5">
+                            Yes, cryptocurrency payment support is planned. Available coins and the
+                            checkout process will be displayed once the integration is live.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item faq-accordion">
+                    <button class="faq-question">
+                        <span><i class="fas fa-times-circle"></i> <span data-i18n="faq_q6">Can I cancel a booking?</span></span>
+                        <i class="fas fa-chevron-down faq-toggle-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a6">
+                            Cancellation terms vary depending on the type of booking — whether it is a
+                            ticket, hotel, or flight. Specific cancellation conditions will be displayed
+                            during the booking process and in your account confirmation.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item faq-accordion">
+                    <button class="faq-question">
+                        <span><i class="fas fa-plane"></i> <span data-i18n="faq_q7">Can I book flights and hotels on the same platform?</span></span>
+                        <i class="fas fa-chevron-down faq-toggle-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a7">
+                            Yes. This platform is designed to let you manage multiple bookings in one
+                            place, including match tickets, flights, hotels, and extras — without needing
+                            to use separate websites for each.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item faq-accordion">
+                    <button class="faq-question">
+                        <span><i class="fas fa-hotel"></i> <span data-i18n="faq_q8">Are hotel bookings refundable?</span></span>
+                        <i class="fas fa-chevron-down faq-toggle-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a8">
+                            Refund eligibility depends on the hotel and the room type selected at the
+                            time of booking. Always review the cancellation terms shown before confirming
+                            your reservation.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item faq-accordion">
+                    <button class="faq-question">
+                        <span><i class="fas fa-shuttle-van"></i> <span data-i18n="faq_q9">Do you provide airport transfer services?</span></span>
+                        <i class="fas fa-chevron-down faq-toggle-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a9">
+                            Airport transfer options may be available as part of the extras section,
+                            depending on the host city and service availability at the time of booking.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item faq-accordion">
+                    <button class="faq-question">
+                        <span><i class="fas fa-search"></i> <span data-i18n="faq_q10">How can I track my bookings?</span></span>
+                        <i class="fas fa-chevron-down faq-toggle-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a10">
+                            All bookings can be accessed from the My Account page once you are signed in.
+                            You will be able to view booking references, status updates, and details for
+                            each reservation.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item faq-accordion">
+                    <button class="faq-question">
+                        <span><i class="fas fa-users"></i> <span data-i18n="faq_q11">Are there discounts for group bookings?</span></span>
+                        <i class="fas fa-chevron-down faq-toggle-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a11">
+                            Group booking options may be available. Contact our support team via
+                            WhatsApp or email for assistance with larger group requests and to discuss
+                            what options are available.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item faq-accordion">
+                    <button class="faq-question">
+                        <span><i class="fas fa-headset"></i> <span data-i18n="faq_q12">Is live chat available around the clock?</span></span>
+                        <i class="fas fa-chevron-down faq-toggle-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a12">
+                            Our live chat is available during business hours. For queries outside those
+                            hours, you can reach us at any time via WhatsApp or email and we will respond
+                            as soon as possible.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item faq-accordion">
+                    <button class="faq-question">
+                        <span><i class="fas fa-envelope"></i> <span data-i18n="faq_q13">What is the fastest way to reach support?</span></span>
+                        <i class="fas fa-chevron-down faq-toggle-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a13">
+                            The quickest way to reach our team is through WhatsApp. You can also email
+                            us or use the live chat widget on the Support page. We aim to respond to
+                            all enquiries promptly.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item faq-accordion">
+                    <button class="faq-question">
+                        <span><i class="fas fa-globe"></i> <span data-i18n="faq_q14">Does this platform support multiple languages?</span></span>
+                        <i class="fas fa-chevron-down faq-toggle-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a14">
+                            Yes. Multi-language support is available on this platform to help fans from
+                            different countries navigate the booking process more easily. You can switch
+                            languages using the selector in the navigation bar.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="faq-cta">
+                <h2><i class="fas fa-life-ring"></i> <span data-i18n="faq_cta_title">Still Have a Question?</span></h2>
+                <p data-i18n="faq_cta_desc">
+                    Our support team is here to help. If you did not find the answer you were looking
+                    for, reach out to us directly and we will be happy to assist.
+                </p>
+                <div class="faq-cta-buttons">
+                    <a href="support.html" class="btn btn-gold">
+                        <i class="fas fa-headset"></i> <span data-i18n="faq_btn_support">Go to Support</span>
+                    </a>
+                    <a href="https://wa.me/16154145082" target="_blank" class="btn btn-primary">
+                        <i class="fab fa-whatsapp"></i> <span data-i18n="faq_btn_whatsapp">Message Us on WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE CHAT FLOATING BUTTON -->
+    <button class="live-chat-toggle" id="liveChatToggle" onclick="toggleLiveChat()">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <!-- LIVE CHAT BOX -->
+    <div class="live-chat-box" id="liveChatBox">
+        <div class="live-chat-header">
+            <div class="live-chat-title">
+                <i class="fas fa-headset"></i>
+                <span data-i18n="chat_title">Support Chat</span>
+            </div>
+            <button class="live-chat-close" onclick="toggleLiveChat()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="live-chat-body" id="liveChatBody">
+            <div class="chat-message bot-message">
+                <p data-i18n="chat_greeting">Hi there! How can we help you today? You can reach us through the options below or contact us directly.</p>
+                <p class="chat-contact-info">
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_whatsapp_label">WhatsApp:</span> <a href="https://wa.me/16154145082" target="_blank">+1 (615) 414-5082</a><br>
+                    <i class="fas fa-envelope"></i> <span data-i18n="chat_email_label">Email:</span> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a>
+                </p>
+            </div>
+            <div class="chat-options">
+                <button onclick="sendQuickChat('tickets')" data-i18n="chat_btn_tickets">Tickets</button>
+                <button onclick="sendQuickChat('travel')" data-i18n="chat_btn_travel">Travel</button>
+                <button onclick="sendQuickChat('hotels')" data-i18n="chat_btn_hotels">Hotels</button>
+                <button onclick="sendQuickChat('payments')" data-i18n="chat_btn_payments">Payments</button>
+                <button onclick="window.open('https://wa.me/16154145082', '_blank')">
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_btn_whatsapp">Chat on WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 data-i18n="footer_about">Company</h4>
+                    <ul>
+                        <li><a href="about.html" data-i18n="footer_about_link">About</a></li>
+                        <li><a href="blog.html" data-i18n="footer_blog">Blog</a></li>
+                        <li><a href="careers.html" data-i18n="footer_careers">Work With Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_support">Help</h4>
+                    <ul>
+                        <li><a href="faq.html" data-i18n="footer_faq">FAQ</a></li>
+                        <li><a href="support.html" data-i18n="footer_contact_us">Contact Us</a></li>
+                        <li><a href="#" onclick="toggleLiveChat(); return false;" data-i18n="footer_live_chat">Live Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_legal">Legal</h4>
+                    <ul>
+                        <li><a href="terms.html" data-i18n="footer_terms">Terms & Conditions</a></li>
+                        <li><a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
+                        <li><a href="cookies.html" data-i18n="footer_cookies">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_contact">Get in Touch</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a></p>
+                        <div class="social-links">
+                            <a href="https://wa.me/16154145082" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">© 2026 World Cup Travel Platform. Independent booking assistance service.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

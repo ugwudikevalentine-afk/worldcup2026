@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotels & Accommodation - World Cup 2026 Travel Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .booking-modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); overflow-y: auto; }
+        .booking-modal.active { display: flex; align-items: center; justify-content: center; }
+        .booking-modal-content { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 30px; border-radius: 15px; max-width: 600px; width: 90%; margin: 20px; box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5); border: 2px solid #ffd700; max-height: 90vh; overflow-y: auto; }
+        .booking-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #ffd700; }
+        .booking-modal-header h2 { color: #ffd700; margin: 0; }
+        .close-modal { background: none; border: none; color: #fff; font-size: 30px; cursor: pointer; transition: color 0.3s; }
+        .close-modal:hover { color: #ffd700; }
+        .booking-form-group { margin-bottom: 20px; }
+        .booking-form-group label { display: block; color: #ffd700; margin-bottom: 8px; font-weight: bold; }
+        .booking-form-group select, .booking-form-group input { width: 100%; padding: 12px; border: 2px solid #ffd700; border-radius: 8px; background-color: rgba(255, 255, 255, 0.1); color: #fff; font-size: 16px; }
+        .booking-form-group input[type="date"] { color-scheme: dark; }
+        .booking-form-group select option { background-color: #1a1a2e; color: #fff; }
+        .date-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .booking-summary { background-color: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #ffd700; }
+        .booking-summary h3 { color: #ffd700; margin-top: 0; }
+        .booking-summary p { color: #fff; margin: 8px 0; }
+        .total-price { font-size: 24px; font-weight: bold; color: #ffd700; }
+        .btn-book-now { width: 100%; padding: 15px; background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); border: none; border-radius: 8px; color: #000; font-size: 18px; font-weight: bold; cursor: pointer; transition: transform 0.3s; }
+        .btn-book-now:hover { transform: scale(1.05); }
+        .btn-book-now:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .loading-spinner { display: none; text-align: center; padding: 40px; }
+        .loading-spinner.active { display: block; }
+        .booking-error { color: #ff4444; background-color: rgba(255, 68, 68, 0.1); padding: 10px; border-radius: 5px; margin: 10px 0; display: none; }
+        .booking-error.active { display: block; }
+        .booking-success { color: #00ff00; background-color: rgba(0, 255, 0, 0.1); padding: 10px; border-radius: 5px; margin: 10px 0; display: none; }
+        .booking-success.active { display: block; }
+        .no-hotels { text-align: center; padding: 40px; color: #fff; }
+        .stars { color: #ffd700; }
+        .hotel-rating { display: inline-block; }
+        @media (max-width: 600px) { .date-row { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-trophy trophy-icon"></i>
+                <span data-i18n="nav_brand">World Cup 2026 Travel</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+                <li><a href="index.html#matches" class="nav-link" data-i18n="nav_matches">Matches</a></li>
+                <li><a href="travel.html" class="nav-link" data-i18n="nav_travel">Travel</a></li>
+                <li><a href="hotel.html" class="nav-link" data-i18n="nav_hotel">Hotels</a></li>
+                <li><a href="ticket.html" class="nav-link" data-i18n="nav_ticket">Tickets</a></li>
+                <li><a href="extras.html" class="nav-link" data-i18n="nav_extras">Extras</a></li>
+                <li><a href="payments.html" class="nav-link" data-i18n="nav_payments">Payments</a></li>
+                <li><a href="support.html" class="nav-link" data-i18n="nav_support">Support</a></li>
+                <li><a href="faq.html" class="nav-link" data-i18n="nav_faq">FAQ</a></li>
+                <li><a href="account.html" class="nav-link" data-i18n="nav_account">My Account</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="login.html" class="btn-signin" data-i18n="nav_signin">Sign In</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="container">
+            <h1><i class="fas fa-hotel"></i> <span data-i18n="hotel_hero_title">Hotels & Accommodation</span></h1>
+            <p data-i18n="hotel_hero_subtitle">Find places to stay near World Cup venues</p>
+        </div>
+    </section>
+
+    <section class="page-content">
+        <div class="container">
+
+            <!-- Loading State -->
+            <div id="hotelsLoading" class="loading-spinner active">
+                <i class="fas fa-spinner fa-spin fa-3x" style="color: #ffd700;"></i>
+                <p style="color: #fff; margin-top: 10px;" data-i18n="hotel_loading">Loading available hotels...</p>
+            </div>
+
+            <!-- Hotels Container -->
+            <div class="content-grid" id="hotelsContainer"></div>
+
+        </div>
+    </section>
+
+    <!-- HOTEL BOOKING MODAL -->
+    <div class="booking-modal" id="bookingModal">
+        <div class="booking-modal-content">
+            <div class="booking-modal-header">
+                <h2><i class="fas fa-hotel"></i> <span data-i18n="hotel_modal_title">Book This Hotel</span></h2>
+                <button class="close-modal" onclick="closeBookingModal()">&times;</button>
+            </div>
+
+            <div id="modalHotelInfo"></div>
+
+            <form id="hotelBookingForm">
+                <div class="date-row">
+                    <div class="booking-form-group">
+                        <label for="checkInDate">
+                            <i class="fas fa-calendar-check"></i> <span data-i18n="hotel_checkin">Check-in Date</span>
+                        </label>
+                        <input type="date" id="checkInDate" required>
+                    </div>
+                    <div class="booking-form-group">
+                        <label for="checkOutDate">
+                            <i class="fas fa-calendar-times"></i> <span data-i18n="hotel_checkout">Check-out Date</span>
+                        </label>
+                        <input type="date" id="checkOutDate" required>
+                    </div>
+                </div>
+
+                <div class="booking-form-group">
+                    <label for="roomType">
+                        <i class="fas fa-bed"></i> <span data-i18n="hotel_room_type">Room Type</span>
+                    </label>
+                    <select id="roomType" required>
+                        <option value="" data-i18n="hotel_select_room">Select Room Type</option>
+                        <option value="standard" data-i18n="hotel_standard">Standard Room</option>
+                        <option value="deluxe" data-i18n="hotel_deluxe">Deluxe Room (+$50/night)</option>
+                        <option value="suite" data-i18n="hotel_suite">Suite (+$150/night)</option>
+                    </select>
+                </div>
+
+                <div class="booking-form-group">
+                    <label for="numRooms">
+                        <i class="fas fa-door-open"></i> <span data-i18n="hotel_num_rooms">Number of Rooms</span>
+                    </label>
+                    <input type="number" id="numRooms" min="1" max="5" value="1" required>
+                </div>
+
+                <div class="booking-form-group">
+                    <label for="numGuests">
+                        <i class="fas fa-users"></i> <span data-i18n="hotel_num_guests">Number of Guests</span>
+                    </label>
+                    <input type="number" id="numGuests" min="1" max="10" value="2" required>
+                </div>
+
+                <div class="booking-summary">
+                    <h3><i class="fas fa-receipt"></i> <span data-i18n="hotel_summary_title">Booking Summary</span></h3>
+                    <p><strong data-i18n="hotel_summary_hotel">Hotel:</strong> <span id="summaryHotel">-</span></p>
+                    <p><strong data-i18n="hotel_summary_checkin">Check-in:</strong> <span id="summaryCheckIn">-</span></p>
+                    <p><strong data-i18n="hotel_summary_checkout">Check-out:</strong> <span id="summaryCheckOut">-</span></p>
+                    <p><strong data-i18n="hotel_summary_nights">Nights:</strong> <span id="summaryNights">0</span></p>
+                    <p><strong data-i18n="hotel_summary_room_type">Room Type:</strong> <span id="summaryRoomType">-</span></p>
+                    <p><strong data-i18n="hotel_summary_rooms">Rooms:</strong> <span id="summaryRooms">-</span></p>
+                    <p><strong data-i18n="hotel_summary_price_night">Price per night:</strong> $<span id="summaryPricePerNight">0</span></p>
+                    <hr style="border-color: #ffd700; margin: 10px 0;">
+                    <p class="total-price">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span data-i18n="hotel_summary_total">Total:</span> $<span id="summaryTotal">0</span>
+                    </p>
+                </div>
+
+                <p style="color: #ccc; font-size: 0.85rem; margin-bottom: 15px;">
+                    <i class="fas fa-info-circle" style="color: #ffd700;"></i>
+                    By confirming this booking you agree to our
+                    <a href="terms.html" style="color: #ffd700;">Terms & Conditions</a>.
+                    Hotel availability is subject to change.
+                </p>
+
+                <div class="booking-error" id="bookingError"></div>
+                <div class="booking-success" id="bookingSuccess"></div>
+
+                <button type="submit" class="btn-book-now" id="bookNowBtn">
+                    <i class="fas fa-check-circle"></i> <span data-i18n="hotel_btn_confirm">Confirm Booking Request</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- LIVE CHAT FLOATING BUTTON -->
+    <button class="live-chat-toggle" id="liveChatToggle" onclick="toggleLiveChat()">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <!-- LIVE CHAT BOX -->
+    <div class="live-chat-box" id="liveChatBox">
+        <div class="live-chat-header">
+            <div class="live-chat-title">
+                <i class="fas fa-headset"></i>
+                <span data-i18n="chat_title">Support Chat</span>
+            </div>
+            <button class="live-chat-close" onclick="toggleLiveChat()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="live-chat-body" id="liveChatBody">
+            <div class="chat-message bot-message">
+                <p data-i18n="chat_greeting">Hi there! How can we help you today? You can reach us through the options below or contact us directly.</p>
+                <p class="chat-contact-info">
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_whatsapp_label">WhatsApp:</span> <a href="https://wa.me/16154145082" target="_blank">+1 (615) 414-5082</a><br>
+                    <i class="fas fa-envelope"></i> <span data-i18n="chat_email_label">Email:</span> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a>
+                </p>
+            </div>
+            <div class="chat-options">
+                <button onclick="sendQuickChat('tickets')" data-i18n="chat_btn_tickets">Tickets</button>
+                <button onclick="sendQuickChat('travel')" data-i18n="chat_btn_travel">Travel</button>
+                <button onclick="sendQuickChat('hotels')" data-i18n="chat_btn_hotels">Hotels</button>
+                <button onclick="sendQuickChat('payments')" data-i18n="chat_btn_payments">Payments</button>
+                <button onclick="window.open('https://wa.me/16154145082', '_blank')">
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_btn_whatsapp">Chat on WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 data-i18n="footer_about">Company</h4>
+                    <ul>
+                        <li><a href="about.html" data-i18n="footer_about_link">About</a></li>
+                        <li><a href="blog.html" data-i18n="footer_blog">Blog</a></li>
+                        <li><a href="careers.html" data-i18n="footer_careers">Work With Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_support">Help</h4>
+                    <ul>
+                        <li><a href="faq.html" data-i18n="footer_faq">FAQ</a></li>
+                        <li><a href="support.html" data-i18n="footer_contact_us">Contact Us</a></li>
+                        <li><a href="#" onclick="toggleLiveChat(); return false;" data-i18n="footer_live_chat">Live Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_legal">Legal</h4>
+                    <ul>
+                        <li><a href="terms.html" data-i18n="footer_terms">Terms & Conditions</a></li>
+                        <li><a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
+                        <li><a href="cookies.html" data-i18n="footer_cookies">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_contact">Get in Touch</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a></p>
+                        <div class="social-links">
+                            <a href="https://wa.me/16154145082" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">© 2026 World Cup Travel Platform. Independent booking assistance service.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        let selectedHotel = null;
+
+        async function loadHotels() {
+            const loadingEl = document.getElementById('hotelsLoading');
+            const containerEl = document.getElementById('hotelsContainer');
+            try {
+                const response = await fetch(`${API_URL}/api/hotels`);
+                const data = await response.json();
+                loadingEl.classList.remove('active');
+                if (data.success && data.hotels.length > 0) {
+                    displayHotels(data.hotels);
+                } else {
+                    containerEl.innerHTML = `
+                        <div class="no-hotels">
+                            <i class="fas fa-hotel" style="font-size: 3rem; color: #ffd700; margin-bottom: 15px;"></i>
+                            <p>No hotel listings are currently available. Please check back later.</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading hotels:', error);
+                loadingEl.classList.remove('active');
+                containerEl.innerHTML = `
+                    <div class="no-hotels">
+                        <p style="color: #ff4444;">Unable to load hotel listings. Please refresh the page and try again.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function generateStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5;
+            for (let i = 0; i < fullStars; i++) { stars += '<i class="fas fa-star"></i>'; }
+            if (halfStar) { stars += '<i class="fas fa-star-half-alt"></i>'; }
+            const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+            for (let i = 0; i < emptyStars; i++) { stars += '<i class="far fa-star"></i>'; }
+            return stars;
+        }
+
+        function displayHotels(hotels) {
+            const container = document.getElementById('hotelsContainer');
+            container.innerHTML = hotels.map(hotel => `
+                <div class="content-card">
+                    <h3><i class="fas fa-hotel"></i> ${hotel.name}</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> ${hotel.city}</p>
+                    <p><i class="fas fa-star"></i> <strong>Rating:</strong> <span class="stars hotel-rating">${generateStars(hotel.rating)}</span> (${hotel.rating}/5)</p>
+                    <p><i class="fas fa-road"></i> <strong>Distance from Venue:</strong> ${hotel.distance_to_stadium}</p>
+                    <p><i class="fas fa-door-open"></i> <strong>Available Rooms:</strong> ${hotel.rooms}</p>
+                    <p><i class="fas fa-dollar-sign"></i> <strong>From:</strong> <span style="color: #ffd700; font-weight: bold;">$${hotel.price_per_night}/night</span></p>
+                    <button class="btn btn-gold" onclick="openHotelBookingModal('${hotel._id}')">
+                        <i class="fas fa-search"></i> View Booking Options
+                    </button>
+                </div>
+            `).join('');
+            window.hotelsData = hotels;
+        }
+
+        function openHotelBookingModal(hotelId) {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please sign in to your account to proceed with a booking.');
+                window.location.href = 'login.html';
+                return;
+            }
+            const hotel = window.hotelsData.find(h => h._id === hotelId);
+            if (!hotel) {
+                alert('Hotel details could not be loaded. Please refresh the page.');
+                return;
+            }
+            selectedHotel = hotel;
+            document.getElementById('modalHotelInfo').innerHTML = `
+                <div style="background-color: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h3 style="color: #ffd700; margin: 0 0 10px 0;"><i class="fas fa-hotel"></i> ${hotel.name}</h3>
+                    <p style="color: #fff; margin: 5px 0;"><i class="fas fa-map-marker-alt"></i> ${hotel.city}</p>
+                    <p style="color: #fff; margin: 5px 0;"><i class="fas fa-star"></i> Rating: <span class="stars">${generateStars(hotel.rating)}</span></p>
+                    <p style="color: #fff; margin: 5px 0;"><i class="fas fa-road"></i> ${hotel.distance_to_stadium} from venue</p>
+                    <p style="color: #ffd700; margin: 5px 0; font-weight: bold;"><i class="fas fa-dollar-sign"></i> From $${hotel.price_per_night}/night</p>
+                </div>
+            `;
+            document.getElementById('summaryHotel').textContent = hotel.name;
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('checkInDate').min = today;
+            document.getElementById('checkOutDate').min = today;
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const dayAfter = new Date();
+            dayAfter.setDate(dayAfter.getDate() + 2);
+            document.getElementById('checkInDate').value = tomorrow.toISOString().split('T')[0];
+            document.getElementById('checkOutDate').value = dayAfter.toISOString().split('T')[0];
+            document.getElementById('bookingModal').classList.add('active');
+            document.getElementById('roomType').value = '';
+            document.getElementById('numRooms').value = 1;
+            document.getElementById('numGuests').value = 2;
+            document.getElementById('bookingError').classList.remove('active');
+            document.getElementById('bookingSuccess').classList.remove('active');
+            const submitBtn = document.getElementById('bookNowBtn');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Confirm Booking Request';
+            updateHotelBookingSummary();
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.remove('active');
+            document.getElementById('bookingError').classList.remove('active');
+            document.getElementById('bookingSuccess').classList.remove('active');
+            selectedHotel = null;
+        }
+
+        document.getElementById('bookingModal').addEventListener('click', function(e) {
+            if (e.target === this) closeBookingModal();
+        });
+
+        function calculateNights(checkIn, checkOut) {
+            if (!checkIn || !checkOut) return 0;
+            const start = new Date(checkIn);
+            const end = new Date(checkOut);
+            const diffTime = end - start;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays > 0 ? diffDays : 0;
+        }
+
+        function getRoomTypePrice(roomType) {
+            switch (roomType) {
+                case 'standard': return 0;
+                case 'deluxe': return 50;
+                case 'suite': return 150;
+                default: return 0;
+            }
+        }
+
+        function updateHotelBookingSummary() {
+            const checkInDate = document.getElementById('checkInDate').value;
+            const checkOutDate = document.getElementById('checkOutDate').value;
+            const roomType = document.getElementById('roomType').value;
+            const numRooms = parseInt(document.getElementById('numRooms').value) || 1;
+            const nights = calculateNights(checkInDate, checkOutDate);
+            document.getElementById('summaryCheckIn').textContent = checkInDate || '-';
+            document.getElementById('summaryCheckOut').textContent = checkOutDate || '-';
+            document.getElementById('summaryNights').textContent = nights;
+            document.getElementById('summaryRoomType').textContent = roomType ? roomType.charAt(0).toUpperCase() + roomType.slice(1) : '-';
+            document.getElementById('summaryRooms').textContent = numRooms;
+            if (selectedHotel && roomType && nights > 0) {
+                const basePrice = selectedHotel.price_per_night;
+                const roomTypeExtra = getRoomTypePrice(roomType);
+                const pricePerNight = basePrice + roomTypeExtra;
+                const total = pricePerNight * nights * numRooms;
+                document.getElementById('summaryPricePerNight').textContent = pricePerNight;
+                document.getElementById('summaryTotal').textContent = total;
+            } else {
+                document.getElementById('summaryPricePerNight').textContent = selectedHotel ? selectedHotel.price_per_night : '0';
+                document.getElementById('summaryTotal').textContent = '0';
+            }
+        }
+
+        function showHotelBookingError(message) {
+            const errorEl = document.getElementById('bookingError');
+            errorEl.textContent = message;
+            errorEl.classList.add('active');
+            setTimeout(() => { errorEl.classList.remove('active'); }, 5000);
+        }
+
+        function showHotelBookingSuccess(message) {
+            const successEl = document.getElementById('bookingSuccess');
+            successEl.textContent = message;
+            successEl.classList.add('active');
+        }
+
+        document.getElementById('hotelBookingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const checkInDate = document.getElementById('checkInDate').value;
+            const checkOutDate = document.getElementById('checkOutDate').value;
+            const roomType = document.getElementById('roomType').value;
+            const numRooms = parseInt(document.getElementById('numRooms').value);
+            const numGuests = parseInt(document.getElementById('numGuests').value);
+            const token = localStorage.getItem('token');
+            if (!selectedHotel) { showHotelBookingError('No hotel selected.'); return; }
+            if (!checkInDate || !checkOutDate) { showHotelBookingError('Please select check-in and check-out dates.'); return; }
+            const nights = calculateNights(checkInDate, checkOutDate);
+            if (nights <= 0) { showHotelBookingError('Check-out date must be after check-in date.'); return; }
+            if (!roomType) { showHotelBookingError('Please select a room type.'); return; }
+            if (numRooms > selectedHotel.rooms) {
+                showHotelBookingError(`Only ${selectedHotel.rooms} room(s) currently listed.`);
+                return;
+            }
+            const basePrice = selectedHotel.price_per_night;
+            const roomTypeExtra = getRoomTypePrice(roomType);
+            const pricePerNight = basePrice + roomTypeExtra;
+            const totalPrice = pricePerNight * nights * numRooms;
+            const bookedHotelName = selectedHotel.name;
+            const bookedHotelCity = selectedHotel.city;
+            const bookedHotelId = selectedHotel._id;
+            const submitBtn = document.getElementById('bookNowBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            document.getElementById('bookingError').classList.remove('active');
+            document.getElementById('bookingSuccess').classList.remove('active');
+            try {
+                const response = await fetch(`${API_URL}/api/bookings`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        bookingType: 'hotel',
+                        itemName: `${bookedHotelName} - ${roomType.charAt(0).toUpperCase() + roomType.slice(1)} Room`,
+                        pricePerUnit: pricePerNight,
+                        quantity: numRooms,
+                        totalPrice: totalPrice,
+                        eventDate: checkInDate,
+                        itemDetails: {
+                            hotelId: bookedHotelId,
+                            hotelName: bookedHotelName,
+                            city: bookedHotelCity,
+                            checkIn: checkInDate,
+                            checkOut: checkOutDate,
+                            nights: nights,
+                            roomType: roomType,
+                            numRooms: numRooms,
+                            numGuests: numGuests,
+                            pricePerNight: pricePerNight
+                        }
+                    })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    const bookingRef = data.booking.bookingReference;
+                    showHotelBookingSuccess(`✅ Booking request confirmed! Reference: ${bookingRef}`);
+                    setTimeout(() => {
+                        alert(`Booking Request Confirmed\n\nReference: ${bookingRef}\nHotel: ${bookedHotelName}\nCity: ${bookedHotelCity}\nCheck-in: ${checkInDate}\nCheck-out: ${checkOutDate}\nNights: ${nights}\nRooms: ${numRooms}\nTotal: $${totalPrice}\n\nView your booking in My Account. Our team will be in touch to confirm the next steps.`);
+                        closeBookingModal();
+                        loadHotels();
+                    }, 2000);
+                } else {
+                    showHotelBookingError(data.message || 'Booking could not be completed. Please try again.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Confirm Booking Request';
+                }
+            } catch (error) {
+                console.error('Booking error:', error);
+                showHotelBookingError('Network error. Please check your connection and try again.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Confirm Booking Request';
+            }
+        });
+
+        document.getElementById('checkInDate').addEventListener('change', function() {
+            const checkIn = new Date(this.value);
+            checkIn.setDate(checkIn.getDate() + 1);
+            document.getElementById('checkOutDate').min = checkIn.toISOString().split('T')[0];
+            updateHotelBookingSummary();
+        });
+        document.getElementById('checkOutDate').addEventListener('change', updateHotelBookingSummary);
+        document.getElementById('roomType').addEventListener('change', updateHotelBookingSummary);
+        document.getElementById('numRooms').addEventListener('input', updateHotelBookingSummary);
+
+        document.addEventListener('DOMContentLoaded', function() { loadHotels(); });
+    </script>
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+</body>
+</html>

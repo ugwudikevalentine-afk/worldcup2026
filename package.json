@@ -1,0 +1,49 @@
+{
+  "name": "world-cup-booking",
+  "version": "1.0.0",
+  "description": "Full World Cup booking platform with tickets, travel, hotels, payments, support and automation.",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "seed": "node src/utils/seedData.js"
+  },
+  "keywords": [
+    "fifa",
+    "world-cup",
+    "2026",
+    "booking",
+    "tickets",
+    "travel",
+    "hotels"
+  ],
+  "author": "World Cup Booking Hub",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.15.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "coinbase-commerce-node": "^1.0.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.0",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^7.2.0",
+    "mongoose": "^7.6.0",
+    "node-cron": "^4.2.1",
+    "nodemailer": "^8.0.5",
+    "resend": "^6.10.0",
+    "stripe": "^22.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}

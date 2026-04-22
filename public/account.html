@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - World Cup 2026 Travel Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Account Page Styles */
+        .account-loading {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .account-loading i {
+            color: #ffd700;
+        }
+
+        .account-profile-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 2px solid #ffd700;
+            border-radius: 15px;
+            padding: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .account-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .account-avatar i {
+            font-size: 50px;
+            color: #1a1a2e;
+        }
+
+        .account-profile-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .account-profile-info h2 {
+            color: #ffd700;
+            margin: 0 0 15px 0;
+        }
+
+        .account-profile-info p {
+            color: #fff;
+            margin: 8px 0;
+        }
+
+        .account-profile-info i {
+            color: #ffd700;
+            width: 25px;
+        }
+
+        .account-profile-action {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-logout {
+            background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .btn-logout:hover {
+            transform: scale(1.05);
+        }
+
+        .account-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .account-summary-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 2px solid #ffd700;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .summary-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+
+        .summary-icon i {
+            font-size: 25px;
+            color: #1a1a2e;
+        }
+
+        .account-summary-card h3 {
+            color: #ffd700;
+            margin: 0 0 10px 0;
+        }
+
+        .summary-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #ffd700;
+            margin: 10px 0;
+        }
+
+        .account-summary-card p {
+            color: #ccc;
+            margin: 5px 0;
+        }
+
+        .account-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 2px solid #ffd700;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .account-section h2 {
+            color: #ffd700;
+            margin: 0 0 20px 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .booking-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .booking-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .booking-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .booking-info h4 {
+            color: #ffd700;
+            margin: 0 0 10px 0;
+        }
+
+        .booking-info p {
+            color: #ccc;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .booking-info .booking-ref {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .booking-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .status-confirmed {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+        }
+
+        .status-cancelled {
+            background-color: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+        }
+
+        .status-completed {
+            background-color: rgba(23, 162, 184, 0.2);
+            color: #17a2b8;
+        }
+
+        .booking-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-cancel {
+            background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: transform 0.3s;
+        }
+
+        .btn-cancel:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-cancel:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .no-bookings {
+            text-align: center;
+            padding: 40px;
+            color: #ccc;
+        }
+
+        .no-bookings i {
+            font-size: 50px;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .booking-type-badge {
+            display: inline-block;
+            background-color: #ffd700;
+            color: #000;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-right: 10px;
+        }
+
+        .booking-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .login-prompt {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 2px solid #ffd700;
+            border-radius: 15px;
+        }
+
+        .login-prompt i {
+            font-size: 60px;
+            color: #ffd700;
+            margin-bottom: 20px;
+        }
+
+        .login-prompt h2 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .login-prompt p {
+            color: #ccc;
+            margin-bottom: 25px;
+        }
+
+        .login-prompt-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .account-profile-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .booking-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .booking-actions {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-trophy trophy-icon"></i>
+                <span data-i18n="nav_brand">World Cup 2026 Travel</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+                <li><a href="index.html#matches" class="nav-link" data-i18n="nav_matches">Matches</a></li>
+                <li><a href="travel.html" class="nav-link" data-i18n="nav_travel">Travel</a></li>
+                <li><a href="hotel.html" class="nav-link" data-i18n="nav_hotel">Hotels</a></li>
+                <li><a href="ticket.html" class="nav-link" data-i18n="nav_ticket">Tickets</a></li>
+                <li><a href="extras.html" class="nav-link" data-i18n="nav_extras">Extras</a></li>
+                <li><a href="payments.html" class="nav-link" data-i18n="nav_payments">Payments</a></li>
+                <li><a href="support.html" class="nav-link" data-i18n="nav_support">Support</a></li>
+                <li><a href="faq.html" class="nav-link" data-i18n="nav_faq">FAQ</a></li>
+                <li><a href="account.html" class="nav-link" data-i18n="nav_account">My Account</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="login.html" class="btn-signin" data-i18n="nav_signin">Sign In</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="page-hero">
+        <div class="container">
+            <h1><i class="fas fa-user-circle"></i> <span data-i18n="account_hero_title">My Account</span></h1>
+            <p data-i18n="account_hero_subtitle">View and manage your bookings, travel plans, and account details</p>
+        </div>
+    </section>
+
+    <!-- ACCOUNT CONTENT -->
+    <section class="page-content">
+        <div class="container">
+
+            <!-- Loading State -->
+            <div id="accountLoading" class="account-loading">
+                <i class="fas fa-spinner fa-spin fa-3x"></i>
+                <p style="color: #fff; margin-top: 15px;" data-i18n="account_loading">Loading your account...</p>
+            </div>
+
+            <!-- Login Prompt (shown if not logged in) -->
+            <div id="loginPrompt" class="login-prompt" style="display: none;">
+                <i class="fas fa-user-lock"></i>
+                <h2 data-i18n="account_signin_title">Sign In to View Your Account</h2>
+                <p data-i18n="account_signin_desc">
+                    Create an account or sign in to access your bookings, track your travel plans,
+                    and manage your profile.
+                </p>
+                <div class="login-prompt-buttons">
+                    <a href="login.html" class="btn btn-gold">
+                        <i class="fas fa-sign-in-alt"></i> <span data-i18n="account_btn_signin">Sign In</span>
+                    </a>
+                    <a href="register.html" class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i> <span data-i18n="account_btn_register">Create Account</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Account Dashboard (shown if logged in) -->
+            <div id="accountDashboard" class="account-dashboard" style="display: none;">
+
+                <!-- ACCOUNT PROFILE -->
+                <div class="account-profile-card">
+                    <div class="account-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="account-profile-info" id="userProfileInfo">
+                        <h2 data-i18n="account_loading">Loading...</h2>
+                        <p><i class="fas fa-envelope"></i> <span data-i18n="account_loading">Loading...</span></p>
+                        <p><i class="fab fa-whatsapp"></i> <span data-i18n="account_loading">Loading...</span></p>
+                        <p><i class="fas fa-calendar"></i> <span data-i18n="account_member_since">Member since:</span> <span data-i18n="account_loading">Loading...</span></p>
+                    </div>
+                    <div class="account-profile-action">
+                        <button class="btn-logout" onclick="handleLogout()">
+                            <i class="fas fa-sign-out-alt"></i> <span data-i18n="account_btn_logout">Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ACCOUNT SUMMARY CARDS -->
+                <div class="account-summary-grid">
+                    <div class="account-summary-card">
+                        <div class="summary-icon"><i class="fas fa-ticket-alt"></i></div>
+                        <h3 data-i18n="account_summary_tickets">Tickets</h3>
+                        <p class="summary-number" id="ticketCount">0</p>
+                        <p data-i18n="account_summary_tickets_desc">Match ticket bookings</p>
+                    </div>
+                    <div class="account-summary-card">
+                        <div class="summary-icon"><i class="fas fa-hotel"></i></div>
+                        <h3 data-i18n="account_summary_hotels">Hotels</h3>
+                        <p class="summary-number" id="hotelCount">0</p>
+                        <p data-i18n="account_summary_hotels_desc">Hotel reservations</p>
+                    </div>
+                    <div class="account-summary-card">
+                        <div class="summary-icon"><i class="fas fa-plane"></i></div>
+                        <h3 data-i18n="account_summary_flights">Flights</h3>
+                        <p class="summary-number" id="flightCount">0</p>
+                        <p data-i18n="account_summary_flights_desc">Flight bookings</p>
+                    </div>
+                    <div class="account-summary-card">
+                        <div class="summary-icon"><i class="fas fa-gift"></i></div>
+                        <h3 data-i18n="account_summary_extras">Extras</h3>
+                        <p class="summary-number" id="extraCount">0</p>
+                        <p data-i18n="account_summary_extras_desc">Additional services</p>
+                    </div>
+                </div>
+
+                <!-- ALL BOOKINGS -->
+                <div class="account-section">
+                    <h2><i class="fas fa-list"></i> <span data-i18n="account_all_bookings">Your Bookings</span></h2>
+                    <div id="bookingsList" class="booking-list">
+                        <div class="no-bookings">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p data-i18n="account_loading_bookings">Loading bookings...</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE CHAT FLOATING BUTTON -->
+    <button class="live-chat-toggle" id="liveChatToggle" onclick="toggleLiveChat()">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <!-- LIVE CHAT BOX -->
+    <div class="live-chat-box" id="liveChatBox">
+        <div class="live-chat-header">
+            <div class="live-chat-title">
+                <i class="fas fa-headset"></i>
+                <span data-i18n="chat_title">Support Chat</span>
+            </div>
+            <button class="live-chat-close" onclick="toggleLiveChat()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="live-chat-body" id="liveChatBody">
+            <div class="chat-message bot-message">
+                <p data-i18n="chat_greeting">Hi there! How can we help you today? You can reach us through the options below or contact us directly.</p>
+                <p class="chat-contact-info">
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_whatsapp_label">WhatsApp:</span> <a href="https://wa.me/16154145082" target="_blank">+1 (615) 414-5082</a><br>
+                    <i class="fas fa-envelope"></i> <span data-i18n="chat_email_label">Email:</span> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a>
+                </p>
+            </div>
+            <div class="chat-options">
+                <button onclick="sendQuickChat('tickets')" data-i18n="chat_btn_tickets">Tickets</button>
+                <button onclick="sendQuickChat('travel')" data-i18n="chat_btn_travel">Travel</button>
+                <button onclick="sendQuickChat('hotels')" data-i18n="chat_btn_hotels">Hotels</button>
+                <button onclick="sendQuickChat('payments')" data-i18n="chat_btn_payments">Payments</button>
+                <button onclick="window.open('https://wa.me/16154145082', '_blank')">
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_btn_whatsapp">Chat on WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 data-i18n="footer_about">Company</h4>
+                    <ul>
+                        <li><a href="about.html" data-i18n="footer_about_link">About</a></li>
+                        <li><a href="blog.html" data-i18n="footer_blog">Blog</a></li>
+                        <li><a href="careers.html" data-i18n="footer_careers">Work With Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_support">Help</h4>
+                    <ul>
+                        <li><a href="faq.html" data-i18n="footer_faq">FAQ</a></li>
+                        <li><a href="support.html" data-i18n="footer_contact_us">Contact Us</a></li>
+                        <li><a href="#" onclick="toggleLiveChat(); return false;" data-i18n="footer_live_chat">Live Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_legal">Legal</h4>
+                    <ul>
+                        <li><a href="terms.html" data-i18n="footer_terms">Terms & Conditions</a></li>
+                        <li><a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
+                        <li><a href="cookies.html" data-i18n="footer_cookies">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_contact">Get in Touch</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a></p>
+                        <div class="social-links">
+                            <a href="https://wa.me/16154145082" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">© 2026 World Cup Travel Platform. Independent booking assistance service.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // ===================================
+        // ACCOUNT PAGE JAVASCRIPT
+        // ===================================
+
+        async function initAccountPage() {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+
+            const loadingEl = document.getElementById('accountLoading');
+            const loginPrompt = document.getElementById('loginPrompt');
+            const dashboard = document.getElementById('accountDashboard');
+
+            loadingEl.style.display = 'none';
+
+            if (!token || !user) {
+                loginPrompt.style.display = 'block';
+                dashboard.style.display = 'none';
+                return;
+            }
+
+            loginPrompt.style.display = 'none';
+            dashboard.style.display = 'block';
+
+            loadUserProfile();
+            await loadUserBookings();
+        }
+
+        function loadUserProfile() {
+            const user = JSON.parse(localStorage.getItem('user'));
+
+            if (user) {
+                const memberDate = new Date(user.createdAt || Date.now()).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                document.getElementById('userProfileInfo').innerHTML = `
+                    <h2>${user.name || 'User'}</h2>
+                    <p><i class="fas fa-envelope"></i> ${user.email || 'Not provided'}</p>
+                    <p><i class="fab fa-whatsapp"></i> ${user.whatsapp || 'Not provided'}</p>
+                    <p><i class="fas fa-calendar"></i> Member since: ${memberDate}</p>
+                    <p><i class="fas fa-shield-alt"></i> Status: <span style="color: #00ff00;">Active</span></p>
+                `;
+            }
+        }
+
+        async function loadUserBookings() {
+            const token = localStorage.getItem('token');
+            const bookingsList = document.getElementById('bookingsList');
+
+            try {
+                const response = await fetch(`${API_URL}/api/bookings`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayBookings(data.bookings);
+                    updateBookingCounts(data.bookings);
+                } else {
+                    bookingsList.innerHTML = `
+                        <div class="no-bookings">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>Unable to load bookings at this time. Please try again.</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading bookings:', error);
+                bookingsList.innerHTML = `
+                    <div class="no-bookings">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Network error. Please check your connection and try again.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function updateBookingCounts(bookings) {
+            const counts = { ticket: 0, hotel: 0, flight: 0, extra: 0 };
+
+            bookings.forEach(booking => {
+                if (booking.status !== 'cancelled') {
+                    if (booking.bookingType === 'ticket') counts.ticket++;
+                    else if (booking.bookingType === 'hotel') counts.hotel++;
+                    else if (booking.bookingType === 'flight') counts.flight++;
+                    else if (booking.bookingType === 'extra') counts.extra++;
+                }
+            });
+
+            document.getElementById('ticketCount').textContent = counts.ticket;
+            document.getElementById('hotelCount').textContent = counts.hotel;
+            document.getElementById('flightCount').textContent = counts.flight;
+            document.getElementById('extraCount').textContent = counts.extra;
+        }
+
+        function getBookingIcon(type) {
+            switch (type) {
+                case 'ticket': return 'fa-ticket-alt';
+                case 'hotel': return 'fa-hotel';
+                case 'flight': return 'fa-plane';
+                case 'extra': return 'fa-gift';
+                default: return 'fa-receipt';
+            }
+        }
+
+        function formatBookingType(type) {
+            switch (type) {
+                case 'ticket': return 'Ticket';
+                case 'hotel': return 'Hotel';
+                case 'flight': return 'Flight';
+                case 'extra': return 'Extra';
+                default: return 'Booking';
+            }
+        }
+
+        function formatBookingDate(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function displayBookings(bookings) {
+            const bookingsList = document.getElementById('bookingsList');
+            const activeBookings = bookings.filter(booking => booking.status !== 'cancelled');
+
+            if (activeBookings.length === 0) {
+                bookingsList.innerHTML = `
+                    <div class="no-bookings">
+                        <i class="fas fa-calendar-times"></i>
+                        <h3>No Bookings on Record</h3>
+                        <p>You have not made any bookings yet. Start by exploring available tickets, flights, or hotels.</p>
+                        <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <a href="ticket.html" class="btn btn-gold"><i class="fas fa-ticket-alt"></i> Browse Tickets</a>
+                            <a href="hotel.html" class="btn btn-primary"><i class="fas fa-hotel"></i> Browse Hotels</a>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            bookingsList.innerHTML = activeBookings.map(booking => {
+                const icon = getBookingIcon(booking.bookingType);
+                const typeName = formatBookingType(booking.bookingType);
+                const statusClass = `status-${booking.status}`;
+                const canCancel = booking.status === 'pending' || booking.status === 'confirmed';
+
+                let details = '';
+                if (booking.bookingType === 'ticket' && booking.match) {
+                    details = `
+                        <p><i class="fas fa-futbol"></i> ${booking.match.team1} vs ${booking.match.team2}</p>
+                        <p><i class="fas fa-map-marker-alt"></i> ${booking.match.stadium}, ${booking.match.city}</p>
+                        <p><i class="fas fa-calendar"></i> ${formatBookingDate(booking.match.date)} at ${booking.match.time}</p>
+                    `;
+                } else if (booking.itemDetails) {
+                    const d = booking.itemDetails;
+                    if (booking.bookingType === 'hotel') {
+                        details = `
+                            <p><i class="fas fa-map-marker-alt"></i> ${d.city || 'N/A'}</p>
+                            <p><i class="fas fa-calendar-check"></i> Check-in: ${d.checkIn || 'N/A'}</p>
+                            <p><i class="fas fa-calendar-times"></i> Check-out: ${d.checkOut || 'N/A'}</p>
+                            <p><i class="fas fa-bed"></i> ${d.numRooms || 1} room(s), ${d.nights || 1} night(s)</p>
+                        `;
+                    } else if (booking.bookingType === 'flight') {
+                        details = `
+                            <p><i class="fas fa-plane-departure"></i> ${d.departure || 'N/A'} → ${d.arrival || 'N/A'}</p>
+                            <p><i class="fas fa-building"></i> ${d.airline || 'N/A'}</p>
+                            <p><i class="fas fa-calendar"></i> ${formatBookingDate(d.date)} at ${d.time || 'N/A'}</p>
+                            <p><i class="fas fa-users"></i> ${d.numPassengers || 1} passenger(s)</p>
+                        `;
+                    } else if (booking.bookingType === 'extra') {
+                        details = `
+                            <p><i class="fas fa-info-circle"></i> ${d.description || 'N/A'}</p>
+                            <p><i class="fas fa-calendar"></i> ${formatBookingDate(d.date)}</p>
+                            <p><i class="fas fa-sort-numeric-up"></i> Quantity: ${d.quantity || 1}</p>
+                        `;
+                    }
+                }
+
+                return `
+                    <div class="booking-item" id="booking-${booking._id}">
+                        <div class="booking-info">
+                            <h4>
+                                <span class="booking-type-badge">${typeName}</span>
+                                ${booking.itemName}
+                            </h4>
+                            <p class="booking-ref"><i class="fas fa-hashtag"></i> Reference: ${booking.bookingReference}</p>
+                            ${details}
+                            <p><i class="fas fa-clock"></i> Booked: ${formatBookingDate(booking.createdAt)}</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <span class="booking-status ${statusClass}">${booking.status}</span>
+                            <p class="booking-price">$${booking.totalPrice}</p>
+                            <div class="booking-actions" style="margin-top: 10px;">
+                                ${canCancel ? `
+                                    <button class="btn-cancel" onclick="cancelBooking('${booking._id}')">
+                                        <i class="fas fa-times"></i> Cancel
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function cancelBooking(bookingId) {
+            if (!confirm('Are you sure you want to cancel this booking?')) return;
+
+            const token = localStorage.getItem('token');
+            const bookingEl = document.getElementById(`booking-${bookingId}`);
+            const cancelBtn = bookingEl.querySelector('.btn-cancel');
+
+            if (cancelBtn) {
+                cancelBtn.disabled = true;
+                cancelBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/api/bookings/${bookingId}/cancel`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('Your booking has been cancelled successfully.');
+                    await loadUserBookings();
+                } else {
+                    alert(data.message || 'Unable to cancel booking. Please try again or contact support.');
+                    if (cancelBtn) {
+                        cancelBtn.disabled = false;
+                        cancelBtn.innerHTML = '<i class="fas fa-times"></i> Cancel';
+                    }
+                }
+            } catch (error) {
+                console.error('Cancel error:', error);
+                alert('Network error. Please try again.');
+                if (cancelBtn) {
+                    cancelBtn.disabled = false;
+                    cancelBtn.innerHTML = '<i class="fas fa-times"></i> Cancel';
+                }
+            }
+        }
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to sign out?')) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = 'login.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initAccountPage();
+        });
+    </script>
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+</body>
+</html>

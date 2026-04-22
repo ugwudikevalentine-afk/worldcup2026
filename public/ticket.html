@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Tickets - World Cup 2026 Travel Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .booking-modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); overflow-y: auto; }
+        .booking-modal.active { display: flex; align-items: center; justify-content: center; }
+        .booking-modal-content { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 30px; border-radius: 15px; max-width: 600px; width: 90%; margin: 20px; box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5); border: 2px solid #ffd700; }
+        .booking-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #ffd700; }
+        .booking-modal-header h2 { color: #ffd700; margin: 0; }
+        .close-modal { background: none; border: none; color: #fff; font-size: 30px; cursor: pointer; transition: color 0.3s; }
+        .close-modal:hover { color: #ffd700; }
+        .booking-form-group { margin-bottom: 20px; }
+        .booking-form-group label { display: block; color: #ffd700; margin-bottom: 8px; font-weight: bold; }
+        .booking-form-group select, .booking-form-group input { width: 100%; padding: 12px; border: 2px solid #ffd700; border-radius: 8px; background-color: rgba(255, 255, 255, 0.1); color: #fff; font-size: 16px; }
+        .booking-form-group select option { background-color: #1a1a2e; color: #fff; }
+        .booking-summary { background-color: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #ffd700; }
+        .booking-summary h3 { color: #ffd700; margin-top: 0; }
+        .booking-summary p { color: #fff; margin: 8px 0; }
+        .total-price { font-size: 24px; font-weight: bold; color: #ffd700; }
+        .btn-book-now { width: 100%; padding: 15px; background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%); border: none; border-radius: 8px; color: #000; font-size: 18px; font-weight: bold; cursor: pointer; transition: transform 0.3s; }
+        .btn-book-now:hover { transform: scale(1.05); }
+        .btn-book-now:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .loading-spinner { display: none; text-align: center; padding: 40px; }
+        .loading-spinner.active { display: block; }
+        .booking-error { color: #ff4444; background-color: rgba(255, 68, 68, 0.1); padding: 10px; border-radius: 5px; margin: 10px 0; display: none; }
+        .booking-error.active { display: block; }
+        .booking-success { color: #00ff00; background-color: rgba(0, 255, 0, 0.1); padding: 10px; border-radius: 5px; margin: 10px 0; display: none; }
+        .booking-success.active { display: block; }
+        .no-matches { text-align: center; padding: 40px; color: #fff; }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-trophy trophy-icon"></i>
+                <span data-i18n="nav_brand">World Cup 2026 Travel</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+                <li><a href="index.html#matches" class="nav-link" data-i18n="nav_matches">Matches</a></li>
+                <li><a href="travel.html" class="nav-link" data-i18n="nav_travel">Travel</a></li>
+                <li><a href="hotel.html" class="nav-link" data-i18n="nav_hotel">Hotels</a></li>
+                <li><a href="ticket.html" class="nav-link" data-i18n="nav_ticket">Tickets</a></li>
+                <li><a href="extras.html" class="nav-link" data-i18n="nav_extras">Extras</a></li>
+                <li><a href="payments.html" class="nav-link" data-i18n="nav_payments">Payments</a></li>
+                <li><a href="support.html" class="nav-link" data-i18n="nav_support">Support</a></li>
+                <li><a href="faq.html" class="nav-link" data-i18n="nav_faq">FAQ</a></li>
+                <li><a href="account.html" class="nav-link" data-i18n="nav_account">My Account</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="login.html" class="btn-signin" data-i18n="nav_signin">Sign In</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="container">
+            <h1><i class="fas fa-ticket-alt"></i> <span data-i18n="ticket_hero_title">Match Ticket Options</span></h1>
+            <p data-i18n="ticket_hero_subtitle">Browse available seating for World Cup 2026 matches</p>
+        </div>
+    </section>
+
+    <section class="page-content">
+        <div class="container">
+
+            <!-- Loading State -->
+            <div id="matchesLoading" class="loading-spinner active">
+                <i class="fas fa-spinner fa-spin fa-3x" style="color: #ffd700;"></i>
+                <p style="color: #fff; margin-top: 10px;" data-i18n="ticket_loading">Loading available matches...</p>
+            </div>
+
+            <!-- Matches Container -->
+            <div class="content-grid" id="matchesContainer"></div>
+
+        </div>
+    </section>
+
+    <!-- BOOKING MODAL -->
+    <div class="booking-modal" id="bookingModal">
+        <div class="booking-modal-content">
+            <div class="booking-modal-header">
+                <h2><i class="fas fa-ticket-alt"></i> <span data-i18n="ticket_modal_title">Select Your Tickets</span></h2>
+                <button class="close-modal" onclick="closeBookingModal()">&times;</button>
+            </div>
+
+            <div id="modalMatchInfo"></div>
+
+            <form id="ticketBookingForm">
+                <div class="booking-form-group">
+                    <label for="ticketType">
+                        <i class="fas fa-tag"></i> <span data-i18n="ticket_form_category">Ticket Category</span>
+                    </label>
+                    <select id="ticketType" required>
+                        <option value="" data-i18n="ticket_select_category">Select Category</option>
+                        <option value="vip">VIP</option>
+                        <option value="premium">Premium</option>
+                        <option value="regular" data-i18n="ticket_regular">Standard</option>
+                    </select>
+                </div>
+
+                <div class="booking-form-group">
+                    <label for="ticketQuantity">
+                        <i class="fas fa-sort-numeric-up"></i> <span data-i18n="ticket_form_quantity">Number of Tickets</span>
+                    </label>
+                    <input type="number" id="ticketQuantity" min="1" max="10" value="1" required>
+                </div>
+
+                <div class="booking-summary">
+                    <h3><i class="fas fa-receipt"></i> <span data-i18n="ticket_summary_title">Booking Summary</span></h3>
+                    <p><strong data-i18n="ticket_summary_match">Match:</strong> <span id="summaryMatch">-</span></p>
+                    <p><strong data-i18n="ticket_summary_category">Category:</strong> <span id="summaryCategory">-</span></p>
+                    <p><strong data-i18n="ticket_summary_quantity">Quantity:</strong> <span id="summaryQuantity">-</span></p>
+                    <p><strong data-i18n="ticket_summary_price">Price per ticket:</strong> $<span id="summaryPricePerTicket">0</span></p>
+                    <hr style="border-color: #ffd700; margin: 10px 0;">
+                    <p class="total-price">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span data-i18n="ticket_summary_total">Total:</span> $<span id="summaryTotal">0</span>
+                    </p>
+                </div>
+
+                <p style="color: #ccc; font-size: 0.85rem; margin-bottom: 15px;">
+                    <i class="fas fa-info-circle" style="color: #ffd700;"></i>
+                    By confirming this booking request you agree to our
+                    <a href="terms.html" style="color: #ffd700;">Terms & Conditions</a>.
+                    Ticket availability is subject to change.
+                </p>
+
+                <div class="booking-error" id="bookingError"></div>
+                <div class="booking-success" id="bookingSuccess"></div>
+
+                <button type="submit" class="btn-book-now" id="bookNowBtn">
+                    <i class="fas fa-shopping-cart"></i> <span data-i18n="ticket_btn_confirm">Confirm Booking Request</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- LIVE CHAT FLOATING BUTTON -->
+    <button class="live-chat-toggle" id="liveChatToggle" onclick="toggleLiveChat()">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <!-- LIVE CHAT BOX -->
+    <div class="live-chat-box" id="liveChatBox">
+        <div class="live-chat-header">
+            <div class="live-chat-title">
+                <i class="fas fa-headset"></i>
+                <span data-i18n="chat_title">Support Chat</span>
+            </div>
+            <button class="live-chat-close" onclick="toggleLiveChat()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="live-chat-body" id="liveChatBody">
+            <div class="chat-message bot-message">
+                <p data-i18n="chat_greeting">Hi there! How can we help you today? You can reach us through the options below or contact us directly.</p>
+                <p class="chat-contact-info">
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_whatsapp_label">WhatsApp:</span> <a href="https://wa.me/16154145082" target="_blank">+1 (615) 414-5082</a><br>
+                    <i class="fas fa-envelope"></i> <span data-i18n="chat_email_label">Email:</span> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a>
+                </p>
+            </div>
+            <div class="chat-options">
+                <button onclick="sendQuickChat('tickets')" data-i18n="chat_btn_tickets">Tickets</button>
+                <button onclick="sendQuickChat('travel')" data-i18n="chat_btn_travel">Travel</button>
+                <button onclick="sendQuickChat('hotels')" data-i18n="chat_btn_hotels">Hotels</button>
+                <button onclick="sendQuickChat('payments')" data-i18n="chat_btn_payments">Payments</button>
+                <button onclick="window.open('https://wa.me/16154145082', '_blank')">
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_btn_whatsapp">Chat on WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 data-i18n="footer_about">Company</h4>
+                    <ul>
+                        <li><a href="about.html" data-i18n="footer_about_link">About</a></li>
+                        <li><a href="blog.html" data-i18n="footer_blog">Blog</a></li>
+                        <li><a href="careers.html" data-i18n="footer_careers">Work With Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_support">Help</h4>
+                    <ul>
+                        <li><a href="faq.html" data-i18n="footer_faq">FAQ</a></li>
+                        <li><a href="support.html" data-i18n="footer_contact_us">Contact Us</a></li>
+                        <li><a href="#" onclick="toggleLiveChat(); return false;" data-i18n="footer_live_chat">Live Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_legal">Legal</h4>
+                    <ul>
+                        <li><a href="terms.html" data-i18n="footer_terms">Terms & Conditions</a></li>
+                        <li><a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
+                        <li><a href="cookies.html" data-i18n="footer_cookies">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_contact">Get in Touch</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a></p>
+                        <div class="social-links">
+                            <a href="https://wa.me/16154145082" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">© 2026 World Cup Travel Platform. Independent booking assistance service.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        let selectedMatch = null;
+
+        async function loadTicketMatches() {
+            const loadingEl = document.getElementById('matchesLoading');
+            const containerEl = document.getElementById('matchesContainer');
+            try {
+                const response = await fetch(`${API_URL}/api/matches`);
+                const data = await response.json();
+                loadingEl.classList.remove('active');
+                if (data.success && data.matches.length > 0) {
+                    displayTicketMatches(data.matches);
+                } else {
+                    containerEl.innerHTML = `
+                        <div class="no-matches">
+                            <i class="fas fa-calendar-times" style="font-size: 3rem; color: #ffd700; margin-bottom: 15px;"></i>
+                            <p>No matches are currently listed. Please check back later.</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading matches:', error);
+                loadingEl.classList.remove('active');
+                containerEl.innerHTML = `
+                    <div class="no-matches">
+                        <p style="color: #ff4444;">Unable to load match listings. Please refresh the page and try again.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayTicketMatches(matches) {
+            const container = document.getElementById('matchesContainer');
+            container.innerHTML = matches.map(match => `
+                <div class="content-card">
+                    <h3>${match.team1} vs ${match.team2}</h3>
+                    <p><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> ${formatMatchDate(match.date)}</p>
+                    <p><i class="fas fa-clock"></i> <strong>Time:</strong> ${match.time} UTC</p>
+                    <p><i class="fas fa-map-marker-alt"></i> <strong>Venue:</strong> ${match.stadium}, ${match.city}</p>
+                    <p>
+                        <i class="fas fa-tag"></i>
+                        <strong>From:</strong>
+                        <span style="color: #ffd700; font-weight: bold;">$${match.ticket_prices.regular}</span>
+                        <span style="color: #ccc; font-size: 0.85rem;"> (Standard) &nbsp;|&nbsp; </span>
+                        <span style="color: #ffd700; font-weight: bold;">$${match.ticket_prices.premium}</span>
+                        <span style="color: #ccc; font-size: 0.85rem;"> (Premium) &nbsp;|&nbsp; </span>
+                        <span style="color: #ffd700; font-weight: bold;">$${match.ticket_prices.vip}</span>
+                        <span style="color: #ccc; font-size: 0.85rem;"> (VIP)</span>
+                    </p>
+                    <p style="color: ${match.tickets_available > 100 ? '#28a745' : '#ffc107'};">
+                        <i class="fas fa-info-circle"></i>
+                        ${match.tickets_available} listing(s) currently available
+                    </p>
+                    <button class="btn btn-gold" onclick="openBookingModal('${match._id}')">
+                        <i class="fas fa-search"></i> View Booking Options
+                    </button>
+                </div>
+            `).join('');
+            window.matchesData = matches;
+        }
+
+        function formatMatchDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function openBookingModal(matchId) {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please sign in to your account to proceed with a booking.');
+                window.location.href = 'login.html';
+                return;
+            }
+            const match = window.matchesData.find(m => m._id === matchId);
+            if (!match) {
+                alert('Match details could not be loaded. Please refresh the page.');
+                return;
+            }
+            selectedMatch = match;
+            document.getElementById('modalMatchInfo').innerHTML = `
+                <div style="background-color: rgba(255, 215, 0, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h3 style="color: #ffd700; margin: 0 0 10px 0;">${match.team1} vs ${match.team2}</h3>
+                    <p style="color: #fff; margin: 5px 0;"><i class="fas fa-calendar"></i> ${formatMatchDate(match.date)} at ${match.time} UTC</p>
+                    <p style="color: #fff; margin: 5px 0;"><i class="fas fa-map-marker-alt"></i> ${match.stadium}, ${match.city}</p>
+                    <p style="color: #ccc; margin: 5px 0; font-size: 0.85rem;">
+                        <i class="fas fa-ticket-alt"></i> ${match.tickets_available} listing(s) available
+                    </p>
+                </div>
+            `;
+            document.getElementById('summaryMatch').textContent = `${match.team1} vs ${match.team2}`;
+            document.getElementById('bookingModal').classList.add('active');
+            document.getElementById('ticketBookingForm').reset();
+            document.getElementById('bookingError').classList.remove('active');
+            document.getElementById('bookingSuccess').classList.remove('active');
+            updateBookingSummary();
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.remove('active');
+            document.getElementById('bookingError').classList.remove('active');
+            document.getElementById('bookingSuccess').classList.remove('active');
+            selectedMatch = null;
+        }
+
+        document.getElementById('bookingModal').addEventListener('click', function(e) {
+            if (e.target === this) closeBookingModal();
+        });
+
+        function updateBookingSummary() {
+            const ticketType = document.getElementById('ticketType').value;
+            const quantity = parseInt(document.getElementById('ticketQuantity').value) || 1;
+            if (ticketType && selectedMatch) {
+                const pricePerTicket = selectedMatch.ticket_prices[ticketType];
+                const total = pricePerTicket * quantity;
+                document.getElementById('summaryCategory').textContent = ticketType.toUpperCase();
+                document.getElementById('summaryQuantity').textContent = quantity;
+                document.getElementById('summaryPricePerTicket').textContent = pricePerTicket;
+                document.getElementById('summaryTotal').textContent = total;
+            } else {
+                document.getElementById('summaryCategory').textContent = '-';
+                document.getElementById('summaryQuantity').textContent = quantity || '-';
+                document.getElementById('summaryPricePerTicket').textContent = '0';
+                document.getElementById('summaryTotal').textContent = '0';
+            }
+        }
+
+        function showBookingError(message) {
+            const errorEl = document.getElementById('bookingError');
+            errorEl.textContent = message;
+            errorEl.classList.add('active');
+            setTimeout(() => { errorEl.classList.remove('active'); }, 5000);
+        }
+
+        function showBookingSuccess(message) {
+            const successEl = document.getElementById('bookingSuccess');
+            successEl.textContent = message;
+            successEl.classList.add('active');
+        }
+
+        document.getElementById('ticketBookingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const ticketType = document.getElementById('ticketType').value;
+            const quantity = parseInt(document.getElementById('ticketQuantity').value);
+            const token = localStorage.getItem('token');
+            if (!selectedMatch) { showBookingError('No match selected.'); return; }
+            if (!ticketType) { showBookingError('Please select a ticket category.'); return; }
+            if (!quantity || quantity < 1) { showBookingError('Please enter a valid quantity.'); return; }
+            if (quantity > selectedMatch.tickets_available) {
+                showBookingError(`Only ${selectedMatch.tickets_available} listing(s) available for this match.`);
+                return;
+            }
+            const pricePerUnit = selectedMatch.ticket_prices[ticketType];
+            const submitBtn = document.getElementById('bookNowBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            document.getElementById('bookingError').classList.remove('active');
+            document.getElementById('bookingSuccess').classList.remove('active');
+            try {
+                const response = await fetch(`${API_URL}/api/bookings`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        bookingType: 'ticket',
+                        match: selectedMatch._id,
+                        ticketType: ticketType,
+                        quantity: quantity,
+                        itemName: `${selectedMatch.team1} vs ${selectedMatch.team2} - ${ticketType.toUpperCase()} Ticket`,
+                        pricePerUnit: pricePerUnit,
+                        eventDate: selectedMatch.date
+                    })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    showBookingSuccess(`✅ Booking request confirmed! Reference: ${data.booking.bookingReference}`);
+                    setTimeout(() => {
+                        closeBookingModal();
+                        loadTicketMatches();
+                        alert(`Booking Request Confirmed\n\nReference: ${data.booking.bookingReference}\nTotal: $${data.booking.totalPrice}\n\nYou can view this booking in your account. Our team will be in touch to confirm the next steps.`);
+                    }, 2000);
+                } else {
+                    showBookingError(data.message || 'Booking could not be completed. Please try again.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> Confirm Booking Request';
+                }
+            } catch (error) {
+                showBookingError('Network error. Please check your connection and try again.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> Confirm Booking Request';
+            }
+        });
+
+        document.getElementById('ticketType').addEventListener('change', updateBookingSummary);
+        document.getElementById('ticketQuantity').addEventListener('input', updateBookingSummary);
+        document.addEventListener('DOMContentLoaded', function() { loadTicketMatches(); });
+    </script>
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+</body>
+</html>

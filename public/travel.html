@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flights & Travel - World Cup 2026 Travel Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .booking-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            overflow-y: auto;
+        }
+
+        .booking-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .booking-modal-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            margin: 20px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--gold);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .booking-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .booking-modal-header h2 {
+            color: var(--gold);
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--gold);
+        }
+
+        .booking-form-group {
+            margin-bottom: 20px;
+        }
+
+        .booking-form-group label {
+            display: block;
+            color: var(--gold);
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .booking-form-group select,
+        .booking-form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .booking-form-group select option {
+            background-color: #1a1a2e;
+            color: #fff;
+        }
+
+        .booking-summary {
+            background-color: rgba(255, 215, 0, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--gold);
+        }
+
+        .booking-summary h3 {
+            color: var(--gold);
+            margin-top: 0;
+        }
+
+        .booking-summary p {
+            color: #fff;
+            margin: 8px 0;
+        }
+
+        .total-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--gold);
+        }
+
+        .btn-book-now {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .btn-book-now:hover { transform: scale(1.05); }
+        .btn-book-now:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .booking-error {
+            color: #ff4444;
+            background-color: rgba(255, 68, 68, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: none;
+        }
+        .booking-error.active { display: block; }
+
+        .booking-success {
+            color: #00ff00;
+            background-color: rgba(0, 255, 0, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: none;
+        }
+        .booking-success.active { display: block; }
+
+        .flight-search-box {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 35px;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(30, 58, 138, 0.08);
+        }
+
+        .flight-search-box h2 {
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        .flight-search-box h2 i {
+            color: var(--gold);
+            margin-right: 10px;
+        }
+
+        .flight-search-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .flight-search-grid .form-group {
+            margin-bottom: 0;
+        }
+
+        .btn-search-flights {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            height: 47px;
+        }
+
+        .btn-search-flights:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-clear-search {
+            padding: 12px 20px;
+            background: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            height: 47px;
+            margin-left: 10px;
+        }
+
+        .btn-clear-search:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .flights-section-header {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: var(--white);
+            padding: 18px 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .flights-section-header h2 {
+            margin: 0;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--white);
+        }
+
+        .flights-section-header h2 i {
+            color: var(--gold);
+        }
+
+        .flights-section-header .flight-count {
+            background: var(--gold);
+            color: var(--primary-blue);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .other-section-header {
+            background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+        }
+
+        .other-section-header .flight-count {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
+        }
+
+        .country-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold) 0%, #f59e0b 100%);
+            color: var(--primary-blue);
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .login-prompt {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
+            color: var(--white);
+            padding: 20px 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .login-prompt p {
+            margin: 0 0 15px;
+            font-size: 1rem;
+        }
+
+        .login-prompt a {
+            background: var(--gold);
+            color: var(--primary-blue);
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .login-prompt a:hover {
+            transform: translateY(-2px);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 50px 20px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .no-results i {
+            font-size: 3.5rem;
+            color: var(--light-gray);
+            margin-bottom: 15px;
+        }
+
+        .no-results h3 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .no-results p {
+            color: var(--text-dark);
+        }
+        @media (max-width: 768px) {
+            .flight-search-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-search-flights,
+            .btn-clear-search {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .flights-section-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .flights-section-header h2 {
+                justify-content: center;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .booking-modal-content {
+                padding: 20px 15px;
+            }
+
+            .btn-book-now {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            .total-price {
+                font-size: 20px;
+            }
+
+            .flight-search-box {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-trophy trophy-icon"></i>
+                <span data-i18n="nav_brand">World Cup 2026 Travel</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+                <li><a href="index.html#matches" class="nav-link" data-i18n="nav_matches">Matches</a></li>
+                <li><a href="travel.html" class="nav-link" data-i18n="nav_travel">Travel</a></li>
+                <li><a href="hotel.html" class="nav-link" data-i18n="nav_hotel">Hotels</a></li>
+                <li><a href="ticket.html" class="nav-link" data-i18n="nav_ticket">Tickets</a></li>
+                <li><a href="extras.html" class="nav-link" data-i18n="nav_extras">Extras</a></li>
+                <li><a href="payments.html" class="nav-link" data-i18n="nav_payments">Payments</a></li>
+                <li><a href="support.html" class="nav-link" data-i18n="nav_support">Support</a></li>
+                <li><a href="faq.html" class="nav-link" data-i18n="nav_faq">FAQ</a></li>
+                <li><a href="account.html" class="nav-link" data-i18n="nav_account">My Account</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="login.html" class="btn-signin" data-i18n="nav_signin">Sign In</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="container">
+            <h1><i class="fas fa-plane"></i> <span data-i18n="travel_hero_title">Flights & Travel</span></h1>
+            <p data-i18n="travel_hero_subtitle">Search available flights to World Cup host cities</p>
+        </div>
+    </section>
+
+    <!-- PAGE CONTENT -->
+    <section class="page-content">
+        <div class="container">
+
+
+            <!-- FLIGHT SEARCH BOX -->
+            <div class="flight-search-box">
+                <h2><i class="fas fa-search"></i> <span data-i18n="travel_search_title">Search Flights</span></h2>
+                <div class="flight-search-grid">
+                    <div class="form-group">
+                        <label for="departureCity">
+                            <i class="fas fa-plane-departure"></i> <span data-i18n="travel_departure">Departure City</span>
+                        </label>
+                        <select id="departureCity">
+                            <option value="" data-i18n="travel_all_departures">All Departure Cities</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="arrivalCity">
+                            <i class="fas fa-plane-arrival"></i> <span data-i18n="travel_arrival">Arrival City</span>
+                        </label>
+                        <select id="arrivalCity">
+                            <option value="" data-i18n="travel_all_arrivals">All Arrival Cities</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; align-items: flex-end; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn-search-flights" onclick="searchFlights()">
+                            <i class="fas fa-search"></i> <span data-i18n="travel_btn_search">Search</span>
+                        </button>
+                        <button class="btn-clear-search" onclick="clearSearch()">
+                            <i class="fas fa-times"></i> <span data-i18n="travel_btn_clear">Clear</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="flightsLoading" style="display: none; text-align: center; padding: 40px;">
+                <i class="fas fa-spinner fa-spin fa-3x" style="color: var(--gold);"></i>
+                <p style="margin-top: 15px; color: var(--text-dark); font-weight: 600;" data-i18n="travel_loading">Loading available flights...</p>
+            </div>
+
+            <!-- Flights Container -->
+            <div id="flightsContainer"></div>
+
+        </div>
+    </section>
+
+    <!-- FLIGHT BOOKING MODAL -->
+    <div class="booking-modal" id="bookingModal">
+        <div class="booking-modal-content">
+            <div class="booking-modal-header">
+                <h2><i class="fas fa-plane"></i> <span data-i18n="travel_modal_title">Book This Flight</span></h2>
+                <button class="close-modal" onclick="closeBookingModal()">&times;</button>
+            </div>
+
+            <div id="modalFlightInfo"></div>
+
+            <form id="flightBookingForm">
+                <div class="booking-form-group">
+                    <label for="travelClass">
+                        <i class="fas fa-chair"></i> <span data-i18n="travel_class">Travel Class</span>
+                    </label>
+                    <select id="travelClass" required>
+                        <option value="" data-i18n="travel_select_class">Select Class</option>
+                        <option value="economy" data-i18n="travel_economy">Economy</option>
+                        <option value="business" data-i18n="travel_business">Business Class (+$200)</option>
+                        <option value="first" data-i18n="travel_first">First Class (+$500)</option>
+                    </select>
+                </div>
+
+                <div class="booking-form-group">
+                    <label for="numPassengers">
+                        <i class="fas fa-users"></i> <span data-i18n="travel_passengers">Number of Passengers</span>
+                    </label>
+                    <input type="number" id="numPassengers" min="1" max="9" value="1" required>
+                </div>
+
+                <div class="booking-form-group">
+                    <label for="luggageOption">
+                        <i class="fas fa-suitcase"></i> <span data-i18n="travel_luggage">Luggage Option</span>
+                    </label>
+                    <select id="luggageOption" required>
+                        <option value="" data-i18n="travel_select_luggage">Select Luggage</option>
+                        <option value="carry-on" data-i18n="travel_carryon">Carry-on Only (Included)</option>
+                        <option value="checked-1" data-i18n="travel_checked1">1 Checked Bag (+$35)</option>
+                        <option value="checked-2" data-i18n="travel_checked2">2 Checked Bags (+$60)</option>
+                    </select>
+                </div>
+
+                <div class="booking-summary">
+                    <h3><i class="fas fa-receipt"></i> <span data-i18n="travel_summary_title">Booking Summary</span></h3>
+                    <p><strong data-i18n="travel_summary_flight">Route:</strong> <span id="summaryFlight">-</span></p>
+                    <p><strong data-i18n="travel_summary_airline">Airline:</strong> <span id="summaryAirline">-</span></p>
+                    <p><strong data-i18n="travel_summary_date">Date:</strong> <span id="summaryDate">-</span></p>
+                    <p><strong data-i18n="travel_summary_time">Time:</strong> <span id="summaryTime">-</span></p>
+                    <p><strong data-i18n="travel_summary_class">Class:</strong> <span id="summaryClass">-</span></p>
+                    <p><strong data-i18n="travel_summary_passengers">Passengers:</strong> <span id="summaryPassengers">-</span></p>
+                    <p><strong data-i18n="travel_summary_luggage">Luggage:</strong> <span id="summaryLuggage">-</span></p>
+                    <p><strong data-i18n="travel_summary_price">Price per person:</strong> $<span id="summaryPricePerPerson">0</span></p>
+                    <hr style="border-color: var(--gold); margin: 10px 0;">
+                    <p class="total-price">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span data-i18n="travel_summary_total">Total:</span> $<span id="summaryTotal">0</span>
+                    </p>
+                </div>
+
+                <p style="color: #ccc; font-size: 0.85rem; margin-bottom: 15px;">
+                    <i class="fas fa-info-circle" style="color: #ffd700;"></i>
+                    By confirming this booking you agree to our
+                    <a href="terms.html" style="color: #ffd700;">Terms & Conditions</a>.
+                    Flight availability is subject to change.
+                </p>
+
+                <div class="booking-error" id="bookingError"></div>
+                <div class="booking-success" id="bookingSuccess"></div>
+
+                <button type="submit" class="btn-book-now" id="bookNowBtn">
+                    <i class="fas fa-check-circle"></i> <span data-i18n="travel_btn_confirm">Confirm Booking Request</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- LIVE CHAT FLOATING BUTTON -->
+    <button class="live-chat-toggle" id="liveChatToggle" onclick="toggleLiveChat()">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <!-- LIVE CHAT BOX -->
+    <div class="live-chat-box" id="liveChatBox">
+        <div class="live-chat-header">
+            <div class="live-chat-title">
+                <i class="fas fa-headset"></i>
+                <span data-i18n="chat_title">Support Chat</span>
+            </div>
+            <button class="live-chat-close" onclick="toggleLiveChat()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="live-chat-body" id="liveChatBody">
+            <div class="chat-message bot-message">
+                <p data-i18n="chat_greeting">Hi there! How can we help you today? You can reach us through the options below or contact us directly.</p>
+                <p class="chat-contact-info">
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_whatsapp_label">WhatsApp:</span> <a href="https://wa.me/16154145082" target="_blank">+1 (615) 414-5082</a><br>
+                    <i class="fas fa-envelope"></i> <span data-i18n="chat_email_label">Email:</span> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a>
+                </p>
+            </div>
+            <div class="chat-options">
+                <button onclick="sendQuickChat('tickets')" data-i18n="chat_btn_tickets">Tickets</button>
+                <button onclick="sendQuickChat('travel')" data-i18n="chat_btn_travel">Travel</button>
+                <button onclick="sendQuickChat('hotels')" data-i18n="chat_btn_hotels">Hotels</button>
+                <button onclick="sendQuickChat('payments')" data-i18n="chat_btn_payments">Payments</button>
+                <button onclick="window.open('https://wa.me/16154145082', '_blank')">
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_btn_whatsapp">Chat on WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 data-i18n="footer_about">Company</h4>
+                    <ul>
+                        <li><a href="about.html" data-i18n="footer_about_link">About</a></li>
+                        <li><a href="blog.html" data-i18n="footer_blog">Blog</a></li>
+                        <li><a href="careers.html" data-i18n="footer_careers">Work With Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_support">Help</h4>
+                    <ul>
+                        <li><a href="faq.html" data-i18n="footer_faq">FAQ</a></li>
+                        <li><a href="support.html" data-i18n="footer_contact_us">Contact Us</a></li>
+                        <li><a href="#" onclick="toggleLiveChat(); return false;" data-i18n="footer_live_chat">Live Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_legal">Legal</h4>
+                    <ul>
+                        <li><a href="terms.html" data-i18n="footer_terms">Terms & Conditions</a></li>
+                        <li><a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
+                        <li><a href="cookies.html" data-i18n="footer_cookies">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_contact">Get in Touch</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a></p>
+                        <div class="social-links">
+                            <a href="https://wa.me/16154145082" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">© 2026 World Cup Travel Platform. Independent booking assistance service.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

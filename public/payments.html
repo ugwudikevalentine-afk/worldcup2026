@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments - World Cup 2026 Travel Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-trophy trophy-icon"></i>
+                <span data-i18n="nav_brand">World Cup 2026 Travel</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+                <li><a href="index.html#matches" class="nav-link" data-i18n="nav_matches">Matches</a></li>
+                <li><a href="travel.html" class="nav-link" data-i18n="nav_travel">Travel</a></li>
+                <li><a href="hotel.html" class="nav-link" data-i18n="nav_hotel">Hotels</a></li>
+                <li><a href="ticket.html" class="nav-link" data-i18n="nav_ticket">Tickets</a></li>
+                <li><a href="extras.html" class="nav-link" data-i18n="nav_extras">Extras</a></li>
+                <li><a href="payments.html" class="nav-link" data-i18n="nav_payments">Payments</a></li>
+                <li><a href="support.html" class="nav-link" data-i18n="nav_support">Support</a></li>
+                <li><a href="faq.html" class="nav-link" data-i18n="nav_faq">FAQ</a></li>
+                <li><a href="account.html" class="nav-link" data-i18n="nav_account">My Account</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="login.html" class="btn-signin" data-i18n="nav_signin">Sign In</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="page-hero">
+        <div class="container">
+            <h1><i class="fas fa-credit-card"></i> <span data-i18n="pay_hero_title">Payments</span></h1>
+            <p data-i18n="pay_hero_subtitle">Information about accepted payment methods and how the checkout process works</p>
+        </div>
+    </section>
+
+    <!-- CONTENT -->
+    <section class="page-content">
+        <div class="container">
+
+            <div class="about-content">
+                <h2><i class="fas fa-shield-alt"></i> <span data-i18n="pay_secure_title">How Payments Work</span></h2>
+                <p data-i18n="pay_secure_p1">
+                    Our platform is being set up to support multiple payment methods for ticket bookings,
+                    flights, hotels, and extras. The goal is to provide a straightforward, secure checkout
+                    experience for fans from all over the world.
+                </p>
+                <p data-i18n="pay_secure_p2">
+                    Once payment integration is complete, you will be able to select your preferred method,
+                    review your booking details, and receive a confirmation after your transaction is
+                    processed. This platform acts as a booking intermediary and all transactions will be
+                    clearly displayed before confirmation.
+                </p>
+            </div>
+
+            <div class="content-grid" style="margin-top: 30px;">
+                <div class="content-card">
+                    <h3><i class="fas fa-credit-card"></i> <span data-i18n="pay_cards_title">Credit & Debit Cards</span></h3>
+                    <p data-i18n="pay_cards_desc">
+                        We plan to support Visa, Mastercard, and other major cards for straightforward
+                        and familiar checkout.
+                    </p>
+                    <p><strong data-i18n="pay_includes">Includes:</strong> Visa, Mastercard, and other supported providers</p>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fab fa-bitcoin"></i> <span data-i18n="pay_crypto_title">Cryptocurrency</span></h3>
+                    <p data-i18n="pay_crypto_desc">
+                        For fans who prefer digital payments, we intend to support cryptocurrency as
+                        a payment option through a secure and transparent process.
+                    </p>
+                    <p><strong data-i18n="pay_includes">Includes:</strong> Bitcoin, Ethereum, USDT, and selected digital currencies</p>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fab fa-paypal"></i> <span data-i18n="pay_wallets_title">Digital Wallets</span></h3>
+                    <p data-i18n="pay_wallets_desc">
+                        Wallet-based payment methods may be available to offer more flexibility
+                        at checkout, depending on your location and preference.
+                    </p>
+                    <p><strong data-i18n="pay_includes">Includes:</strong> PayPal and similar options</p>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-university"></i> <span data-i18n="pay_bank_title">Bank Transfer</span></h3>
+                    <p data-i18n="pay_bank_desc">
+                        Bank transfer may be available for selected high-value bookings or upon
+                        request through our support team.
+                    </p>
+                    <p><strong data-i18n="pay_ideal_for">Ideal for:</strong> <span data-i18n="pay_bank_ideal">Larger booking requests and assisted transactions</span></p>
+                </div>
+            </div>
+
+            <div class="about-content" style="margin-top: 30px;">
+                <h2><i class="fas fa-list-ol"></i> <span data-i18n="pay_flow_title">The Booking and Payment Process</span></h2>
+                <div class="about-feature-list">
+                    <div class="about-feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <h3 data-i18n="pay_step1_title">1. Choose What You Need</h3>
+                            <p data-i18n="pay_step1_desc">
+                                Select the ticket, hotel, flight, or extra service you would like to
+                                book from the available listings on the platform.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="about-feature-item">
+                        <i class="fas fa-file-invoice"></i>
+                        <div>
+                            <h3 data-i18n="pay_step2_title">2. Review Your Order</h3>
+                            <p data-i18n="pay_step2_desc">
+                                Check the details of your selection — including pricing, dates, and
+                                any applicable conditions — before proceeding to payment.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="about-feature-item">
+                        <i class="fas fa-lock"></i>
+                        <div>
+                            <h3 data-i18n="pay_step3_title">3. Complete Payment</h3>
+                            <p data-i18n="pay_step3_desc">
+                                Choose your payment method and complete the transaction through our
+                                secure checkout process. All pricing is displayed clearly before
+                                you confirm.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="about-feature-item">
+                        <i class="fas fa-envelope-open-text"></i>
+                        <div>
+                            <h3 data-i18n="pay_step4_title">4. Receive Confirmation</h3>
+                            <p data-i18n="pay_step4_desc">
+                                Once your payment is confirmed, a booking reference and confirmation
+                                details will be available in your account and sent to your email.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-grid" style="margin-top: 30px;">
+                <div class="content-card">
+                    <h3><i class="fas fa-user-shield"></i> <span data-i18n="pay_security_title">Your Security Matters</span></h3>
+                    <p data-i18n="pay_security_desc">
+                        We take payment security seriously. All transactions are handled with the aim
+                        of protecting customer data and financial information in line with standard
+                        security practices.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-globe"></i> <span data-i18n="pay_global_title">Supporting Global Fans</span></h3>
+                    <p data-i18n="pay_global_desc">
+                        We understand that fans are travelling from many countries. Our payment options
+                        are being designed with international users in mind, including support for
+                        multiple currencies where possible.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-receipt"></i> <span data-i18n="pay_transparency_title">Clear Pricing</span></h3>
+                    <p data-i18n="pay_transparency_desc">
+                        We aim to display pricing transparently so you know exactly what you are
+                        paying for before completing any transaction. No hidden fees will be added
+                        without your knowledge.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3><i class="fas fa-clock"></i> <span data-i18n="pay_progress_title">Payment Options Coming Soon</span></h3>
+                    <p data-i18n="pay_progress_desc">
+                        Full payment integration is currently being finalised. More payment methods
+                        and a complete checkout flow will be available at launch. Contact support
+                        for assistance in the meantime.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-cta" style="margin-top: 35px;">
+                <h2><i class="fas fa-wallet"></i> <span data-i18n="pay_cta_title">Have a Payment Question?</span></h2>
+                <p data-i18n="pay_cta_desc">
+                    If you have questions about payment methods, booking costs, or need assistance
+                    with a transaction, our support team is available via WhatsApp and email.
+                </p>
+                <div class="faq-cta-buttons">
+                    <a href="ticket.html" class="btn btn-gold">
+                        <i class="fas fa-ticket-alt"></i> <span data-i18n="pay_btn_tickets">Browse Tickets</span>
+                    </a>
+                    <a href="support.html" class="btn btn-primary">
+                        <i class="fas fa-headset"></i> <span data-i18n="pay_btn_support">Contact Support</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- LIVE CHAT FLOATING BUTTON -->
+    <button class="live-chat-toggle" id="liveChatToggle" onclick="toggleLiveChat()">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <!-- LIVE CHAT BOX -->
+    <div class="live-chat-box" id="liveChatBox">
+        <div class="live-chat-header">
+            <div class="live-chat-title">
+                <i class="fas fa-headset"></i>
+                <span data-i18n="chat_title">Support Chat</span>
+            </div>
+            <button class="live-chat-close" onclick="toggleLiveChat()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="live-chat-body" id="liveChatBody">
+            <div class="chat-message bot-message">
+                <p data-i18n="chat_greeting">Hi there! How can we help you today? You can reach us through the options below or contact us directly.</p>
+                <p class="chat-contact-info">
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_whatsapp_label">WhatsApp:</span> <a href="https://wa.me/16154145082" target="_blank">+1 (615) 414-5082</a><br>
+                    <i class="fas fa-envelope"></i> <span data-i18n="chat_email_label">Email:</span> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a>
+                </p>
+            </div>
+            <div class="chat-options">
+                <button onclick="sendQuickChat('tickets')" data-i18n="chat_btn_tickets">Tickets</button>
+                <button onclick="sendQuickChat('travel')" data-i18n="chat_btn_travel">Travel</button>
+                <button onclick="sendQuickChat('hotels')" data-i18n="chat_btn_hotels">Hotels</button>
+                <button onclick="sendQuickChat('payments')" data-i18n="chat_btn_payments">Payments</button>
+                <button onclick="window.open('https://wa.me/16154145082', '_blank')">
+                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_btn_whatsapp">Chat on WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 data-i18n="footer_about">Company</h4>
+                    <ul>
+                        <li><a href="about.html" data-i18n="footer_about_link">About</a></li>
+                        <li><a href="blog.html" data-i18n="footer_blog">Blog</a></li>
+                        <li><a href="careers.html" data-i18n="footer_careers">Work With Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_support">Help</h4>
+                    <ul>
+                        <li><a href="faq.html" data-i18n="footer_faq">FAQ</a></li>
+                        <li><a href="support.html" data-i18n="footer_contact_us">Contact Us</a></li>
+                        <li><a href="#" onclick="toggleLiveChat(); return false;" data-i18n="footer_live_chat">Live Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_legal">Legal</h4>
+                    <ul>
+                        <li><a href="terms.html" data-i18n="footer_terms">Terms & Conditions</a></li>
+                        <li><a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
+                        <li><a href="cookies.html" data-i18n="footer_cookies">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_contact">Get in Touch</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a></p>
+                        <div class="social-links">
+                            <a href="https://wa.me/16154145082" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">© 2026 World Cup Travel Platform. Independent booking assistance service.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
