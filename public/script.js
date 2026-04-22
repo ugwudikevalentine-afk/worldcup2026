@@ -4,7 +4,7 @@
 // ===================================
 
 // API Base URL - Change this when deploying to production
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://worldcup2026-wf8o.onrender.com';
 
 // ===================================
 // TOGGLE PASSWORD VISIBILITY
