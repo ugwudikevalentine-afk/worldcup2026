@@ -3171,3 +3171,59 @@ body {
         font-size: 1.1rem;
     }
 }
+/* ===== FLOATING CART BUTTON ===== */
+.floating-cart-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 62px;
+    height: 62px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1200;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.floating-cart-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+}
+
+.floating-cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--gold);
+    color: var(--primary-blue);
+    font-size: 0.7rem;
+    font-weight: 800;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border: 2px solid #fff;
+}
+
+.floating-cart-btn.has-items .floating-cart-count {
+    display: flex;
+}
+
+@media (max-width: 480px) {
+    .floating-cart-btn {
+        bottom: 15px;
+        left: 15px;
+        width: 56px;
+        height: 56px;
+    }
+}

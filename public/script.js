@@ -2123,11 +2123,25 @@ function removeFromCart(bookingId) {
 // ===== UPDATE CART ICON IN NAVBAR =====
 function updateCartIcon() {
     const count = getCartCount();
+
+    // Update navbar cart icons
     const cartIcons = document.querySelectorAll('.cart-count');
     cartIcons.forEach(icon => {
         icon.textContent = count;
         icon.style.display = count > 0 ? 'flex' : 'none';
     });
+
+    // Update floating cart button
+    const floatingBtn = document.getElementById('floatingCartBtn');
+    const floatingCount = document.getElementById('floatingCartCount');
+    if (floatingBtn && floatingCount) {
+        floatingCount.textContent = count;
+        if (count > 0) {
+            floatingBtn.classList.add('has-items');
+        } else {
+            floatingBtn.classList.remove('has-items');
+        }
+    }
 }
 
 // ===== SHOW CART POPUP AFTER BOOKING =====
