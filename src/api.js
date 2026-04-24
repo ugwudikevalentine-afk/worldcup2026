@@ -216,4 +216,113 @@ router.get('/health', (req, res) => {
     });
 });
 
+// ===== ONE TIME SEED ROUTE (DELETE AFTER USE) =====
+router.post('/seed-database', async (req, res) => {
+    try {
+        const { seedKey } = req.body;
+
+        // Secret key to prevent unauthorized access
+        if (seedKey !== 'WORLDCUP2026SEED') {
+            return res.status(401).json({
+                success: false,
+                message: 'Unauthorized'
+            });
+        }
+
+        const Hotel = (await import('./models/hotel.js')).default;
+        const Flight = (await import('./models/flight.js')).default;
+        const Extra = (await import('./models/extra.js')).default;
+        const Match = (await import('./models/match.js')).default;
+        const User = (await import('./models/user.js')).default;
+
+        // Clear hotels, flights, extras only
+        await Hotel.deleteMany({});
+        await Flight.deleteMany({});
+        await Extra.deleteMany({});
+
+        // 1 Hotel
+        await Hotel.create({
+            name: 'MetLife Stadium Hotel',
+            city: 'East Rutherford',
+            country: 'USA',
+            address: '1 MetLife Stadium Dr, East Rutherford, NJ',
+            rating: 4.5,
+            price_per_night: 350,
+            distance_to_stadium: '0.5 km',
+            rooms: 200,
+            amenities: ['WiFi', 'Pool', 'Gym', 'Restaurant', 'Parking', 'Room Service'],
+            description: 'Premium hotel located right next to MetLife Stadium.',
+            isActive: true
+        });
+
+        // 1 Flight from Nigeria
+        await Flight.create({
+            airline: 'Air Peace',
+            flightNumber: 'P47001',
+            departure: 'Lagos',
+            arrival: 'New York',
+            departureCountry: 'Nigeria',
+            arrivalCountry: 'United States',
+            date: '2026-06-10',
+            time: '23:00',
+            duration: '12h 30m',
+            price: 850,
+            seats: 120,
+            class: 'economy',
+            isActive: true
+        });
+
+        // All 13 Extras
+        const extras = [
+            { name: 'Stadium Parking', type: 'parking', description: 'Official stadium parking lot with easy access to entrances', price: 50, priceType: 'per_day', location: 'Stadium Lot A', available: 500, isActive: true },
+            { name: 'VIP Parking', type: 'parking', description: 'Premium parking with valet service and closest spots', price: 100, priceType: 'per_day', location: 'VIP Lot', available: 100, isActive: true },
+            { name: 'Economy SUV Rental', type: 'car_rental', description: 'Spacious SUV perfect for families, seats 7', price: 120, priceType: 'per_day', location: 'Airport/Hotel Pickup', available: 50, isActive: true },
+            { name: 'Luxury Sedan Rental', type: 'car_rental', description: 'Premium sedan with leather interior and GPS', price: 180, priceType: 'per_day', location: 'Airport/Hotel Pickup', available: 30, isActive: true },
+            { name: 'Compact Car Rental', type: 'car_rental', description: 'Fuel-efficient compact car for city driving', price: 80, priceType: 'per_day', location: 'Airport/Hotel Pickup', available: 80, isActive: true },
+            { name: 'Stadium Tour', type: 'tour', description: '2-hour behind-the-scenes tour including locker rooms and field access', price: 75, priceType: 'per_person', duration: '2 hours', location: 'Stadium Main Entrance', available: 200, isActive: true },
+            { name: 'City Sightseeing Tour', type: 'tour', description: 'Full day guided tour of city highlights and landmarks', price: 95, priceType: 'per_person', duration: '6 hours', location: 'Hotel Pickup', available: 150, isActive: true },
+            { name: 'Fan Experience Package', type: 'experience', description: 'Photo with World Cup trophy replica, official jersey, and VIP lounge access', price: 150, priceType: 'per_person', location: 'Fan Zone', available: 100, isActive: true },
+            { name: 'Meet & Greet Package', type: 'experience', description: 'Meet former World Cup legends and get autographs', price: 250, priceType: 'per_person', location: 'VIP Area', available: 50, isActive: true },
+            { name: 'Airport Shuttle', type: 'transport', description: 'Round-trip shuttle service from airport to hotel', price: 45, priceType: 'per_person', location: 'Airport', available: 500, isActive: true },
+            { name: 'Match Day Shuttle', type: 'transport', description: 'Round-trip shuttle from hotel to stadium on match day', price: 25, priceType: 'per_person', location: 'Hotel Lobby', available: 300, isActive: true },
+            { name: 'Official Team Jersey', type: 'merchandise', description: 'Authentic FIFA World Cup 2026 team jersey', price: 120, priceType: 'per_item', location: 'Official Store', available: 1000, isActive: true },
+            { name: 'World Cup Souvenir Pack', type: 'merchandise', description: 'Includes scarf, cap, keychain, and mini ball', price: 65, priceType: 'per_item', location: 'Official Store', available: 500, isActive: true }
+        ];
+        await Extra.insertMany(extras);
+
+        // Admin user
+        const existingAdmin = await User.findOne({ email: 'admin@worldcupbookinghub.com' });
+        if (!existingAdmin) {
+            await User.create({
+                name: 'Admin',
+                email: 'admin@worldcupbookinghub.com',
+                whatsapp: '16154145082',
+                password: 'admin123456',
+                role: 'admin',
+                isEmailVerified: true
+            });
+        }
+
+        const matchCount = await Match.countDocuments();
+
+        res.json({
+            success: true,
+            message: 'Database seeded successfully!',
+            data: {
+                matches: matchCount,
+                hotels: 1,
+                flights: 1,
+                extras: 13
+            }
+        });
+    } catch (error) {
+        console.error('Seed error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Seed failed',
+            error: error.message
+        });
+    }
+});
+
 export default router;
