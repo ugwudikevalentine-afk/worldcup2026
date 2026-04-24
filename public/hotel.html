@@ -59,9 +59,16 @@
                 <li><a href="faq.html" class="nav-link" data-i18n="nav_faq">FAQ</a></li>
                 <li><a href="account.html" class="nav-link" data-i18n="nav_account">My Account</a></li>
             </ul>
-            <div class="nav-auth">
-                <a href="login.html" class="btn-signin" data-i18n="nav_signin">Sign In</a>
-            </div>
+           <!-- REPLACE WITH THIS: -->
+<div class="nav-auth">
+    <div class="cart-nav-item">
+        <a href="cart.html" class="cart-nav-link" title="Cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+        </a>
+    </div>
+    <a href="login.html" class="btn-signin" data-i18n="nav_signin">Sign In</a>
+</div>
             <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
@@ -488,10 +495,18 @@
                 });
                 const data = await response.json();
                 if (data.success) {
-    showHotelBookingSuccess(`✅ Booking confirmed! Redirecting to payment...`);
-    setTimeout(() => {
-        window.location.href = `payments.html?booking=${data.booking._id}`;
-    }, 2000);
+    const cartItem = {
+        bookingId: data.booking._id,
+        type: 'hotel',
+        name: `${bookedHotelName} - ${roomType.charAt(0).toUpperCase() + roomType.slice(1)} Room`,
+        quantity: numRooms,
+        pricePerUnit: pricePerNight,
+        total: data.booking.totalPrice,
+        date: checkInDate,
+        details: `${nights} night(s) • ${numRooms} room(s) • Check-out: ${checkOutDate}`
+    };
+    closeBookingModal();
+    showCartPopup(cartItem);
                 } else {
                     showHotelBookingError(data.message || 'Booking could not be completed. Please try again.');
                     submitBtn.disabled = false;

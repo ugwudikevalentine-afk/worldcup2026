@@ -1406,10 +1406,18 @@ function setupFlightBookingForm() {
             const data = await response.json();
 
             if (data.success) {
-    showFlightBookingSuccess(`✅ Booking confirmed! Redirecting to payment...`);
-    setTimeout(() => {
-        window.location.href = `payments.html?booking=${data.booking._id}`;
-    }, 2000);
+    const cartItem = {
+        bookingId: data.booking._id,
+        type: 'flight',
+        name: `${selectedFlight.departure} → ${selectedFlight.arrival} - ${selectedFlight.airline}`,
+        quantity: numPassengersVal,
+        pricePerUnit: pricePerPerson,
+        total: data.booking.totalPrice,
+        date: selectedFlight.date,
+        details: `${travelClassVal} • ${numPassengersVal} passenger(s) • ${selectedFlight.time}`
+    };
+    closeBookingModal();
+    showCartPopup(cartItem);
             } else {
                 showFlightBookingError(data.message || 'Booking failed. Please try again.');
                 submitBtn.disabled = false;
@@ -2059,5 +2067,288 @@ async function submitPaymentProof() {
         submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Payment Proof';
     }
 }
+
+// ===================================
+// 🛒 CART SYSTEM
+// ===================================
+
+// ===== CART HELPERS =====
+function getCart() {
+    const cart = localStorage.getItem('wc2026_cart');
+    return cart ? JSON.parse(cart) : [];
+}
+
+function saveCart(cart) {
+    localStorage.setItem('wc2026_cart', JSON.stringify(cart));
+    updateCartIcon();
+}
+
+function clearCart() {
+    localStorage.removeItem('wc2026_cart');
+    updateCartIcon();
+}
+
+function getCartTotal() {
+    const cart = getCart();
+    return cart.reduce((total, item) => total + item.total, 0);
+}
+
+function getCartCount() {
+    return getCart().length;
+}
+
+// ===== ADD TO CART =====
+function addToCart(bookingData) {
+    const cart = getCart();
+
+    // Check if booking already in cart
+    const exists = cart.find(item => item.bookingId === bookingData.bookingId);
+    if (exists) {
+        console.log('Booking already in cart');
+        return;
+    }
+
+    cart.push(bookingData);
+    saveCart(cart);
+    console.log('✅ Added to cart:', bookingData.name);
+}
+
+// ===== REMOVE FROM CART =====
+function removeFromCart(bookingId) {
+    let cart = getCart();
+    cart = cart.filter(item => item.bookingId !== bookingId);
+    saveCart(cart);
+}
+
+// ===== UPDATE CART ICON IN NAVBAR =====
+function updateCartIcon() {
+    const count = getCartCount();
+    const cartIcons = document.querySelectorAll('.cart-count');
+    cartIcons.forEach(icon => {
+        icon.textContent = count;
+        icon.style.display = count > 0 ? 'flex' : 'none';
+    });
+}
+
+// ===== SHOW CART POPUP AFTER BOOKING =====
+function showCartPopup(bookingData) {
+    // Add to cart first
+    addToCart(bookingData);
+
+    // Remove existing popup if any
+    const existing = document.getElementById('cartPopup');
+    if (existing) existing.remove();
+
+    // Create popup
+    const popup = document.createElement('div');
+    popup.id = 'cartPopup';
+    popup.innerHTML = `
+        <div class="cart-popup-overlay" onclick="closeCartPopup()"></div>
+        <div class="cart-popup-box">
+            <div class="cart-popup-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Added to Cart!</h3>
+            <div class="cart-popup-item">
+                <p><strong>${bookingData.name}</strong></p>
+                <p class="cart-popup-total">$${bookingData.total}</p>
+            </div>
+            <div class="cart-popup-summary">
+                <p>${getCartCount()} item(s) in cart</p>
+                <p class="cart-grand-total">Cart Total: <strong>$${getCartTotal()}</strong></p>
+            </div>
+            <div class="cart-popup-buttons">
+                <button class="cart-btn-continue" onclick="closeCartPopup()">
+                    <i class="fas fa-shopping-bag"></i> Continue Shopping
+                </button>
+                <button class="cart-btn-checkout" onclick="goToCart()">
+                    <i class="fas fa-shopping-cart"></i> Go to Cart (${getCartCount()})
+                </button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    // Auto close after 8 seconds
+    setTimeout(() => {
+        closeCartPopup();
+    }, 8000);
+}
+
+function closeCartPopup() {
+    const popup = document.getElementById('cartPopup');
+    if (popup) {
+        popup.classList.add('cart-popup-closing');
+        setTimeout(() => popup.remove(), 300);
+    }
+}
+
+function goToCart() {
+    closeCartPopup();
+    window.location.href = 'cart.html';
+}
+
+// ===== INITIALIZE CART =====
+function initCart() {
+    updateCartIcon();
+}
+
+// ===================================
+// 🛒 CART PAGE FUNCTIONS
+// ===================================
+async function loadCartPage() {
+    const cartContainer = document.getElementById('cartContainer');
+    if (!cartContainer) return;
+
+    const cart = getCart();
+
+    if (cart.length === 0) {
+        cartContainer.innerHTML = `
+            <div class="cart-empty">
+                <i class="fas fa-shopping-cart"></i>
+                <h2>Your Cart is Empty</h2>
+                <p>You haven't added any bookings yet.</p>
+                <div class="cart-empty-buttons">
+                    <a href="ticket.html" class="btn btn-gold">
+                        <i class="fas fa-ticket-alt"></i> Book Tickets
+                    </a>
+                    <a href="hotel.html" class="btn btn-primary">
+                        <i class="fas fa-hotel"></i> Book Hotel
+                    </a>
+                    <a href="travel.html" class="btn btn-primary">
+                        <i class="fas fa-plane"></i> Book Flight
+                    </a>
+                    <a href="extras.html" class="btn btn-primary">
+                        <i class="fas fa-gift"></i> Book Extras
+                    </a>
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    const total = getCartTotal();
+
+    cartContainer.innerHTML = `
+        <div class="cart-items">
+            ${cart.map(item => createCartItemHTML(item)).join('')}
+        </div>
+
+        <div class="cart-summary-box">
+            <h2><i class="fas fa-receipt"></i> Order Summary</h2>
+
+            <div class="cart-summary-items">
+                ${cart.map(item => `
+                    <div class="cart-summary-row">
+                        <span>${item.name}</span>
+                        <span>$${item.total}</span>
+                    </div>
+                `).join('')}
+            </div>
+
+            <div class="cart-summary-total">
+                <span>Grand Total</span>
+                <span>$${total}</span>
+            </div>
+
+            <div class="cart-warning">
+                <i class="fas fa-info-circle"></i>
+                <p>
+                    All items will be paid together in one transaction.
+                    After payment, upload your proof and our team
+                    will confirm all bookings within 24 hours.
+                </p>
+            </div>
+
+            <button class="cart-checkout-btn" onclick="proceedToPayment()">
+                <i class="fas fa-lock"></i> Proceed to Payment — $${total}
+            </button>
+
+            <a href="index.html" class="cart-continue-link">
+                <i class="fas fa-arrow-left"></i> Continue Shopping
+            </a>
+        </div>
+    `;
+}
+
+function createCartItemHTML(item) {
+    const typeIcons = {
+        ticket: 'fa-ticket-alt',
+        hotel: 'fa-hotel',
+        flight: 'fa-plane',
+        extra: 'fa-gift'
+    };
+
+    const typeColors = {
+        ticket: '#2563eb',
+        hotel: '#16a34a',
+        flight: '#7c3aed',
+        extra: '#d97706'
+    };
+
+    const icon = typeIcons[item.type] || 'fa-receipt';
+    const color = typeColors[item.type] || '#2563eb';
+
+    return `
+        <div class="cart-item" id="cart-item-${item.bookingId}">
+            <div class="cart-item-icon" style="background: ${color};">
+                <i class="fas ${icon}"></i>
+            </div>
+            <div class="cart-item-details">
+                <h3>${item.name}</h3>
+                <p>
+                    <i class="fas fa-calendar"></i>
+                    ${item.date || 'N/A'}
+                </p>
+                <p>
+                    <i class="fas fa-sort-numeric-up"></i>
+                    Quantity: ${item.quantity}
+                    &nbsp;×&nbsp;
+                    $${item.pricePerUnit} each
+                </p>
+                ${item.details ? `<p><i class="fas fa-info-circle"></i> ${item.details}</p>` : ''}
+            </div>
+            <div class="cart-item-price">
+                <span class="cart-item-total">$${item.total}</span>
+                <button class="cart-remove-btn" onclick="removeCartItem('${item.bookingId}')">
+                    <i class="fas fa-trash"></i> Remove
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function removeCartItem(bookingId) {
+    if (!confirm('Remove this item from your cart?')) return;
+    removeFromCart(bookingId);
+    loadCartPage();
+    updateCartIcon();
+}
+
+function proceedToPayment() {
+    const cart = getCart();
+
+    if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+        alert('Please sign in to proceed to payment.');
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // Pass all booking IDs to payment page
+    const bookingIds = cart.map(item => item.bookingId).join(',');
+    window.location.href = `payments.html?bookings=${bookingIds}`;
+}
+
+// Add initCart to DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    initCart();
+});
 
 console.log('✅ World Cup Booking Site - Script Loaded Successfully!');
