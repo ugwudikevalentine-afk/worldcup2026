@@ -1871,17 +1871,47 @@ async function initPaymentPage() {
         return;
     }
 
-    // Get booking ID from URL
     const urlParams = new URLSearchParams(window.location.search);
-    paymentBookingId = urlParams.get('booking');
 
-    if (paymentBookingId) {
+    // Check for multiple bookings from cart
+    const bookingsParam = urlParams.get('bookings');
+    // Check for single booking
+    const bookingParam = urlParams.get('booking');
+
+    if (bookingsParam) {
+        // Multiple bookings from cart
+        const bookingIds = bookingsParam.split(',').filter(id => id.trim() !== '');
+        paymentBookingId = bookingIds[0]; // primary booking ID
+        await loadCartPaymentDetails(bookingIds);
+    } else if (bookingParam) {
+        // Single booking
+        paymentBookingId = bookingParam;
         await loadPaymentBookingDetails();
     } else {
-        document.getElementById('paymentBookingSummary').innerHTML = `
-            <h3><i class="fas fa-info-circle"></i> No Booking Selected</h3>
-            <p>Go to <a href="account.html">My Account</a> to find your booking and complete payment.</p>
-        `;
+        // Check if cart has items
+        const cart = getCart();
+        if (cart.length > 0) {
+            // Load from cart
+            const bookingIds = cart.map(item => item.bookingId);
+            paymentBookingId = bookingIds[0];
+            await loadCartPaymentDetails(bookingIds);
+        } else {
+            document.getElementById('paymentBookingSummary').innerHTML = `
+                <div class="payment-warning-box">
+                    <i class="fas fa-info-circle"></i>
+                    <p>
+                        <strong>No Booking Selected.</strong><br>
+                        Please go to
+                        <a href="ticket.html" style="color: var(--primary-blue); font-weight: 600;">Tickets</a>,
+                        <a href="hotel.html" style="color: var(--primary-blue); font-weight: 600;">Hotels</a>,
+                        <a href="travel.html" style="color: var(--primary-blue); font-weight: 600;">Flights</a> or
+                        <a href="extras.html" style="color: var(--primary-blue); font-weight: 600;">Extras</a>
+                        to make a booking first.
+                    </p>
+                </div>
+            `;
+            document.getElementById('paymentBookingSummary').style.display = 'block';
+        }
     }
 }
 
@@ -1904,6 +1934,113 @@ async function loadPaymentBookingDetails() {
         }
     } catch (error) {
         console.error('Error loading booking:', error);
+    }
+}
+
+// Load multiple bookings from cart for payment page
+async function loadCartPaymentDetails(bookingIds) {
+    const token = localStorage.getItem('token');
+    const summaryEl = document.getElementById('paymentBookingSummary');
+
+    if (!summaryEl) return;
+
+    summaryEl.style.display = 'block';
+    summaryEl.innerHTML = `
+        <h3><i class="fas fa-spinner fa-spin"></i> Loading your order...</h3>
+    `;
+
+    try {
+        // Load all bookings
+        const bookingPromises = bookingIds.map(id =>
+            fetch(`${API_URL}/api/bookings/${id}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            }).then(r => r.json())
+        );
+
+        const results = await Promise.all(bookingPromises);
+        const bookings = results
+            .filter(r => r.success)
+            .map(r => r.booking);
+
+        if (bookings.length === 0) {
+            summaryEl.innerHTML = `
+                <div class="payment-warning-box">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Could not load booking details. Please try again.</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Calculate grand total
+        const grandTotal = bookings.reduce((sum, b) => sum + b.totalPrice, 0);
+
+        // Display all bookings
+        summaryEl.innerHTML = `
+            <h3><i class="fas fa-receipt"></i> Order Summary</h3>
+
+            ${bookings.map(booking => `
+                <div style="
+                    background: #f8fafc;
+                    border: 1px solid #e5e7eb;
+                    border-radius: 10px;
+                    padding: 12px 15px;
+                    margin-bottom: 10px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 10px;
+                ">
+                    <div>
+                        <p style="font-weight: 700; color: var(--primary-blue); margin: 0 0 4px;">
+                            ${getBookingTypeIcon(booking.bookingType)} ${booking.itemName}
+                        </p>
+                        <p style="color: #6b7280; font-size: 0.82rem; margin: 0;">
+                            Ref: ${booking.bookingReference}
+                        </p>
+                    </div>
+                    <span style="
+                        font-size: 1.1rem;
+                        font-weight: 800;
+                        color: #16a34a;
+                        white-space: nowrap;
+                    ">$${booking.totalPrice}</span>
+                </div>
+            `).join('')}
+
+            <div class="payment-total-amount">
+                Grand Total: $${grandTotal}
+            </div>
+
+            <p style="text-align: center; color: #6b7280; font-size: 0.85rem; margin-top: 5px;">
+                <i class="fas fa-info-circle"></i>
+                Send exactly $${grandTotal} as one payment
+            </p>
+        `;
+
+        // Store all booking IDs for submission
+        window.cartBookingIds = bookingIds;
+        window.cartGrandTotal = grandTotal;
+
+    } catch (error) {
+        console.error('Error loading cart payment details:', error);
+        summaryEl.innerHTML = `
+            <div class="payment-warning-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Network error loading bookings. Please refresh and try again.</p>
+            </div>
+        `;
+    }
+}
+
+// Helper — get booking type icon
+function getBookingTypeIcon(type) {
+    switch(type) {
+        case 'ticket': return '🎟️';
+        case 'hotel': return '🏨';
+        case 'flight': return '✈️';
+        case 'extra': return '🎁';
+        default: return '📋';
     }
 }
 
@@ -2023,38 +2160,50 @@ async function submitPaymentProof() {
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
 
+    // Determine booking IDs to submit
+    const bookingIds = window.cartBookingIds || [paymentBookingId];
+
     try {
-        const response = await fetch(`${API_URL}/api/payments/submit`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                bookingId: paymentBookingId,
-                paymentMethod: selectedPaymentMethod,
-                transactionId,
-                proofImage: paymentProofBase64
-            })
-        });
+        // Submit payment for each booking
+        const submitPromises = bookingIds.map(bookingId =>
+            fetch(`${API_URL}/api/payments/submit`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    bookingId,
+                    paymentMethod: selectedPaymentMethod,
+                    transactionId: transactionId || null,
+                    proofImage: paymentProofBase64
+                })
+            }).then(r => r.json())
+        );
 
-        const data = await response.json();
+        const results = await Promise.all(submitPromises);
+        const allSuccess = results.every(r => r.success);
+        const firstRef = results[0]?.payment?.paymentReference || 'N/A';
 
-        if (data.success) {
+        if (allSuccess) {
             successEl.innerHTML = `
                 <i class="fas fa-check-circle"></i>
-                <strong>Payment proof submitted!</strong><br>
-                Reference: ${data.payment.paymentReference}<br>
-                Our team will verify within 24 hours and contact you via email and WhatsApp.
+                <strong>Payment proof submitted for all ${bookingIds.length} booking(s)!</strong><br>
+                Reference: ${firstRef}<br>
+                Our team will verify within 24 hours and confirm via email and WhatsApp.
             `;
             successEl.style.display = 'block';
             submitBtn.innerHTML = '<i class="fas fa-check"></i> Submitted Successfully!';
+
+            // Clear cart after successful submission
+            clearCart();
 
             setTimeout(() => {
                 window.location.href = 'account.html';
             }, 4000);
         } else {
-            errorEl.textContent = data.message || 'Error submitting payment. Please try again.';
+            const failedMsg = results.find(r => !r.success)?.message || 'Error submitting payment.';
+            errorEl.textContent = failedMsg;
             errorEl.style.display = 'block';
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Payment Proof';
