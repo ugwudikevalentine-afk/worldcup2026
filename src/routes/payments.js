@@ -9,21 +9,21 @@ const router = express.Router();
 const PAYMENT_DETAILS = {
     cashapp: {
         name: 'CashApp',
-        handle: '$LawnmowerMan25',
-        instructions: 'Send payment to $LawnmowerMan25 on CashApp. Include your booking reference in the note.',
+        handle: process.env.CASHAPP_HANDLE || '$LawnmowerMan25',
+        instructions: 'Send payment to CashApp handle. Include booking reference in note.',
         available: true
     },
     bitcoin: {
         name: 'Bitcoin (BTC)',
-        address: 'bc1qrrdpy7axrhfktt2xm2etgddrlapxvpum7me9mn',
+        address: process.env.BITCOIN_ADDRESS || 'bc1qrrdpy7axrhfktt2xm2etgddrlapxvpum7me9mn',
         network: 'Bitcoin',
         memo: 'Not required',
-        instructions: 'Send exact BTC amount to the address above. No memo required.',
+        instructions: 'Send exact BTC amount. No memo required.',
         available: true
     },
     usdt_trc20: {
         name: 'USDT (TRC20)',
-        address: 'TPk5swCGr8NyRLMED11CG4R8EnAEpHu7Pi',
+        address: process.env.USDT_TRC20_ADDRESS || 'TPk5swCGr8NyRLMED11CG4R8EnAEpHu7Pi',
         network: 'TRC20',
         memo: 'Not required',
         instructions: 'Send exact USDT amount on TRC20 network. No memo required.',
@@ -31,20 +31,20 @@ const PAYMENT_DETAILS = {
     },
     bank_sofi: {
         name: 'Bank Transfer (SoFi)',
-        bankName: 'SoFi Bank',
-        accountName: 'Patricia Gray',
-        routingNumber: '031101334',
-        accountNumber: '411057596092',
+        bankName: process.env.BANK1_NAME || 'SoFi Bank',
+        accountName: process.env.BANK1_ACCOUNT_NAME || 'Patricia Gray',
+        routingNumber: process.env.BANK1_ROUTING || '031101334',
+        accountNumber: process.env.BANK1_ACCOUNT || '411057596092',
         instructions: 'Transfer exact amount to SoFi bank account.',
         available: false,
         unavailableMessage: 'Bank transfer is currently down. Please use another payment method.'
     },
     bank_chime: {
         name: 'Bank Transfer (Chime)',
-        bankName: 'Chime Bank',
-        accountName: 'Patricia Gray',
-        routingNumber: '103100195',
-        accountNumber: '346895145728517',
+        bankName: process.env.BANK2_NAME || 'Chime Bank',
+        accountName: process.env.BANK2_ACCOUNT_NAME || 'Patricia Gray',
+        routingNumber: process.env.BANK2_ROUTING || '103100195',
+        accountNumber: process.env.BANK2_ACCOUNT || '346895145728517',
         instructions: 'Transfer exact amount to Chime bank account.',
         available: false,
         unavailableMessage: 'Bank transfer is currently down. Please use another payment method.'
