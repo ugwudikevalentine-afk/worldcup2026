@@ -488,13 +488,10 @@
                 });
                 const data = await response.json();
                 if (data.success) {
-                    const bookingRef = data.booking.bookingReference;
-                    showHotelBookingSuccess(`✅ Booking request confirmed! Reference: ${bookingRef}`);
-                    setTimeout(() => {
-                        alert(`Booking Request Confirmed\n\nReference: ${bookingRef}\nHotel: ${bookedHotelName}\nCity: ${bookedHotelCity}\nCheck-in: ${checkInDate}\nCheck-out: ${checkOutDate}\nNights: ${nights}\nRooms: ${numRooms}\nTotal: $${totalPrice}\n\nView your booking in My Account. Our team will be in touch to confirm the next steps.`);
-                        closeBookingModal();
-                        loadHotels();
-                    }, 2000);
+    showHotelBookingSuccess(`✅ Booking confirmed! Redirecting to payment...`);
+    setTimeout(() => {
+        window.location.href = `payments.html?booking=${data.booking._id}`;
+    }, 2000);
                 } else {
                     showHotelBookingError(data.message || 'Booking could not be completed. Please try again.');
                     submitBtn.disabled = false;

@@ -9,6 +9,7 @@ import flightRoutes from './routes/flights.js';
 import extraRoutes from './routes/extras.js';
 import contactRoutes from './routes/contacts.js';
 import adminRoutes from './routes/admin.js';
+import paymentRoutes from './routes/payments.js';
 
 const router = express.Router();
 
@@ -21,6 +22,7 @@ router.use('/flights', flightRoutes);
 router.use('/extras', extraRoutes);
 router.use('/contact', contactRoutes);
 router.use('/admin', adminRoutes);
+router.use('/payments', paymentRoutes);
 
 // ===== CONFIG ENDPOINT =====
 router.get('/config', (req, res) => {
@@ -174,7 +176,7 @@ router.get('/faq', (req, res) => {
         {
             id: 2,
             question: 'What payment methods do you accept?',
-            answer: 'We accept credit cards, debit cards, crypto payments (Bitcoin, Ethereum), and bank transfers.'
+            answer: 'We accept CashApp, cryptocurrency payments (Bitcoin, USDT), and bank transfers.'
         },
         {
             id: 3,

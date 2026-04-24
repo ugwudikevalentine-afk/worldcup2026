@@ -566,17 +566,11 @@
                     })
                 });
                 const data = await response.json();
-                if (data.success) {
-                    const bookingRef = data.booking.bookingReference;
-                    showExtraBookingSuccess(`✅ Booking request confirmed! Reference: ${bookingRef}`);
-                    let alertMessage = `Booking Request Confirmed\n\nReference: ${bookingRef}\nItem: ${bookedExtraName}\nDate: ${extraDate}\nQuantity: ${quantity}`;
-                    if (needsDuration(bookedExtraType)) alertMessage += `\nDuration: ${duration} day(s)`;
-                    alertMessage += `\nTotal: $${totalPrice}\n\nView your booking in My Account. Our team will be in touch to confirm the next steps.`;
-                    setTimeout(() => {
-                        alert(alertMessage);
-                        closeBookingModal();
-                        loadExtras();
-                    }, 2000);
+               if (data.success) {
+    showExtraBookingSuccess(`✅ Booking confirmed! Redirecting to payment...`);
+    setTimeout(() => {
+        window.location.href = `payments.html?booking=${data.booking._id}`;
+    }, 2000);
                 } else {
                     showExtraBookingError(data.message || 'Booking could not be completed. Please try again.');
                     submitBtn.disabled = false;

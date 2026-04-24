@@ -6,27 +6,14 @@
     <title>Admin Dashboard - FIFA World Cup 2026</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Reset & Base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #0a0a15;
             color: #fff;
             min-height: 100vh;
         }
-
-        /* Admin Container */
-        .admin-container {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar */
+        .admin-container { display: flex; min-height: 100vh; }
         .admin-sidebar {
             width: 250px;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
@@ -36,36 +23,16 @@
             height: 100vh;
             overflow-y: auto;
         }
-
         .admin-logo {
             text-align: center;
             padding: 20px;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            border-bottom: 1px solid rgba(255,215,0,0.3);
             margin-bottom: 20px;
         }
-
-        .admin-logo h2 {
-            color: #ffd700;
-            font-size: 18px;
-            margin: 10px 0 0;
-        }
-
-        .admin-logo p {
-            color: #ccc;
-            font-size: 12px;
-            margin: 5px 0 0;
-        }
-
-        .admin-nav {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .admin-nav li {
-            margin: 5px 0;
-        }
-
+        .admin-logo h2 { color: #ffd700; font-size: 18px; margin: 10px 0 0; }
+        .admin-logo p { color: #ccc; font-size: 12px; margin: 5px 0 0; }
+        .admin-nav { list-style: none; padding: 0; margin: 0; }
+        .admin-nav li { margin: 5px 0; }
         .admin-nav a {
             display: flex;
             align-items: center;
@@ -76,20 +43,13 @@
             transition: all 0.3s;
             border-left: 3px solid transparent;
         }
-
         .admin-nav a:hover,
         .admin-nav a.active {
-            background: rgba(255, 215, 0, 0.1);
+            background: rgba(255,215,0,0.1);
             border-left-color: #ffd700;
             color: #ffd700;
         }
-
-        .admin-nav i {
-            width: 20px;
-            text-align: center;
-        }
-
-        /* Main Content */
+        .admin-nav i { width: 20px; text-align: center; }
         .admin-main {
             flex: 1;
             margin-left: 250px;
@@ -97,36 +57,22 @@
             background: #0a0a15;
             min-height: 100vh;
         }
-
         .admin-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            border-bottom: 1px solid rgba(255,215,0,0.3);
         }
-
-        .admin-header h1 {
-            color: #ffd700;
-            margin: 0;
-        }
-
-        .admin-user {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #fff;
-        }
-
-        /* Stats Grid */
+        .admin-header h1 { color: #ffd700; margin: 0; }
+        .admin-user { display: flex; align-items: center; gap: 10px; color: #fff; }
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
-
         .stat-card {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             border: 2px solid #ffd700;
@@ -134,25 +80,9 @@
             padding: 25px;
             text-align: center;
         }
-
-        .stat-card i {
-            font-size: 30px;
-            color: #ffd700;
-            margin-bottom: 10px;
-        }
-
-        .stat-card h3 {
-            color: #ffd700;
-            font-size: 32px;
-            margin: 10px 0;
-        }
-
-        .stat-card p {
-            color: #ccc;
-            margin: 0;
-        }
-
-        /* Data Tables */
+        .stat-card i { font-size: 30px; color: #ffd700; margin-bottom: 10px; }
+        .stat-card h3 { color: #ffd700; font-size: 32px; margin: 10px 0; }
+        .stat-card p { color: #ccc; margin: 0; }
         .admin-section {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             border: 2px solid #ffd700;
@@ -160,21 +90,15 @@
             padding: 25px;
             margin-bottom: 30px;
         }
-
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            border-bottom: 1px solid rgba(255,215,0,0.3);
         }
-
-        .section-header h2 {
-            color: #ffd700;
-            margin: 0;
-        }
-
+        .section-header h2 { color: #ffd700; margin: 0; }
         .btn-add {
             background: linear-gradient(135deg, #28a745 0%, #218838 100%);
             color: #fff;
@@ -187,34 +111,20 @@
             align-items: center;
             gap: 8px;
         }
-
-        .btn-add:hover {
-            transform: scale(1.05);
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            color: #fff;
-        }
-
+        .btn-add:hover { transform: scale(1.05); }
+        .data-table { width: 100%; border-collapse: collapse; color: #fff; }
         .data-table th {
-            background: rgba(255, 215, 0, 0.2);
+            background: rgba(255,215,0,0.2);
             color: #ffd700;
             padding: 12px;
             text-align: left;
             font-weight: bold;
         }
-
         .data-table td {
             padding: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-
-        .data-table tr:hover {
-            background: rgba(255, 215, 0, 0.05);
-        }
-
+        .data-table tr:hover { background: rgba(255,215,0,0.05); }
         .status-badge {
             padding: 5px 12px;
             border-radius: 20px;
@@ -222,37 +132,15 @@
             font-weight: bold;
             text-transform: uppercase;
         }
-
-        .status-pending {
-            background: rgba(255, 193, 7, 0.2);
-            color: #ffc107;
-        }
-
-        .status-confirmed {
-            background: rgba(40, 167, 69, 0.2);
-            color: #28a745;
-        }
-
-        .status-cancelled {
-            background: rgba(220, 53, 69, 0.2);
-            color: #dc3545;
-        }
-
-        .status-new {
-            background: rgba(0, 123, 255, 0.2);
-            color: #007bff;
-        }
-
-        .status-active {
-            background: rgba(40, 167, 69, 0.2);
-            color: #28a745;
-        }
-
-        .action-btns {
-            display: flex;
-            gap: 8px;
-        }
-
+        .status-pending { background: rgba(255,193,7,0.2); color: #ffc107; }
+        .status-confirmed { background: rgba(40,167,69,0.2); color: #28a745; }
+        .status-cancelled { background: rgba(220,53,69,0.2); color: #dc3545; }
+        .status-new { background: rgba(0,123,255,0.2); color: #007bff; }
+        .status-active { background: rgba(40,167,69,0.2); color: #28a745; }
+        .status-submitted { background: rgba(255,193,7,0.2); color: #ffc107; }
+        .status-approved { background: rgba(40,167,69,0.2); color: #28a745; }
+        .status-rejected { background: rgba(220,53,69,0.2); color: #dc3545; }
+        .action-btns { display: flex; gap: 8px; flex-wrap: wrap; }
         .btn-edit {
             background: #007bff;
             color: #fff;
@@ -262,7 +150,6 @@
             cursor: pointer;
             font-size: 12px;
         }
-
         .btn-delete {
             background: #dc3545;
             color: #fff;
@@ -272,7 +159,6 @@
             cursor: pointer;
             font-size: 12px;
         }
-
         .btn-view {
             background: #28a745;
             color: #fff;
@@ -282,24 +168,29 @@
             cursor: pointer;
             font-size: 12px;
         }
-
-        /* Tab Content */
-        .tab-content {
-            display: none;
+        .btn-approve {
+            background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+            color: #fff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
         }
-
-        .tab-content.active {
-            display: block;
+        .btn-reject {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: #fff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
         }
-
-        /* Loading */
-        .admin-loading {
-            text-align: center;
-            padding: 40px;
-            color: #ffd700;
-        }
-
-        /* Access Denied */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .admin-loading { text-align: center; padding: 40px; color: #ffd700; }
         .access-denied {
             text-align: center;
             padding: 100px 20px;
@@ -309,23 +200,9 @@
             justify-content: center;
             align-items: center;
         }
-
-        .access-denied i {
-            font-size: 80px;
-            color: #dc3545;
-            margin-bottom: 20px;
-        }
-
-        .access-denied h1 {
-            color: #dc3545;
-            margin-bottom: 15px;
-        }
-
-        .access-denied p {
-            color: #ccc;
-            margin-bottom: 25px;
-        }
-
+        .access-denied i { font-size: 80px; color: #dc3545; margin-bottom: 20px; }
+        .access-denied h1 { color: #dc3545; margin-bottom: 15px; }
+        .access-denied p { color: #ccc; margin-bottom: 25px; }
         .btn-gold {
             background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
             color: #000;
@@ -337,25 +214,17 @@
             text-decoration: none;
             display: inline-block;
         }
-
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
             z-index: 1000;
             justify-content: center;
             align-items: center;
         }
-
-        .modal.active {
-            display: flex;
-        }
-
+        .modal.active { display: flex; }
         .modal-content {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             border: 2px solid #ffd700;
@@ -366,59 +235,35 @@
             max-height: 80vh;
             overflow-y: auto;
         }
-
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            border-bottom: 1px solid rgba(255,215,0,0.3);
         }
-
-        .modal-header h2 {
-            color: #ffd700;
-            margin: 0;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            color: #ffd700;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
+        .modal-header h2 { color: #ffd700; margin: 0; }
+        .modal-close { background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; color: #ffd700; margin-bottom: 5px; font-weight: bold; }
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
             padding: 10px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
+            border: 1px solid rgba(255,215,0,0.3);
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.1);
             color: #fff;
             font-size: 14px;
         }
-
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: #ffd700;
         }
-
         .btn-submit {
             background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
             color: #000;
@@ -430,145 +275,166 @@
             width: 100%;
             margin-top: 10px;
         }
-
-        /* Responsive */
+        .proof-image-link {
+            color: #ffd700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+        }
+        .proof-image-link:hover { color: #fff; }
         @media (max-width: 768px) {
             .admin-sidebar {
                 width: 60px;
                 padding: 10px 0;
             }
-
             .admin-sidebar .admin-logo h2,
             .admin-sidebar .admin-logo p,
-            .admin-nav span {
-                display: none;
-            }
-
-            .admin-nav a {
-                justify-content: center;
-                padding: 15px;
-            }
-
-            .admin-main {
-                margin-left: 60px;
-                padding: 15px;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .data-table {
-                font-size: 12px;
-            }
-
+            .admin-nav span { display: none; }
+            .admin-nav a { justify-content: center; padding: 15px; }
+            .admin-main { margin-left: 60px; padding: 15px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .data-table { font-size: 12px; }
             .data-table th,
-            .data-table td {
-                padding: 8px 5px;
-            }
+            .data-table td { padding: 8px 5px; }
         }
     </style>
 </head>
 <body>
-    <!-- Access Denied (shown if not admin) -->
+        <!-- Access Denied -->
     <div id="accessDenied" class="access-denied" style="display: none;">
         <i class="fas fa-shield-alt"></i>
-        <h1 data-i18n="admin_access_denied">Access Denied</h1>
-        <p data-i18n="admin_access_denied_desc">You don't have permission to access the admin panel.</p>
-        <a href="index.html" class="btn-gold"><i class="fas fa-home"></i> <span data-i18n="admin_go_home">Go to Home</span></a>
+        <h1>Access Denied</h1>
+        <p>You don't have permission to access the admin panel.</p>
+        <a href="index.html" class="btn-gold"><i class="fas fa-home"></i> Go to Home</a>
     </div>
 
     <!-- Admin Container -->
     <div id="adminContainer" class="admin-container" style="display: none;">
-        
+
         <!-- Sidebar -->
         <aside class="admin-sidebar">
             <div class="admin-logo">
                 <i class="fas fa-trophy" style="font-size: 30px; color: #ffd700;"></i>
-                <h2 data-i18n="admin_panel_title">Admin Panel</h2>
-                <p data-i18n="admin_panel_subtitle">World Cup 2026</p>
+                <h2>Admin Panel</h2>
+                <p>World Cup 2026</p>
             </div>
             <ul class="admin-nav">
-                <li><a href="#" class="active" data-tab="dashboard"><i class="fas fa-tachometer-alt"></i> <span data-i18n="admin_nav_dashboard">Dashboard</span></a></li>
-                <li><a href="#" data-tab="users"><i class="fas fa-users"></i> <span data-i18n="admin_nav_users">Users</span></a></li>
-                <li><a href="#" data-tab="bookings"><i class="fas fa-ticket-alt"></i> <span data-i18n="admin_nav_bookings">Bookings</span></a></li>
-                <li><a href="#" data-tab="matches"><i class="fas fa-futbol"></i> <span data-i18n="admin_nav_matches">Matches</span></a></li>
-                <li><a href="#" data-tab="hotels"><i class="fas fa-hotel"></i> <span data-i18n="admin_nav_hotels">Hotels</span></a></li>
-                <li><a href="#" data-tab="flights"><i class="fas fa-plane"></i> <span data-i18n="admin_nav_flights">Flights</span></a></li>
-                <li><a href="#" data-tab="contacts"><i class="fas fa-envelope"></i> <span data-i18n="admin_nav_contacts">Contacts</span></a></li>
-                <li><a href="index.html"><i class="fas fa-home"></i> <span data-i18n="admin_nav_viewsite">View Site</span></a></li>
-                <li><a href="#" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> <span data-i18n="admin_nav_logout">Logout</span></a></li>
+                <li><a href="#" class="active" data-tab="dashboard"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+                <li><a href="#" data-tab="users"><i class="fas fa-users"></i> <span>Users</span></a></li>
+                <li><a href="#" data-tab="bookings"><i class="fas fa-ticket-alt"></i> <span>Bookings</span></a></li>
+                <li><a href="#" data-tab="payments"><i class="fas fa-money-bill-wave"></i> <span>Payments</span></a></li>
+                <li><a href="#" data-tab="matches"><i class="fas fa-futbol"></i> <span>Matches</span></a></li>
+                <li><a href="#" data-tab="hotels"><i class="fas fa-hotel"></i> <span>Hotels</span></a></li>
+                <li><a href="#" data-tab="flights"><i class="fas fa-plane"></i> <span>Flights</span></a></li>
+                <li><a href="#" data-tab="contacts"><i class="fas fa-envelope"></i> <span>Contacts</span></a></li>
+                <li><a href="index.html"><i class="fas fa-home"></i> <span>View Site</span></a></li>
+                <li><a href="#" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
             </ul>
         </aside>
 
         <!-- Main Content -->
         <main class="admin-main">
-            
+
             <!-- Header -->
             <div class="admin-header">
-                <h1 id="pageTitle"><i class="fas fa-tachometer-alt"></i> <span data-i18n="admin_nav_dashboard">Dashboard</span></h1>
+                <h1 id="pageTitle"><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
                 <div class="admin-user">
-                    <span id="adminName" data-i18n="admin_panel_title">Admin</span>
+                    <span id="adminName">Admin</span>
                     <i class="fas fa-user-circle" style="font-size: 35px; color: #ffd700;"></i>
                 </div>
             </div>
 
-            <!-- Dashboard Tab -->
+            <!-- ===== DASHBOARD TAB ===== -->
             <div id="dashboard" class="tab-content active">
-                <!-- Stats Grid -->
                 <div class="stats-grid" id="statsGrid">
                     <div class="stat-card">
                         <i class="fas fa-users"></i>
                         <h3 id="statUsers">0</h3>
-                        <p data-i18n="admin_stat_users">Total Users</p>
+                        <p>Total Users</p>
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-ticket-alt"></i>
                         <h3 id="statBookings">0</h3>
-                        <p data-i18n="admin_stat_bookings">Total Bookings</p>
+                        <p>Total Bookings</p>
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-clock"></i>
                         <h3 id="statPending">0</h3>
-                        <p data-i18n="admin_stat_pending">Pending Bookings</p>
+                        <p>Pending Bookings</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <h3 id="statPendingPayments">0</h3>
+                        <p>Pending Payments</p>
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-dollar-sign"></i>
                         <h3 id="statRevenue">$0</h3>
-                        <p data-i18n="admin_stat_revenue">Total Revenue</p>
+                        <p>Total Revenue</p>
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-futbol"></i>
                         <h3 id="statMatches">0</h3>
-                        <p data-i18n="admin_stat_matches">Matches</p>
+                        <p>Matches</p>
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-envelope"></i>
                         <h3 id="statContacts">0</h3>
-                        <p data-i18n="admin_stat_messages">New Messages</p>
+                        <p>New Messages</p>
                     </div>
                 </div>
 
                 <!-- Recent Bookings -->
                 <div class="admin-section">
                     <div class="section-header">
-                        <h2><i class="fas fa-history"></i> <span data-i18n="admin_recent_bookings">Recent Bookings</span></h2>
+                        <h2><i class="fas fa-history"></i> Recent Bookings</h2>
                     </div>
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th data-i18n="admin_th_booking_id">Booking ID</th>
-                                <th data-i18n="admin_th_user">User</th>
-                                <th data-i18n="admin_th_type">Type</th>
-                                <th data-i18n="admin_th_amount">Amount</th>
-                                <th data-i18n="admin_th_status">Status</th>
-                                <th data-i18n="admin_th_date">Date</th>
+                                <th>Booking ID</th>
+                                <th>User</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody id="recentBookingsTable">
                             <tr>
                                 <td colspan="6" class="admin-loading">
-                                    <i class="fas fa-spinner fa-spin"></i> <span data-i18n="admin_loading">Loading...</span>
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pending Payments Alert -->
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-exclamation-circle" style="color: #ffc107;"></i> Payments Awaiting Approval</h2>
+                        <button class="btn-add" onclick="switchTab('payments')">
+                            <i class="fas fa-eye"></i> View All Payments
+                        </button>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Reference</th>
+                                <th>User</th>
+                                <th>Method</th>
+                                <th>Amount</th>
+                                <th>Submitted</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pendingPaymentsTable">
+                            <tr>
+                                <td colspan="6" class="admin-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
                                 </td>
                             </tr>
                         </tbody>
@@ -576,28 +442,28 @@
                 </div>
             </div>
 
-            <!-- Users Tab -->
+            <!-- ===== USERS TAB ===== -->
             <div id="users" class="tab-content">
                 <div class="admin-section">
                     <div class="section-header">
-                        <h2><i class="fas fa-users"></i> <span data-i18n="admin_all_users">All Users</span></h2>
+                        <h2><i class="fas fa-users"></i> All Users</h2>
                     </div>
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th data-i18n="admin_th_name">Name</th>
-                                <th data-i18n="admin_th_email">Email</th>
-                                <th data-i18n="admin_th_whatsapp">WhatsApp</th>
-                                <th data-i18n="admin_th_role">Role</th>
-                                <th data-i18n="admin_th_status">Status</th>
-                                <th data-i18n="admin_th_joined">Joined</th>
-                                <th data-i18n="admin_th_actions">Actions</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>WhatsApp</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="usersTable">
                             <tr>
                                 <td colspan="7" class="admin-loading">
-                                    <i class="fas fa-spinner fa-spin"></i> <span data-i18n="admin_loading">Loading...</span>
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
                                 </td>
                             </tr>
                         </tbody>
@@ -605,29 +471,30 @@
                 </div>
             </div>
 
-            <!-- Bookings Tab -->
+            <!-- ===== BOOKINGS TAB ===== -->
             <div id="bookings" class="tab-content">
                 <div class="admin-section">
                     <div class="section-header">
-                        <h2><i class="fas fa-ticket-alt"></i> <span data-i18n="admin_all_bookings">All Bookings</span></h2>
+                        <h2><i class="fas fa-ticket-alt"></i> All Bookings</h2>
                     </div>
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th data-i18n="admin_th_reference">Reference</th>
-                                <th data-i18n="admin_th_user">User</th>
-                                <th data-i18n="admin_th_type">Type</th>
-                                <th data-i18n="admin_th_item">Item</th>
-                                <th data-i18n="admin_th_amount">Amount</th>
-                                <th data-i18n="admin_th_status">Status</th>
-                                <th data-i18n="admin_th_date">Date</th>
-                                <th data-i18n="admin_th_actions">Actions</th>
+                                <th>Reference</th>
+                                <th>User</th>
+                                <th>Type</th>
+                                <th>Item</th>
+                                <th>Amount</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="bookingsTable">
                             <tr>
-                                <td colspan="8" class="admin-loading">
-                                    <i class="fas fa-spinner fa-spin"></i> <span data-i18n="admin_loading">Loading...</span>
+                                <td colspan="9" class="admin-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
                                 </td>
                             </tr>
                         </tbody>
@@ -635,32 +502,72 @@
                 </div>
             </div>
 
-            <!-- Matches Tab -->
+            <!-- ===== PAYMENTS TAB ===== -->
+            <div id="payments" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-money-bill-wave"></i> Payment Submissions</h2>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn-add" onclick="filterPayments('submitted')" style="background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);">
+                                <i class="fas fa-clock"></i> Pending
+                            </button>
+                            <button class="btn-add" onclick="filterPayments('all')">
+                                <i class="fas fa-list"></i> All
+                            </button>
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Reference</th>
+                                <th>User</th>
+                                <th>Booking</th>
+                                <th>Method</th>
+                                <th>Amount</th>
+                                <th>Transaction ID</th>
+                                <th>Proof</th>
+                                <th>Status</th>
+                                <th>Submitted</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentsTable">
+                            <tr>
+                                <td colspan="10" class="admin-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ===== MATCHES TAB ===== -->
             <div id="matches" class="tab-content">
                 <div class="admin-section">
                     <div class="section-header">
-                        <h2><i class="fas fa-futbol"></i> <span data-i18n="admin_all_matches">All Matches</span></h2>
+                        <h2><i class="fas fa-futbol"></i> All Matches</h2>
                         <button class="btn-add" onclick="openModal('addMatch')">
-                            <i class="fas fa-plus"></i> <span data-i18n="admin_add_match">Add Match</span>
+                            <i class="fas fa-plus"></i> Add Match
                         </button>
                     </div>
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th data-i18n="admin_th_teams">Teams</th>
-                                <th data-i18n="admin_th_date">Date</th>
-                                <th data-i18n="admin_th_time">Time</th>
-                                <th data-i18n="admin_th_stadium">Stadium</th>
-                                <th data-i18n="admin_th_city">City</th>
-                                <th data-i18n="admin_th_tickets">Tickets</th>
-                                <th data-i18n="admin_th_status">Status</th>
-                                <th data-i18n="admin_th_actions">Actions</th>
+                                <th>Teams</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Stadium</th>
+                                <th>City</th>
+                                <th>Tickets</th>
+                                <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="matchesTable">
                             <tr>
                                 <td colspan="8" class="admin-loading">
-                                    <i class="fas fa-spinner fa-spin"></i> <span data-i18n="admin_loading">Loading...</span>
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
                                 </td>
                             </tr>
                         </tbody>
@@ -668,31 +575,31 @@
                 </div>
             </div>
 
-            <!-- Hotels Tab -->
+            <!-- ===== HOTELS TAB ===== -->
             <div id="hotels" class="tab-content">
                 <div class="admin-section">
                     <div class="section-header">
-                        <h2><i class="fas fa-hotel"></i> <span data-i18n="admin_all_hotels">All Hotels</span></h2>
+                        <h2><i class="fas fa-hotel"></i> All Hotels</h2>
                         <button class="btn-add" onclick="openModal('addHotel')">
-                            <i class="fas fa-plus"></i> <span data-i18n="admin_add_hotel">Add Hotel</span>
+                            <i class="fas fa-plus"></i> Add Hotel
                         </button>
                     </div>
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th data-i18n="admin_th_name">Name</th>
-                                <th data-i18n="admin_th_city">City</th>
-                                <th data-i18n="admin_th_rating">Rating</th>
-                                <th data-i18n="admin_th_price_night">Price/Night</th>
-                                <th data-i18n="admin_th_rooms">Rooms</th>
-                                <th data-i18n="admin_th_status">Status</th>
-                                <th data-i18n="admin_th_actions">Actions</th>
+                                <th>Name</th>
+                                <th>City</th>
+                                <th>Rating</th>
+                                <th>Price/Night</th>
+                                <th>Rooms</th>
+                                <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="hotelsTable">
                             <tr>
                                 <td colspan="7" class="admin-loading">
-                                    <i class="fas fa-spinner fa-spin"></i> <span data-i18n="admin_loading">Loading...</span>
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
                                 </td>
                             </tr>
                         </tbody>
@@ -700,32 +607,32 @@
                 </div>
             </div>
 
-            <!-- Flights Tab -->
+            <!-- ===== FLIGHTS TAB ===== -->
             <div id="flights" class="tab-content">
                 <div class="admin-section">
                     <div class="section-header">
-                        <h2><i class="fas fa-plane"></i> <span data-i18n="admin_all_flights">All Flights</span></h2>
+                        <h2><i class="fas fa-plane"></i> All Flights</h2>
                         <button class="btn-add" onclick="openModal('addFlight')">
-                            <i class="fas fa-plus"></i> <span data-i18n="admin_add_flight">Add Flight</span>
+                            <i class="fas fa-plus"></i> Add Flight
                         </button>
                     </div>
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th data-i18n="admin_th_flight_num">Flight #</th>
-                                <th data-i18n="admin_th_airline">Airline</th>
-                                <th data-i18n="admin_th_route">Route</th>
-                                <th data-i18n="admin_th_date">Date</th>
-                                <th data-i18n="admin_th_time">Time</th>
-                                <th data-i18n="admin_th_price">Price</th>
-                                <th data-i18n="admin_th_seats">Seats</th>
-                                <th data-i18n="admin_th_actions">Actions</th>
+                                <th>Flight #</th>
+                                <th>Airline</th>
+                                <th>Route</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Price</th>
+                                <th>Seats</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="flightsTable">
                             <tr>
                                 <td colspan="8" class="admin-loading">
-                                    <i class="fas fa-spinner fa-spin"></i> <span data-i18n="admin_loading">Loading...</span>
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
                                 </td>
                             </tr>
                         </tbody>
@@ -733,28 +640,28 @@
                 </div>
             </div>
 
-            <!-- Contacts Tab -->
+            <!-- ===== CONTACTS TAB ===== -->
             <div id="contacts" class="tab-content">
                 <div class="admin-section">
                     <div class="section-header">
-                        <h2><i class="fas fa-envelope"></i> <span data-i18n="admin_contact_messages">Contact Messages</span></h2>
+                        <h2><i class="fas fa-envelope"></i> Contact Messages</h2>
                     </div>
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th data-i18n="admin_th_name">Name</th>
-                                <th data-i18n="admin_th_email">Email</th>
-                                <th data-i18n="admin_th_subject">Subject</th>
-                                <th data-i18n="admin_th_message">Message</th>
-                                <th data-i18n="admin_th_status">Status</th>
-                                <th data-i18n="admin_th_date">Date</th>
-                                <th data-i18n="admin_th_actions">Actions</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Subject</th>
+                                <th>Message</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="contactsTable">
                             <tr>
                                 <td colspan="7" class="admin-loading">
-                                    <i class="fas fa-spinner fa-spin"></i> <span data-i18n="admin_loading">Loading...</span>
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
                                 </td>
                             </tr>
                         </tbody>
@@ -764,57 +671,56 @@
 
         </main>
     </div>
-
-    <!-- Add Match Modal -->
+        <!-- Add Match Modal -->
     <div id="addMatchModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2><i class="fas fa-futbol"></i> <span data-i18n="admin_modal_add_match">Add New Match</span></h2>
+                <h2><i class="fas fa-futbol"></i> Add New Match</h2>
                 <button class="modal-close" onclick="closeModal('addMatch')">&times;</button>
             </div>
             <form id="addMatchForm" onsubmit="submitMatch(event)">
                 <div class="form-group">
-                    <label data-i18n="admin_form_team1">Team 1</label>
+                    <label>Team 1</label>
                     <input type="text" name="team1" required placeholder="e.g., Brazil">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_team2">Team 2</label>
+                    <label>Team 2</label>
                     <input type="text" name="team2" required placeholder="e.g., Argentina">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_date">Date</label>
+                    <label>Date</label>
                     <input type="date" name="date" required>
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_time">Time</label>
+                    <label>Time</label>
                     <input type="time" name="time" required>
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_stadium">Stadium</label>
+                    <label>Stadium</label>
                     <input type="text" name="stadium" required placeholder="e.g., MetLife Stadium">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_city">City</label>
+                    <label>City</label>
                     <input type="text" name="city" required placeholder="e.g., New York">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_tickets">Tickets Available</label>
+                    <label>Tickets Available</label>
                     <input type="number" name="tickets_available" required placeholder="e.g., 5000">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_vip_price">VIP Price ($)</label>
+                    <label>VIP Price ($)</label>
                     <input type="number" name="vip_price" required placeholder="e.g., 500">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_premium_price">Premium Price ($)</label>
+                    <label>Premium Price ($)</label>
                     <input type="number" name="premium_price" required placeholder="e.g., 300">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_regular_price">Regular Price ($)</label>
+                    <label>Regular Price ($)</label>
                     <input type="number" name="regular_price" required placeholder="e.g., 150">
                 </div>
                 <button type="submit" class="btn-submit">
-                    <i class="fas fa-plus"></i> <span data-i18n="admin_add_match">Add Match</span>
+                    <i class="fas fa-plus"></i> Add Match
                 </button>
             </form>
         </div>
@@ -824,44 +730,44 @@
     <div id="addHotelModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2><i class="fas fa-hotel"></i> <span data-i18n="admin_modal_add_hotel">Add New Hotel</span></h2>
+                <h2><i class="fas fa-hotel"></i> Add New Hotel</h2>
                 <button class="modal-close" onclick="closeModal('addHotel')">&times;</button>
             </div>
             <form id="addHotelForm" onsubmit="submitHotel(event)">
                 <div class="form-group">
-                    <label data-i18n="admin_form_hotel_name">Hotel Name</label>
+                    <label>Hotel Name</label>
                     <input type="text" name="name" required placeholder="e.g., Grand Plaza Hotel">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_city">City</label>
+                    <label>City</label>
                     <input type="text" name="city" required placeholder="e.g., New York">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_address">Address</label>
+                    <label>Address</label>
                     <input type="text" name="address" required placeholder="e.g., 123 Main Street">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_rating">Rating (1-5)</label>
+                    <label>Rating (1-5)</label>
                     <input type="number" name="rating" min="1" max="5" step="0.5" required placeholder="e.g., 4.5">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_price_night">Price Per Night ($)</label>
+                    <label>Price Per Night ($)</label>
                     <input type="number" name="price_per_night" required placeholder="e.g., 250">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_distance">Distance to Stadium</label>
+                    <label>Distance to Stadium</label>
                     <input type="text" name="distance_to_stadium" required placeholder="e.g., 2 km">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_rooms">Total Rooms</label>
+                    <label>Total Rooms</label>
                     <input type="number" name="rooms" required placeholder="e.g., 200">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_description">Description</label>
+                    <label>Description</label>
                     <textarea name="description" rows="3" placeholder="Hotel description..."></textarea>
                 </div>
                 <button type="submit" class="btn-submit">
-                    <i class="fas fa-plus"></i> <span data-i18n="admin_add_hotel">Add Hotel</span>
+                    <i class="fas fa-plus"></i> Add Hotel
                 </button>
             </form>
         </div>
@@ -871,50 +777,64 @@
     <div id="addFlightModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2><i class="fas fa-plane"></i> <span data-i18n="admin_modal_add_flight">Add New Flight</span></h2>
+                <h2><i class="fas fa-plane"></i> Add New Flight</h2>
                 <button class="modal-close" onclick="closeModal('addFlight')">&times;</button>
             </div>
             <form id="addFlightForm" onsubmit="submitFlight(event)">
                 <div class="form-group">
-                    <label data-i18n="admin_form_airline">Airline</label>
+                    <label>Airline</label>
                     <input type="text" name="airline" required placeholder="e.g., American Airlines">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_flight_num">Flight Number</label>
+                    <label>Flight Number</label>
                     <input type="text" name="flightNumber" required placeholder="e.g., AA1234">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_departure">Departure City</label>
+                    <label>Departure City</label>
                     <input type="text" name="departure" required placeholder="e.g., Los Angeles">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_arrival">Arrival City</label>
+                    <label>Arrival City</label>
                     <input type="text" name="arrival" required placeholder="e.g., New York">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_date">Date</label>
+                    <label>Date</label>
                     <input type="date" name="date" required>
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_time">Time</label>
+                    <label>Time</label>
                     <input type="time" name="time" required>
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_duration">Duration</label>
+                    <label>Duration</label>
                     <input type="text" name="duration" required placeholder="e.g., 5h 30m">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_price">Price ($)</label>
+                    <label>Price ($)</label>
                     <input type="number" name="price" required placeholder="e.g., 350">
                 </div>
                 <div class="form-group">
-                    <label data-i18n="admin_form_seats">Available Seats</label>
+                    <label>Available Seats</label>
                     <input type="number" name="seats" required placeholder="e.g., 150">
                 </div>
                 <button type="submit" class="btn-submit">
-                    <i class="fas fa-plus"></i> <span data-i18n="admin_add_flight">Add Flight</span>
+                    <i class="fas fa-plus"></i> Add Flight
                 </button>
             </form>
+        </div>
+    </div>
+
+    <!-- View Payment Proof Modal -->
+    <div id="viewProofModal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2><i class="fas fa-image"></i> Payment Proof</h2>
+                <button class="modal-close" onclick="closeModal('viewProof')">&times;</button>
+            </div>
+            <div id="proofModalContent" style="text-align: center;">
+                <img id="proofModalImage" src="" alt="Payment Proof"
+                    style="max-width: 100%; max-height: 500px; border-radius: 10px; border: 2px solid #ffd700;">
+            </div>
         </div>
     </div>
 
@@ -923,17 +843,13 @@
         // ADMIN PANEL JAVASCRIPT
         // ===================================
 
-        const API_URL = 'http://localhost:5000';
+        const API_URL = 'https://worldcup2026-wf8o.onrender.com';
         let adminToken = localStorage.getItem('token');
         let adminUser = JSON.parse(localStorage.getItem('user') || '{}');
 
+        // ===== INIT =====
         async function initAdmin() {
-            if (!adminToken) {
-                showAccessDenied();
-                return;
-            }
-
-            if (adminUser.role !== 'admin') {
+            if (!adminToken || adminUser.role !== 'admin') {
                 showAccessDenied();
                 return;
             }
@@ -943,6 +859,7 @@
             document.getElementById('adminName').textContent = adminUser.name || 'Admin';
 
             await loadDashboardStats();
+            await loadPendingPayments();
             setupTabNavigation();
         }
 
@@ -951,41 +868,56 @@
             document.getElementById('adminContainer').style.display = 'none';
         }
 
+        // ===== TAB NAVIGATION =====
         function setupTabNavigation() {
             const navLinks = document.querySelectorAll('.admin-nav a[data-tab]');
-            
+
             navLinks.forEach(link => {
                 link.addEventListener('click', async (e) => {
                     e.preventDefault();
-                    
+
                     navLinks.forEach(l => l.classList.remove('active'));
                     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-                    
+
                     link.classList.add('active');
                     const tabId = link.getAttribute('data-tab');
                     document.getElementById(tabId).classList.add('active');
-                    
+
                     const tabNames = {
                         dashboard: '<i class="fas fa-tachometer-alt"></i> Dashboard',
                         users: '<i class="fas fa-users"></i> Users',
                         bookings: '<i class="fas fa-ticket-alt"></i> Bookings',
+                        payments: '<i class="fas fa-money-bill-wave"></i> Payments',
                         matches: '<i class="fas fa-futbol"></i> Matches',
                         hotels: '<i class="fas fa-hotel"></i> Hotels',
                         flights: '<i class="fas fa-plane"></i> Flights',
                         contacts: '<i class="fas fa-envelope"></i> Contacts'
                     };
                     document.getElementById('pageTitle').innerHTML = tabNames[tabId];
-                    
+
                     await loadTabData(tabId);
                 });
             });
         }
 
+        function switchTab(tabId) {
+            const navLinks = document.querySelectorAll('.admin-nav a[data-tab]');
+            navLinks.forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+
+            const targetLink = document.querySelector(`.admin-nav a[data-tab="${tabId}"]`);
+            if (targetLink) targetLink.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+
+            loadTabData(tabId);
+        }
+
         async function loadTabData(tabId) {
             switch(tabId) {
-                case 'dashboard': await loadDashboardStats(); break;
+                case 'dashboard': await loadDashboardStats(); await loadPendingPayments(); break;
                 case 'users': await loadUsers(); break;
                 case 'bookings': await loadBookings(); break;
+                case 'payments': await loadPayments(); break;
                 case 'matches': await loadMatches(); break;
                 case 'hotels': await loadHotels(); break;
                 case 'flights': await loadFlights(); break;
@@ -993,13 +925,14 @@
             }
         }
 
+        // ===== DASHBOARD =====
         async function loadDashboardStats() {
             try {
                 const response = await fetch(`${API_URL}/api/admin/stats`, {
                     headers: { 'Authorization': `Bearer ${adminToken}` }
                 });
                 const data = await response.json();
-                
+
                 if (data.success) {
                     document.getElementById('statUsers').textContent = data.stats.users;
                     document.getElementById('statBookings').textContent = data.stats.bookings.total;
@@ -1007,7 +940,7 @@
                     document.getElementById('statRevenue').textContent = '$' + data.stats.revenue.toLocaleString();
                     document.getElementById('statMatches').textContent = data.stats.matches;
                     document.getElementById('statContacts').textContent = data.stats.contacts;
-                    
+
                     renderRecentBookings(data.recentBookings);
                 }
             } catch (error) {
@@ -1017,12 +950,10 @@
 
         function renderRecentBookings(bookings) {
             const tbody = document.getElementById('recentBookingsTable');
-            
             if (!bookings || bookings.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No bookings yet</td></tr>';
                 return;
             }
-            
             tbody.innerHTML = bookings.map(b => `
                 <tr>
                     <td>${b.bookingReference || b._id.slice(-8)}</td>
@@ -1034,7 +965,187 @@
                 </tr>
             `).join('');
         }
+                // ===== PENDING PAYMENTS (Dashboard) =====
+        async function loadPendingPayments() {
+            try {
+                const response = await fetch(`${API_URL}/api/payments/admin/all?status=submitted`, {
+                    headers: { 'Authorization': `Bearer ${adminToken}` }
+                });
+                const data = await response.json();
 
+                if (data.success) {
+                    document.getElementById('statPendingPayments').textContent = data.payments.length;
+                    renderPendingPayments(data.payments);
+                }
+            } catch (error) {
+                console.error('Error loading pending payments:', error);
+            }
+        }
+
+        function renderPendingPayments(payments) {
+            const tbody = document.getElementById('pendingPaymentsTable');
+            if (!payments || payments.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No pending payments 🎉</td></tr>';
+                return;
+            }
+            tbody.innerHTML = payments.map(p => `
+                <tr>
+                    <td>${p.paymentReference}</td>
+                    <td>${p.user?.name || 'N/A'}<br><small style="color:#ccc;">${p.user?.email || ''}</small></td>
+                    <td>${formatPaymentMethod(p.paymentMethod)}</td>
+                    <td style="color: #ffd700; font-weight: bold;">$${p.amount}</td>
+                    <td>${new Date(p.submittedAt || p.createdAt).toLocaleDateString()}</td>
+                    <td>
+                        <div class="action-btns">
+                            ${p.proofImage ? `
+                                <button class="btn-view" onclick="viewPaymentProof('${p.proofImage}')">
+                                    <i class="fas fa-image"></i> Proof
+                                </button>
+                            ` : ''}
+                            <button class="btn-approve" onclick="approvePayment('${p._id}')">
+                                <i class="fas fa-check"></i> Approve
+                            </button>
+                            <button class="btn-reject" onclick="rejectPayment('${p._id}')">
+                                <i class="fas fa-times"></i> Reject
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // ===== PAYMENTS TAB =====
+        async function loadPayments(statusFilter) {
+            try {
+                let url = `${API_URL}/api/payments/admin/all`;
+                if (statusFilter && statusFilter !== 'all') {
+                    url += `?status=${statusFilter}`;
+                }
+
+                const response = await fetch(url, {
+                    headers: { 'Authorization': `Bearer ${adminToken}` }
+                });
+                const data = await response.json();
+                if (data.success) renderPayments(data.payments);
+            } catch (error) {
+                console.error('Error loading payments:', error);
+            }
+        }
+
+        function filterPayments(status) {
+            loadPayments(status);
+        }
+
+        function formatPaymentMethod(method) {
+            switch(method) {
+                case 'cashapp': return '💵 CashApp';
+                case 'bitcoin': return '₿ Bitcoin';
+                case 'usdt_trc20': return '💰 USDT TRC20';
+                case 'bank_sofi': return '🏦 SoFi Bank';
+                case 'bank_chime': return '🏦 Chime Bank';
+                default: return method;
+            }
+        }
+
+        function renderPayments(payments) {
+            const tbody = document.getElementById('paymentsTable');
+            if (!payments || payments.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;">No payments found</td></tr>';
+                return;
+            }
+            tbody.innerHTML = payments.map(p => `
+                <tr>
+                    <td>${p.paymentReference}</td>
+                    <td>${p.user?.name || 'N/A'}<br><small style="color:#ccc;">${p.user?.email || ''}</small></td>
+                    <td>${p.booking?.bookingReference || 'N/A'}<br><small style="color:#ccc;">${p.booking?.itemName || ''}</small></td>
+                    <td>${formatPaymentMethod(p.paymentMethod)}</td>
+                    <td style="color: #ffd700; font-weight: bold;">$${p.amount}</td>
+                    <td>${p.transactionId || 'N/A'}</td>
+                    <td>
+                        ${p.proofImage
+                            ? `<a href="#" onclick="viewPaymentProof('${p.proofImage}')" class="proof-image-link">
+                                <i class="fas fa-image"></i> View Proof
+                               </a>`
+                            : '<span style="color:#666;">No proof</span>'
+                        }
+                    </td>
+                    <td><span class="status-badge status-${p.status}">${p.status}</span></td>
+                    <td>${new Date(p.submittedAt || p.createdAt).toLocaleDateString()}</td>
+                    <td>
+                        <div class="action-btns">
+                            ${p.status === 'submitted' ? `
+                                <button class="btn-approve" onclick="approvePayment('${p._id}')">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                                <button class="btn-reject" onclick="rejectPayment('${p._id}')">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                            ` : `<span style="color: #ccc; font-size: 12px;">${p.status}</span>`}
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // ===== PAYMENT ACTIONS =====
+        function viewPaymentProof(imageData) {
+            document.getElementById('proofModalImage').src = imageData;
+            document.getElementById('viewProofModal').classList.add('active');
+        }
+
+        async function approvePayment(id) {
+            const notes = prompt('Add a note for the customer (optional):') || '';
+            if (!confirm('Approve this payment? This will confirm the booking.')) return;
+            try {
+                const response = await fetch(`${API_URL}/api/payments/admin/${id}/approve`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${adminToken}`
+                    },
+                    body: JSON.stringify({ adminNotes: notes })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    alert('✅ Payment approved! Booking confirmed. Confirmation email sent.');
+                    loadPayments();
+                    loadPendingPayments();
+                    loadDashboardStats();
+                } else {
+                    alert(data.message || 'Error approving payment');
+                }
+            } catch (error) {
+                alert('Network error');
+            }
+        }
+
+        async function rejectPayment(id) {
+            const notes = prompt('Reason for rejection (will be noted internally):') || '';
+            if (!confirm('Reject this payment?')) return;
+            try {
+                const response = await fetch(`${API_URL}/api/payments/admin/${id}/reject`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${adminToken}`
+                    },
+                    body: JSON.stringify({ adminNotes: notes })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    alert('Payment rejected.');
+                    loadPayments();
+                    loadPendingPayments();
+                    loadDashboardStats();
+                } else {
+                    alert(data.message || 'Error rejecting payment');
+                }
+            } catch (error) {
+                alert('Network error');
+            }
+        }
+
+        // ===== USERS =====
         async function loadUsers() {
             try {
                 const response = await fetch(`${API_URL}/api/admin/users`, {
@@ -1067,6 +1178,7 @@
             `).join('');
         }
 
+        // ===== BOOKINGS =====
         async function loadBookings() {
             try {
                 const response = await fetch(`${API_URL}/api/admin/bookings`, {
@@ -1082,16 +1194,17 @@
         function renderBookings(bookings) {
             const tbody = document.getElementById('bookingsTable');
             if (!bookings || bookings.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No bookings yet</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;">No bookings yet</td></tr>';
                 return;
             }
             tbody.innerHTML = bookings.map(b => `
                 <tr>
                     <td>${b.bookingReference || b._id.slice(-8)}</td>
-                    <td>${b.user?.name || 'N/A'}<br><small>${b.user?.email || ''}</small></td>
+                    <td>${b.user?.name || 'N/A'}<br><small style="color:#ccc;">${b.user?.email || ''}</small></td>
                     <td>${b.bookingType}</td>
                     <td>${b.itemName}</td>
                     <td>$${b.totalPrice}</td>
+                    <td><span class="status-badge status-${b.paymentStatus || 'pending'}">${b.paymentStatus || 'pending'}</span></td>
                     <td><span class="status-badge status-${b.status}">${b.status}</span></td>
                     <td>${new Date(b.createdAt).toLocaleDateString()}</td>
                     <td>
@@ -1103,7 +1216,7 @@
                 </tr>
             `).join('');
         }
-
+                // ===== MATCHES =====
         async function loadMatches() {
             try {
                 const response = await fetch(`${API_URL}/api/matches`);
@@ -1139,6 +1252,7 @@
             `).join('');
         }
 
+        // ===== HOTELS =====
         async function loadHotels() {
             try {
                 const response = await fetch(`${API_URL}/api/hotels`);
@@ -1173,6 +1287,7 @@
             `).join('');
         }
 
+        // ===== FLIGHTS =====
         async function loadFlights() {
             try {
                 const response = await fetch(`${API_URL}/api/flights`);
@@ -1208,6 +1323,7 @@
             `).join('');
         }
 
+        // ===== CONTACTS =====
         async function loadContacts() {
             try {
                 const response = await fetch(`${API_URL}/api/admin/contacts`, {
@@ -1244,6 +1360,7 @@
             `).join('');
         }
 
+        // ===== MODAL FUNCTIONS =====
         function openModal(type) {
             document.getElementById(`${type}Modal`).classList.add('active');
         }
@@ -1252,11 +1369,12 @@
             document.getElementById(`${type}Modal`).classList.remove('active');
         }
 
+        // ===== SUBMIT FUNCTIONS =====
         async function submitMatch(e) {
             e.preventDefault();
             const form = e.target;
             const formData = new FormData(form);
-            
+
             const matchData = {
                 team1: formData.get('team1'),
                 team2: formData.get('team2'),
@@ -1292,7 +1410,6 @@
                     alert(data.message || 'Error adding match');
                 }
             } catch (error) {
-                console.error('Error:', error);
                 alert('Network error');
             }
         }
@@ -1301,7 +1418,7 @@
             e.preventDefault();
             const form = e.target;
             const formData = new FormData(form);
-            
+
             const hotelData = {
                 name: formData.get('name'),
                 city: formData.get('city'),
@@ -1335,7 +1452,6 @@
                     alert(data.message || 'Error adding hotel');
                 }
             } catch (error) {
-                console.error('Error:', error);
                 alert('Network error');
             }
         }
@@ -1344,7 +1460,7 @@
             e.preventDefault();
             const form = e.target;
             const formData = new FormData(form);
-            
+
             const flightData = {
                 airline: formData.get('airline'),
                 flightNumber: formData.get('flightNumber'),
@@ -1377,11 +1493,10 @@
                     alert(data.message || 'Error adding flight');
                 }
             } catch (error) {
-                console.error('Error:', error);
                 alert('Network error');
             }
         }
-
+                // ===== DELETE FUNCTIONS =====
         async function deleteMatch(id) {
             if (!confirm('Are you sure you want to delete this match?')) return;
             try {
@@ -1434,6 +1549,7 @@
             } catch (error) { alert('Network error'); }
         }
 
+        // ===== UPDATE FUNCTIONS =====
         async function toggleUserRole(id, currentRole) {
             const newRole = currentRole === 'admin' ? 'user' : 'admin';
             if (!confirm(`Change user role to ${newRole}?`)) return;
@@ -1453,6 +1569,7 @@
         }
 
         async function updateBookingStatus(id, status) {
+            if (!confirm(`${status === 'confirmed' ? 'Confirm' : 'Cancel'} this booking?`)) return;
             try {
                 const response = await fetch(`${API_URL}/api/admin/bookings/${id}`, {
                     method: 'PUT',
@@ -1463,7 +1580,7 @@
                     body: JSON.stringify({ status })
                 });
                 const data = await response.json();
-                if (data.success) { alert('Booking updated!'); loadBookings(); }
+                if (data.success) { alert('Booking updated!'); loadBookings(); loadDashboardStats(); }
                 else alert(data.message || 'Error updating booking');
             } catch (error) { alert('Network error'); }
         }
@@ -1484,9 +1601,14 @@
             } catch (error) { alert('Network error'); }
         }
 
+        // ===== UTILITY FUNCTIONS =====
         function replyContact(email) {
             window.open(`mailto:${email}?subject=Re: World Cup 2026 Inquiry`, '_blank');
         }
+
+        function editMatch(id) { alert('Edit functionality coming soon!'); }
+        function editHotel(id) { alert('Edit functionality coming soon!'); }
+        function editFlight(id) { alert('Edit functionality coming soon!'); }
 
         function adminLogout() {
             if (confirm('Are you sure you want to logout?')) {
@@ -1496,10 +1618,7 @@
             }
         }
 
-        function editMatch(id) { alert('Edit functionality coming soon!'); }
-        function editHotel(id) { alert('Edit functionality coming soon!'); }
-        function editFlight(id) { alert('Edit functionality coming soon!'); }
-
+        // ===== INITIALIZE =====
         document.addEventListener('DOMContentLoaded', initAdmin);
     </script>
     <script src="translations.js"></script>

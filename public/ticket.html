@@ -409,12 +409,10 @@
                 });
                 const data = await response.json();
                 if (data.success) {
-                    showBookingSuccess(`✅ Booking request confirmed! Reference: ${data.booking.bookingReference}`);
-                    setTimeout(() => {
-                        closeBookingModal();
-                        loadTicketMatches();
-                        alert(`Booking Request Confirmed\n\nReference: ${data.booking.bookingReference}\nTotal: $${data.booking.totalPrice}\n\nYou can view this booking in your account. Our team will be in touch to confirm the next steps.`);
-                    }, 2000);
+    showBookingSuccess(`✅ Booking confirmed! Redirecting to payment...`);
+    setTimeout(() => {
+        window.location.href = `payments.html?booking=${data.booking._id}`;
+    }, 2000);
                 } else {
                     showBookingError(data.message || 'Booking could not be completed. Please try again.');
                     submitBtn.disabled = false;

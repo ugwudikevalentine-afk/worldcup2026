@@ -1406,13 +1406,10 @@ function setupFlightBookingForm() {
             const data = await response.json();
 
             if (data.success) {
-                const bookingRef = data.booking.bookingReference;
-                showFlightBookingSuccess(`✅ Booking confirmed! Reference: ${bookingRef}`);
-                setTimeout(() => {
-                    alert(`🎉 Flight Booking Confirmed!\n\nReference: ${bookingRef}\nFlight: ${selectedFlight.departure} → ${selectedFlight.arrival}\nAirline: ${selectedFlight.airline}\nDate: ${formatFlightDate(selectedFlight.date)}\nTime: ${selectedFlight.time}\nClass: ${travelClassVal}\nPassengers: ${numPassengersVal}\nTotal: $${totalPrice}\n\nView in My Account.`);
-                    closeBookingModal();
-                    loadTravelFlights();
-                }, 2000);
+    showFlightBookingSuccess(`✅ Booking confirmed! Redirecting to payment...`);
+    setTimeout(() => {
+        window.location.href = `payments.html?booking=${data.booking._id}`;
+    }, 2000);
             } else {
                 showFlightBookingError(data.message || 'Booking failed. Please try again.');
                 submitBtn.disabled = false;
@@ -1833,6 +1830,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load account data if on account page
     loadAccountData();
 
+        // Initialize payment page if on payments page
+    initPaymentPage();
+    
     console.log('✅ FIFA World Cup 2026 - Ready!');
 });
 
@@ -1844,6 +1844,220 @@ if (contactButton) {
     contactButton.addEventListener('click', () => {
         window.location.href = 'support.html';
     });
+}
+// ===================================
+// PAYMENT PAGE FUNCTIONS
+// ===================================
+let selectedPaymentMethod = null;
+let paymentProofBase64 = null;
+let paymentBookingId = null;
+
+// Initialize payment page
+async function initPaymentPage() {
+    const paymentSection = document.getElementById('paymentMethodsSection');
+    if (!paymentSection) return;
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // Get booking ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    paymentBookingId = urlParams.get('booking');
+
+    if (paymentBookingId) {
+        await loadPaymentBookingDetails();
+    } else {
+        document.getElementById('paymentBookingSummary').innerHTML = `
+            <h3><i class="fas fa-info-circle"></i> No Booking Selected</h3>
+            <p>Go to <a href="account.html">My Account</a> to find your booking and complete payment.</p>
+        `;
+    }
+}
+
+// Load booking details for payment
+async function loadPaymentBookingDetails() {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch(`${API_URL}/api/bookings/${paymentBookingId}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            displayPaymentBookingSummary(data.booking);
+        } else {
+            document.getElementById('paymentBookingSummary').innerHTML = `
+                <h3>Error loading booking</h3>
+                <p>${data.message}</p>
+            `;
+        }
+    } catch (error) {
+        console.error('Error loading booking:', error);
+    }
+}
+
+// Display booking summary on payment page
+function displayPaymentBookingSummary(booking) {
+    const el = document.getElementById('paymentBookingSummary');
+    if (!el) return;
+    el.innerHTML = `
+        <h3><i class="fas fa-receipt"></i> Booking Summary</h3>
+        <p><strong>Item:</strong> ${booking.itemName}</p>
+        <p><strong>Reference:</strong> ${booking.bookingReference}</p>
+        <p><strong>Type:</strong> ${booking.bookingType}</p>
+        <p><strong>Status:</strong>
+            <span style="color: #f59e0b; font-weight: 600;">${booking.status}</span>
+        </p>
+        <div class="payment-total-amount">$${booking.totalPrice} USD</div>
+        <p style="text-align: center; color: #6b7280; font-size: 0.9rem;">
+            Please send exactly this amount
+        </p>
+    `;
+}
+
+// Select payment method
+function selectPaymentMethod(method) {
+    // Check if unavailable
+    const clickedCard = event.currentTarget;
+    if (clickedCard.classList.contains('unavailable')) return;
+
+    // Remove selected from all
+    document.querySelectorAll('.payment-method-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+
+    // Select clicked
+    clickedCard.classList.add('selected');
+    selectedPaymentMethod = method;
+
+    // Hide all detail sections
+    document.querySelectorAll('.payment-method-details').forEach(el => {
+        el.style.display = 'none';
+    });
+
+    // Show payment details box
+    document.getElementById('paymentDetailsBox').classList.add('active');
+
+    // Show specific method details
+    const detailEl = document.getElementById(`details-${method}`);
+    if (detailEl) detailEl.style.display = 'block';
+
+    // Show proof section
+    document.getElementById('proofSection').classList.add('active');
+
+    // Smooth scroll
+    document.getElementById('paymentDetailsBox').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
+}
+
+// Copy wallet address to clipboard
+function copyPaymentAddress(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        alert('✅ Copied to clipboard!');
+    }).catch(() => {
+        const el = document.createElement('textarea');
+        el.value = text;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        alert('✅ Copied to clipboard!');
+    });
+}
+
+// Preview proof image
+function previewPaymentProof(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+        alert('File too large. Maximum 5MB.');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        paymentProofBase64 = e.target.result;
+        document.getElementById('proofPreviewImg').src = e.target.result;
+        document.getElementById('proofPreview').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+}
+
+// Submit payment proof
+async function submitPaymentProof() {
+    const token = localStorage.getItem('token');
+    const transactionId = document.getElementById('paymentTransactionId')?.value.trim();
+    const errorEl = document.getElementById('paymentErrorMsg');
+    const successEl = document.getElementById('paymentSuccessMsg');
+    const submitBtn = document.getElementById('submitPaymentBtn');
+
+    if (errorEl) errorEl.style.display = 'none';
+    if (successEl) successEl.style.display = 'none';
+
+    if (!selectedPaymentMethod) {
+        errorEl.textContent = 'Please select a payment method.';
+        errorEl.style.display = 'block';
+        return;
+    }
+
+    if (!paymentProofBase64) {
+        errorEl.textContent = 'Please upload a screenshot of your payment.';
+        errorEl.style.display = 'block';
+        return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+    try {
+        const response = await fetch(`${API_URL}/api/payments/submit`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                bookingId: paymentBookingId,
+                paymentMethod: selectedPaymentMethod,
+                transactionId,
+                proofImage: paymentProofBase64
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            successEl.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <strong>Payment proof submitted!</strong><br>
+                Reference: ${data.payment.paymentReference}<br>
+                Our team will verify within 24 hours and contact you via email and WhatsApp.
+            `;
+            successEl.style.display = 'block';
+            submitBtn.innerHTML = '<i class="fas fa-check"></i> Submitted Successfully!';
+
+            setTimeout(() => {
+                window.location.href = 'account.html';
+            }, 4000);
+        } else {
+            errorEl.textContent = data.message || 'Error submitting payment. Please try again.';
+            errorEl.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Payment Proof';
+        }
+    } catch (error) {
+        console.error('Payment error:', error);
+        errorEl.textContent = 'Network error. Please try again.';
+        errorEl.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Payment Proof';
+    }
 }
 
 console.log('✅ World Cup Booking Site - Script Loaded Successfully!');

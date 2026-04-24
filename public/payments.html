@@ -42,172 +42,315 @@
     <section class="page-hero">
         <div class="container">
             <h1><i class="fas fa-credit-card"></i> <span data-i18n="pay_hero_title">Payments</span></h1>
-            <p data-i18n="pay_hero_subtitle">Information about accepted payment methods and how the checkout process works</p>
+            <p data-i18n="pay_hero_subtitle">Complete your booking payment using one of our accepted methods</p>
         </div>
     </section>
 
     <!-- CONTENT -->
-    <section class="page-content">
+    <section class="page-content" id="paymentMethodsSection">
         <div class="container">
 
+            <!-- Booking Summary (shown when coming from a booking) -->
+            <div id="paymentBookingSummary" class="payment-booking-summary" style="display:none;"></div>
+
+            <!-- How It Works -->
             <div class="about-content">
                 <h2><i class="fas fa-shield-alt"></i> <span data-i18n="pay_secure_title">How Payments Work</span></h2>
                 <p data-i18n="pay_secure_p1">
-                    Our platform is being set up to support multiple payment methods for ticket bookings,
-                    flights, hotels, and extras. The goal is to provide a straightforward, secure checkout
-                    experience for fans from all over the world.
+                    After creating a booking, select your preferred payment method below, send the
+                    exact amount shown, and upload a screenshot of your payment confirmation. Our
+                    team will verify your payment within 24 hours.
                 </p>
-                <p data-i18n="pay_secure_p2">
-                    Once payment integration is complete, you will be able to select your preferred method,
-                    review your booking details, and receive a confirmation after your transaction is
-                    processed. This platform acts as a booking intermediary and all transactions will be
-                    clearly displayed before confirmation.
+
+                <div class="payment-step-flow">
+                    <div class="payment-step-item">
+                        <div class="payment-step-num">1</div>
+                        <h4>Book</h4>
+                        <p>Select tickets, hotels, flights, or extras</p>
+                    </div>
+                    <div class="payment-step-item">
+                        <div class="payment-step-num">2</div>
+                        <h4>Pay</h4>
+                        <p>Send payment using a method below</p>
+                    </div>
+                    <div class="payment-step-item">
+                        <div class="payment-step-num">3</div>
+                        <h4>Upload</h4>
+                        <p>Upload your payment screenshot</p>
+                    </div>
+                    <div class="payment-step-item">
+                        <div class="payment-step-num">4</div>
+                        <h4>Confirm</h4>
+                        <p>We verify and confirm within 24hrs</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Warning Box -->
+            <div class="payment-warning-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>
+                    <strong>Important:</strong> After making your payment, you MUST upload a screenshot
+                    or photo of your payment confirmation below. Our team will verify within 24 hours
+                    and confirm your booking via email and WhatsApp.
                 </p>
             </div>
 
+            <!-- PAYMENT METHODS -->
+            <h2 style="color: var(--primary-blue); margin: 30px 0 20px;">
+                <i class="fas fa-wallet"></i> Select Payment Method
+            </h2>
+
+            <!-- CashApp -->
+            <div class="payment-method-card" onclick="selectPaymentMethod('cashapp')">
+                <div class="payment-method-header">
+                    <div class="payment-method-icon cashapp-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="payment-method-name">
+                        <h3>CashApp</h3>
+                        <p>Send via CashApp — Fast & Easy</p>
+                    </div>
+                    <i class="fas fa-chevron-right" style="color: #9ca3af;"></i>
+                </div>
+            </div>
+
+            <!-- Bitcoin -->
+            <div class="payment-method-card" onclick="selectPaymentMethod('bitcoin')">
+                <div class="payment-method-header">
+                    <div class="payment-method-icon bitcoin-icon">
+                        <i class="fab fa-bitcoin"></i>
+                    </div>
+                    <div class="payment-method-name">
+                        <h3>Bitcoin (BTC)</h3>
+                        <p>Pay with Bitcoin — Network: Bitcoin</p>
+                    </div>
+                    <i class="fas fa-chevron-right" style="color: #9ca3af;"></i>
+                </div>
+            </div>
+
+            <!-- USDT TRC20 -->
+            <div class="payment-method-card" onclick="selectPaymentMethod('usdt_trc20')">
+                <div class="payment-method-header">
+                    <div class="payment-method-icon usdt-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="payment-method-name">
+                        <h3>USDT (TRC20)</h3>
+                        <p>Pay with USDT — Network: TRC20</p>
+                    </div>
+                    <i class="fas fa-chevron-right" style="color: #9ca3af;"></i>
+                </div>
+            </div>
+
+            <!-- Bank Transfer - Unavailable -->
+            <div class="payment-method-card unavailable">
+                <div class="payment-method-header">
+                    <div class="payment-method-icon bank-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="payment-method-name">
+                        <h3>Bank Transfer</h3>
+                        <p>ACH / Wire Transfer</p>
+                    </div>
+                    <span class="unavailable-badge">
+                        <i class="fas fa-wrench"></i> Currently Down
+                    </span>
+                </div>
+            </div>
+                        <!-- PAYMENT DETAILS BOX -->
+            <div class="payment-details-box" id="paymentDetailsBox">
+
+                <!-- CashApp Details -->
+                <div id="details-cashapp" class="payment-method-details" style="display:none;">
+                    <h3><i class="fas fa-dollar-sign"></i> Send via CashApp</h3>
+
+                    <div class="payment-warning-box" style="background: rgba(255,255,255,0.1); border-color: var(--gold);">
+                        <i class="fas fa-info-circle" style="color: var(--gold);"></i>
+                        <p style="color: #fff;">
+                            Send your payment to the CashApp handle below. Include your booking
+                            reference number in the payment note.
+                        </p>
+                    </div>
+
+                    <p style="color: var(--gold); margin: 15px 0;"><strong>CashApp Handle:</strong></p>
+                    <div class="wallet-address-box">
+                        <span>$LawnmowerMan25</span>
+                        <button class="copy-btn" onclick="copyPaymentAddress('$LawnmowerMan25')">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+
+                    <div class="qr-container">
+                        <p><i class="fas fa-qrcode"></i> Scan QR Code</p>
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=$LawnmowerMan25" alt="CashApp QR Code">
+                    </div>
+                </div>
+
+                <!-- Bitcoin Details -->
+                <div id="details-bitcoin" class="payment-method-details" style="display:none;">
+                    <h3><i class="fab fa-bitcoin"></i> Send Bitcoin (BTC)</h3>
+
+                    <div class="payment-warning-box" style="background: rgba(255,255,255,0.1); border-color: var(--gold);">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--gold);"></i>
+                        <p style="color: #fff;">
+                            Send ONLY Bitcoin (BTC) to this address. Sending any other coin will
+                            result in permanent loss of funds.
+                        </p>
+                    </div>
+
+                    <p style="color: var(--gold); margin: 15px 0;">
+                        <strong>Network:</strong> Bitcoin &nbsp;|&nbsp;
+                        <strong>Memo:</strong> Not Required
+                    </p>
+
+                    <div class="wallet-address-box">
+                        <span>bc1qrrdpy7axrhfktt2xm2etgddrlapxvpum7me9mn</span>
+                        <button class="copy-btn" onclick="copyPaymentAddress('bc1qrrdpy7axrhfktt2xm2etgddrlapxvpum7me9mn')">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+
+                    <div class="qr-container">
+                        <p><i class="fas fa-qrcode"></i> Scan QR Code</p>
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bc1qrrdpy7axrhfktt2xm2etgddrlapxvpum7me9mn" alt="Bitcoin QR Code">
+                    </div>
+                </div>
+
+                <!-- USDT TRC20 Details -->
+                <div id="details-usdt_trc20" class="payment-method-details" style="display:none;">
+                    <h3><i class="fas fa-coins"></i> Send USDT (TRC20)</h3>
+
+                    <div class="payment-warning-box" style="background: rgba(255,255,255,0.1); border-color: var(--gold);">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--gold);"></i>
+                        <p style="color: #fff;">
+                            Send ONLY USDT on the <strong>TRC20</strong> network. Do NOT use ERC20
+                            or BEP20 — funds sent on the wrong network will be permanently lost.
+                        </p>
+                    </div>
+
+                    <p style="color: var(--gold); margin: 15px 0;">
+                        <strong>Network:</strong> TRC20 &nbsp;|&nbsp;
+                        <strong>Memo:</strong> Not Required
+                    </p>
+
+                    <div class="wallet-address-box">
+                        <span>TPk5swCGr8NyRLMED11CG4R8EnAEpHu7Pi</span>
+                        <button class="copy-btn" onclick="copyPaymentAddress('TPk5swCGr8NyRLMED11CG4R8EnAEpHu7Pi')">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+
+                    <div class="qr-container">
+                        <p><i class="fas fa-qrcode"></i> Scan QR Code</p>
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TPk5swCGr8NyRLMED11CG4R8EnAEpHu7Pi" alt="USDT TRC20 QR Code">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- PROOF UPLOAD SECTION -->
+            <div id="proofSection" class="proof-section">
+
+                <h2 style="color: var(--primary-blue); margin-bottom: 15px;">
+                    <i class="fas fa-upload"></i> Upload Payment Proof
+                </h2>
+
+                <div class="about-content">
+                    <div class="form-group">
+                        <label style="color: var(--primary-blue); font-weight: 600;">
+                            <i class="fas fa-hashtag"></i> Transaction ID / Reference
+                            <span style="color: #9ca3af; font-weight: 400;">(Optional but recommended)</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="paymentTransactionId"
+                            placeholder="Enter your transaction ID or reference number"
+                        >
+                    </div>
+
+                    <div class="proof-upload-section" onclick="document.getElementById('proofFile').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p><strong>Click to upload payment screenshot</strong></p>
+                        <p style="color: #9ca3af; font-size: 0.85rem;">PNG, JPG, JPEG up to 5MB</p>
+                        <input
+                            type="file"
+                            id="proofFile"
+                            accept="image/*"
+                            style="display:none;"
+                            onchange="previewPaymentProof(event)"
+                        >
+                    </div>
+
+                    <div class="proof-preview" id="proofPreview">
+                        <img id="proofPreviewImg" src="" alt="Payment Proof">
+                        <p style="color: #16a34a; margin-top: 10px;">
+                            <i class="fas fa-check-circle"></i> Screenshot uploaded successfully
+                        </p>
+                    </div>
+
+                    <div class="payment-error-msg" id="paymentErrorMsg"></div>
+                    <div class="payment-success-msg" id="paymentSuccessMsg"></div>
+
+                    <button class="submit-payment-btn" id="submitPaymentBtn" onclick="submitPaymentProof()">
+                        <i class="fas fa-paper-plane"></i> Submit Payment Proof
+                    </button>
+
+                    <p style="text-align: center; color: #6b7280; font-size: 0.85rem; margin-top: 15px;">
+                        <i class="fas fa-clock"></i> Our team verifies payments within 24 hours.
+                        You will receive a confirmation via email and WhatsApp.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Additional Info Cards -->
             <div class="content-grid" style="margin-top: 30px;">
                 <div class="content-card">
-                    <h3><i class="fas fa-credit-card"></i> <span data-i18n="pay_cards_title">Credit & Debit Cards</span></h3>
-                    <p data-i18n="pay_cards_desc">
-                        We plan to support Visa, Mastercard, and other major cards for straightforward
-                        and familiar checkout.
-                    </p>
-                    <p><strong data-i18n="pay_includes">Includes:</strong> Visa, Mastercard, and other supported providers</p>
-                </div>
-
-                <div class="content-card">
-                    <h3><i class="fab fa-bitcoin"></i> <span data-i18n="pay_crypto_title">Cryptocurrency</span></h3>
-                    <p data-i18n="pay_crypto_desc">
-                        For fans who prefer digital payments, we intend to support cryptocurrency as
-                        a payment option through a secure and transparent process.
-                    </p>
-                    <p><strong data-i18n="pay_includes">Includes:</strong> Bitcoin, Ethereum, USDT, and selected digital currencies</p>
-                </div>
-
-                <div class="content-card">
-                    <h3><i class="fab fa-paypal"></i> <span data-i18n="pay_wallets_title">Digital Wallets</span></h3>
-                    <p data-i18n="pay_wallets_desc">
-                        Wallet-based payment methods may be available to offer more flexibility
-                        at checkout, depending on your location and preference.
-                    </p>
-                    <p><strong data-i18n="pay_includes">Includes:</strong> PayPal and similar options</p>
-                </div>
-
-                <div class="content-card">
-                    <h3><i class="fas fa-university"></i> <span data-i18n="pay_bank_title">Bank Transfer</span></h3>
-                    <p data-i18n="pay_bank_desc">
-                        Bank transfer may be available for selected high-value bookings or upon
-                        request through our support team.
-                    </p>
-                    <p><strong data-i18n="pay_ideal_for">Ideal for:</strong> <span data-i18n="pay_bank_ideal">Larger booking requests and assisted transactions</span></p>
-                </div>
-            </div>
-
-            <div class="about-content" style="margin-top: 30px;">
-                <h2><i class="fas fa-list-ol"></i> <span data-i18n="pay_flow_title">The Booking and Payment Process</span></h2>
-                <div class="about-feature-list">
-                    <div class="about-feature-item">
-                        <i class="fas fa-check-circle"></i>
-                        <div>
-                            <h3 data-i18n="pay_step1_title">1. Choose What You Need</h3>
-                            <p data-i18n="pay_step1_desc">
-                                Select the ticket, hotel, flight, or extra service you would like to
-                                book from the available listings on the platform.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="about-feature-item">
-                        <i class="fas fa-file-invoice"></i>
-                        <div>
-                            <h3 data-i18n="pay_step2_title">2. Review Your Order</h3>
-                            <p data-i18n="pay_step2_desc">
-                                Check the details of your selection — including pricing, dates, and
-                                any applicable conditions — before proceeding to payment.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="about-feature-item">
-                        <i class="fas fa-lock"></i>
-                        <div>
-                            <h3 data-i18n="pay_step3_title">3. Complete Payment</h3>
-                            <p data-i18n="pay_step3_desc">
-                                Choose your payment method and complete the transaction through our
-                                secure checkout process. All pricing is displayed clearly before
-                                you confirm.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="about-feature-item">
-                        <i class="fas fa-envelope-open-text"></i>
-                        <div>
-                            <h3 data-i18n="pay_step4_title">4. Receive Confirmation</h3>
-                            <p data-i18n="pay_step4_desc">
-                                Once your payment is confirmed, a booking reference and confirmation
-                                details will be available in your account and sent to your email.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content-grid" style="margin-top: 30px;">
-                <div class="content-card">
-                    <h3><i class="fas fa-user-shield"></i> <span data-i18n="pay_security_title">Your Security Matters</span></h3>
-                    <p data-i18n="pay_security_desc">
-                        We take payment security seriously. All transactions are handled with the aim
-                        of protecting customer data and financial information in line with standard
-                        security practices.
+                    <h3><i class="fas fa-user-shield"></i> Your Security Matters</h3>
+                    <p>
+                        We take payment security seriously. All payment proofs are reviewed by
+                        our team and confirmations are sent via email and WhatsApp.
                     </p>
                 </div>
 
                 <div class="content-card">
-                    <h3><i class="fas fa-globe"></i> <span data-i18n="pay_global_title">Supporting Global Fans</span></h3>
-                    <p data-i18n="pay_global_desc">
-                        We understand that fans are travelling from many countries. Our payment options
-                        are being designed with international users in mind, including support for
-                        multiple currencies where possible.
+                    <h3><i class="fas fa-globe"></i> Supporting Global Fans</h3>
+                    <p>
+                        Our payment options are designed for international users. CashApp for
+                        US-based fans and cryptocurrency for worldwide access.
                     </p>
                 </div>
 
                 <div class="content-card">
-                    <h3><i class="fas fa-receipt"></i> <span data-i18n="pay_transparency_title">Clear Pricing</span></h3>
-                    <p data-i18n="pay_transparency_desc">
-                        We aim to display pricing transparently so you know exactly what you are
-                        paying for before completing any transaction. No hidden fees will be added
-                        without your knowledge.
-                    </p>
-                </div>
-
-                <div class="content-card">
-                    <h3><i class="fas fa-clock"></i> <span data-i18n="pay_progress_title">Payment Options Coming Soon</span></h3>
-                    <p data-i18n="pay_progress_desc">
-                        Full payment integration is currently being finalised. More payment methods
-                        and a complete checkout flow will be available at launch. Contact support
-                        for assistance in the meantime.
+                    <h3><i class="fas fa-receipt"></i> Clear Pricing</h3>
+                    <p>
+                        All prices are displayed clearly before payment. No hidden fees will
+                        be added. You pay exactly what you see.
                     </p>
                 </div>
             </div>
 
+            <!-- CTA -->
             <div class="faq-cta" style="margin-top: 35px;">
-                <h2><i class="fas fa-wallet"></i> <span data-i18n="pay_cta_title">Have a Payment Question?</span></h2>
-                <p data-i18n="pay_cta_desc">
+                <h2><i class="fas fa-wallet"></i> Have a Payment Question?</h2>
+                <p>
                     If you have questions about payment methods, booking costs, or need assistance
                     with a transaction, our support team is available via WhatsApp and email.
                 </p>
                 <div class="faq-cta-buttons">
                     <a href="ticket.html" class="btn btn-gold">
-                        <i class="fas fa-ticket-alt"></i> <span data-i18n="pay_btn_tickets">Browse Tickets</span>
+                        <i class="fas fa-ticket-alt"></i> Browse Tickets
                     </a>
                     <a href="support.html" class="btn btn-primary">
-                        <i class="fas fa-headset"></i> <span data-i18n="pay_btn_support">Contact Support</span>
+                        <i class="fas fa-headset"></i> Contact Support
                     </a>
                 </div>
             </div>
 
         </div>
     </section>
-
-    <!-- LIVE CHAT FLOATING BUTTON -->
+        <!-- LIVE CHAT FLOATING BUTTON -->
     <button class="live-chat-toggle" id="liveChatToggle" onclick="toggleLiveChat()">
         <i class="fas fa-comments"></i>
     </button>
