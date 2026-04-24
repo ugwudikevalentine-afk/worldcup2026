@@ -543,14 +543,19 @@
             </div>
 
             <!-- ===== MATCHES TAB ===== -->
-            <div id="matches" class="tab-content">
-                <div class="admin-section">
-                    <div class="section-header">
-                        <h2><i class="fas fa-futbol"></i> All Matches</h2>
-                        <button class="btn-add" onclick="openModal('addMatch')">
-                            <i class="fas fa-plus"></i> Add Match
-                        </button>
-                    </div>
+<div id="matches" class="tab-content">
+    <div class="admin-section">
+        <div class="section-header">
+            <h2><i class="fas fa-futbol"></i> All Matches</h2>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-add" onclick="syncMatches()" style="background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);">
+                    <i class="fas fa-sync"></i> Sync TheSportsDB
+                </button>
+                <button class="btn-add" onclick="openModal('addMatch')">
+                    <i class="fas fa-plus"></i> Add Match
+                </button>
+            </div>
+        </div>
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -1617,7 +1622,36 @@
                 window.location.href = 'login.html';
             }
         }
+async function syncMatches() {
+    if (!confirm('Sync matches from TheSportsDB? This may take a moment.')) return;
 
+    const btn = event.target;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Syncing...';
+
+    try {
+        const response = await fetch(`${API_URL}/api/matches/sync/thesportsdb`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${adminToken}`
+            }
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            alert(`✅ Sync Complete!\n\nNew matches: ${data.synced}\nUpdated: ${data.updated}\nErrors: ${data.errors}\nTotal from API: ${data.totalFromAPI}`);
+            loadMatches();
+            loadDashboardStats();
+        } else {
+            alert(data.message || 'Sync failed');
+        }
+    } catch (error) {
+        alert('Network error during sync');
+    }
+
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-sync"></i> Sync TheSportsDB';
+}
         // ===== INITIALIZE =====
         document.addEventListener('DOMContentLoaded', initAdmin);
     </script>
