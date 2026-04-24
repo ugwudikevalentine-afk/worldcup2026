@@ -27,16 +27,15 @@
                 <li><a href="faq.html" class="nav-link" data-i18n="nav_faq">FAQ</a></li>
                 <li><a href="account.html" class="nav-link" data-i18n="nav_account">My Account</a></li>
             </ul>
-           <!-- REPLACE WITH THIS: -->
-<div class="nav-auth">
-    <div class="cart-nav-item">
-        <a href="cart.html" class="cart-nav-link" title="Cart">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-count">0</span>
-        </a>
-    </div>
-    <a href="login.html" class="btn-signin" data-i18n="nav_signin">Sign In</a>
-</div>
+            <div class="nav-auth">
+                <div class="cart-nav-item">
+                    <a href="cart.html" class="cart-nav-link" title="Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+                <a href="login.html" class="btn-signin" data-i18n="nav_signin">Sign In</a>
+            </div>
             <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
@@ -48,8 +47,8 @@
     <!-- HERO -->
     <section class="page-hero">
         <div class="container">
-            <h1><i class="fas fa-credit-card"></i> <span data-i18n="pay_hero_title">Payments</span></h1>
-            <p data-i18n="pay_hero_subtitle">Complete your booking payment using one of our accepted methods</p>
+            <h1><i class="fas fa-lock"></i> Complete Payment</h1>
+            <p>Choose your payment method and submit proof of payment</p>
         </div>
     </section>
 
@@ -57,39 +56,41 @@
     <section class="page-content" id="paymentMethodsSection">
         <div class="container">
 
-            <!-- Booking Summary (shown when coming from a booking) -->
-            <div id="paymentBookingSummary" class="payment-booking-summary" style="display:none;"></div>
+            <!-- Step Indicator -->
+            <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 35px; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 8px; color: #16a34a; font-weight: 600;">
+                    <div style="width: 30px; height: 30px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-check" style="font-size: 0.8rem;"></i>
+                    </div>
+                    <span>Bookings Created</span>
+                </div>
+                <div style="width: 40px; height: 2px; background: #16a34a; align-self: center;"></div>
+                <div style="display: flex; align-items: center; gap: 8px; color: #16a34a; font-weight: 600;">
+                    <div style="width: 30px; height: 30px; border-radius: 50%; background: #16a34a; color: #fff; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-check" style="font-size: 0.8rem;"></i>
+                    </div>
+                    <span>Cart Reviewed</span>
+                </div>
+                <div style="width: 40px; height: 2px; background: #16a34a; align-self: center;"></div>
+                <div style="display: flex; align-items: center; gap: 8px; color: var(--primary-blue); font-weight: 600;">
+                    <div style="width: 30px; height: 30px; border-radius: 50%; background: var(--primary-blue); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem;">3</div>
+                    <span>Payment</span>
+                </div>
+                <div style="width: 40px; height: 2px; background: #d1d5db; align-self: center;"></div>
+                <div style="display: flex; align-items: center; gap: 8px; color: #9ca3af;">
+                    <div style="width: 30px; height: 30px; border-radius: 50%; background: #e5e7eb; color: #9ca3af; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem;">4</div>
+                    <span>Confirmation</span>
+                </div>
+            </div>
 
-            <!-- How It Works -->
-            <div class="about-content">
-                <h2><i class="fas fa-shield-alt"></i> <span data-i18n="pay_secure_title">How Payments Work</span></h2>
-                <p data-i18n="pay_secure_p1">
-                    After creating a booking, select your preferred payment method below, send the
-                    exact amount shown, and upload a screenshot of your payment confirmation. Our
-                    team will verify your payment within 24 hours.
-                </p>
-
-                <div class="payment-step-flow">
-                    <div class="payment-step-item">
-                        <div class="payment-step-num">1</div>
-                        <h4>Book</h4>
-                        <p>Select tickets, hotels, flights, or extras</p>
-                    </div>
-                    <div class="payment-step-item">
-                        <div class="payment-step-num">2</div>
-                        <h4>Pay</h4>
-                        <p>Send payment using a method below</p>
-                    </div>
-                    <div class="payment-step-item">
-                        <div class="payment-step-num">3</div>
-                        <h4>Upload</h4>
-                        <p>Upload your payment screenshot</p>
-                    </div>
-                    <div class="payment-step-item">
-                        <div class="payment-step-num">4</div>
-                        <h4>Confirm</h4>
-                        <p>We verify and confirm within 24hrs</p>
-                    </div>
+            <!-- Order Summary -->
+            <div class="payment-booking-summary" id="paymentBookingSummary">
+                <h3><i class="fas fa-receipt"></i> Order Summary</h3>
+                <div id="orderItemsList">
+                    <p style="color: #6b7280;">Loading your order...</p>
+                </div>
+                <div id="orderTotal" class="payment-total-amount" style="display:none;">
+                    $0
                 </div>
             </div>
 
@@ -97,9 +98,9 @@
             <div class="payment-warning-box">
                 <i class="fas fa-exclamation-triangle"></i>
                 <p>
-                    <strong>Important:</strong> After making your payment, you MUST upload a screenshot
-                    or photo of your payment confirmation below. Our team will verify within 24 hours
-                    and confirm your booking via email and WhatsApp.
+                    <strong>Important:</strong> After making your payment, upload a screenshot
+                    of your payment confirmation below. Our team will verify within 24 hours
+                    and confirm ALL your bookings via email and WhatsApp.
                 </p>
             </div>
 
@@ -165,21 +166,20 @@
                     </span>
                 </div>
             </div>
-                        <!-- PAYMENT DETAILS BOX -->
+
+            <!-- PAYMENT DETAILS BOX -->
             <div class="payment-details-box" id="paymentDetailsBox">
 
                 <!-- CashApp Details -->
                 <div id="details-cashapp" class="payment-method-details" style="display:none;">
                     <h3><i class="fas fa-dollar-sign"></i> Send via CashApp</h3>
-
                     <div class="payment-warning-box" style="background: rgba(255,255,255,0.1); border-color: var(--gold);">
                         <i class="fas fa-info-circle" style="color: var(--gold);"></i>
                         <p style="color: #fff;">
-                            Send your payment to the CashApp handle below. Include your booking
-                            reference number in the payment note.
+                            Send your payment to the CashApp handle below.
+                            Include your booking reference numbers in the note.
                         </p>
                     </div>
-
                     <p style="color: var(--gold); margin: 15px 0;"><strong>CashApp Handle:</strong></p>
                     <div class="wallet-address-box">
                         <span>$LawnmowerMan25</span>
@@ -187,70 +187,61 @@
                             <i class="fas fa-copy"></i> Copy
                         </button>
                     </div>
-
                     <div class="qr-container">
                         <p><i class="fas fa-qrcode"></i> Scan QR Code</p>
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=$LawnmowerMan25" alt="CashApp QR Code">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=$LawnmowerMan25" alt="CashApp QR">
                     </div>
                 </div>
 
                 <!-- Bitcoin Details -->
                 <div id="details-bitcoin" class="payment-method-details" style="display:none;">
                     <h3><i class="fab fa-bitcoin"></i> Send Bitcoin (BTC)</h3>
-
                     <div class="payment-warning-box" style="background: rgba(255,255,255,0.1); border-color: var(--gold);">
                         <i class="fas fa-exclamation-triangle" style="color: var(--gold);"></i>
                         <p style="color: #fff;">
-                            Send ONLY Bitcoin (BTC) to this address. Sending any other coin will
-                            result in permanent loss of funds.
+                            Send ONLY Bitcoin (BTC) to this address.
+                            Sending any other coin will result in permanent loss of funds.
                         </p>
                     </div>
-
                     <p style="color: var(--gold); margin: 15px 0;">
                         <strong>Network:</strong> Bitcoin &nbsp;|&nbsp;
                         <strong>Memo:</strong> Not Required
                     </p>
-
                     <div class="wallet-address-box">
                         <span>bc1qrrdpy7axrhfktt2xm2etgddrlapxvpum7me9mn</span>
                         <button class="copy-btn" onclick="copyPaymentAddress('bc1qrrdpy7axrhfktt2xm2etgddrlapxvpum7me9mn')">
                             <i class="fas fa-copy"></i> Copy
                         </button>
                     </div>
-
                     <div class="qr-container">
                         <p><i class="fas fa-qrcode"></i> Scan QR Code</p>
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bc1qrrdpy7axrhfktt2xm2etgddrlapxvpum7me9mn" alt="Bitcoin QR Code">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bc1qrrdpy7axrhfktt2xm2etgddrlapxvpum7me9mn" alt="Bitcoin QR">
                     </div>
                 </div>
 
                 <!-- USDT TRC20 Details -->
                 <div id="details-usdt_trc20" class="payment-method-details" style="display:none;">
                     <h3><i class="fas fa-coins"></i> Send USDT (TRC20)</h3>
-
                     <div class="payment-warning-box" style="background: rgba(255,255,255,0.1); border-color: var(--gold);">
                         <i class="fas fa-exclamation-triangle" style="color: var(--gold);"></i>
                         <p style="color: #fff;">
-                            Send ONLY USDT on the <strong>TRC20</strong> network. Do NOT use ERC20
-                            or BEP20 — funds sent on the wrong network will be permanently lost.
+                            Send ONLY USDT on the <strong>TRC20</strong> network.
+                            Do NOT use ERC20 or BEP20 — funds will be lost.
                         </p>
                     </div>
-
                     <p style="color: var(--gold); margin: 15px 0;">
                         <strong>Network:</strong> TRC20 &nbsp;|&nbsp;
                         <strong>Memo:</strong> Not Required
                     </p>
-
                     <div class="wallet-address-box">
                         <span>TPk5swCGr8NyRLMED11CG4R8EnAEpHu7Pi</span>
                         <button class="copy-btn" onclick="copyPaymentAddress('TPk5swCGr8NyRLMED11CG4R8EnAEpHu7Pi')">
                             <i class="fas fa-copy"></i> Copy
                         </button>
                     </div>
-
                     <div class="qr-container">
                         <p><i class="fas fa-qrcode"></i> Scan QR Code</p>
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TPk5swCGr8NyRLMED11CG4R8EnAEpHu7Pi" alt="USDT TRC20 QR Code">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TPk5swCGr8NyRLMED11CG4R8EnAEpHu7Pi" alt="USDT QR">
                     </div>
                 </div>
 
@@ -258,7 +249,6 @@
 
             <!-- PROOF UPLOAD SECTION -->
             <div id="proofSection" class="proof-section">
-
                 <h2 style="color: var(--primary-blue); margin-bottom: 15px;">
                     <i class="fas fa-upload"></i> Upload Payment Proof
                 </h2>
@@ -299,75 +289,46 @@
                     <div class="payment-error-msg" id="paymentErrorMsg"></div>
                     <div class="payment-success-msg" id="paymentSuccessMsg"></div>
 
-                    <button class="submit-payment-btn" id="submitPaymentBtn" onclick="submitPaymentProof()">
+                    <button class="submit-payment-btn" id="submitPaymentBtn" onclick="submitCartPayment()">
                         <i class="fas fa-paper-plane"></i> Submit Payment Proof
                     </button>
 
                     <p style="text-align: center; color: #6b7280; font-size: 0.85rem; margin-top: 15px;">
                         <i class="fas fa-clock"></i> Our team verifies payments within 24 hours.
-                        You will receive a confirmation via email and WhatsApp.
+                        You will receive confirmation via email and WhatsApp.
                     </p>
                 </div>
-
             </div>
 
-            <!-- Additional Info Cards -->
+            <!-- Info Cards -->
             <div class="content-grid" style="margin-top: 30px;">
                 <div class="content-card">
                     <h3><i class="fas fa-user-shield"></i> Your Security Matters</h3>
-                    <p>
-                        We take payment security seriously. All payment proofs are reviewed by
-                        our team and confirmations are sent via email and WhatsApp.
-                    </p>
+                    <p>All payment proofs are reviewed by our team. Confirmations sent via email and WhatsApp.</p>
                 </div>
-
-                <div class="content-card">
-                    <h3><i class="fas fa-globe"></i> Supporting Global Fans</h3>
-                    <p>
-                        Our payment options are designed for international users. CashApp for
-                        US-based fans and cryptocurrency for worldwide access.
-                    </p>
-                </div>
-
                 <div class="content-card">
                     <h3><i class="fas fa-receipt"></i> Clear Pricing</h3>
-                    <p>
-                        All prices are displayed clearly before payment. No hidden fees will
-                        be added. You pay exactly what you see.
-                    </p>
+                    <p>All prices are displayed clearly. No hidden fees. You pay exactly what you see.</p>
                 </div>
-            </div>
-
-            <!-- CTA -->
-            <div class="faq-cta" style="margin-top: 35px;">
-                <h2><i class="fas fa-wallet"></i> Have a Payment Question?</h2>
-                <p>
-                    If you have questions about payment methods, booking costs, or need assistance
-                    with a transaction, our support team is available via WhatsApp and email.
-                </p>
-                <div class="faq-cta-buttons">
-                    <a href="ticket.html" class="btn btn-gold">
-                        <i class="fas fa-ticket-alt"></i> Browse Tickets
-                    </a>
-                    <a href="support.html" class="btn btn-primary">
-                        <i class="fas fa-headset"></i> Contact Support
-                    </a>
+                <div class="content-card">
+                    <h3><i class="fas fa-headset"></i> Need Help?</h3>
+                    <p>Contact us via WhatsApp or email if you have any payment questions.</p>
                 </div>
             </div>
 
         </div>
     </section>
-        <!-- LIVE CHAT FLOATING BUTTON -->
+
+    <!-- LIVE CHAT -->
     <button class="live-chat-toggle" id="liveChatToggle" onclick="toggleLiveChat()">
         <i class="fas fa-comments"></i>
     </button>
 
-    <!-- LIVE CHAT BOX -->
     <div class="live-chat-box" id="liveChatBox">
         <div class="live-chat-header">
             <div class="live-chat-title">
                 <i class="fas fa-headset"></i>
-                <span data-i18n="chat_title">Support Chat</span>
+                <span>Support Chat</span>
             </div>
             <button class="live-chat-close" onclick="toggleLiveChat()">
                 <i class="fas fa-times"></i>
@@ -375,19 +336,21 @@
         </div>
         <div class="live-chat-body" id="liveChatBody">
             <div class="chat-message bot-message">
-                <p data-i18n="chat_greeting">Hi there! How can we help you today? You can reach us through the options below or contact us directly.</p>
+                <p>Hi there! How can we help you today?</p>
                 <p class="chat-contact-info">
-                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_whatsapp_label">WhatsApp:</span> <a href="https://wa.me/16154145082" target="_blank">+1 (615) 414-5082</a><br>
-                    <i class="fas fa-envelope"></i> <span data-i18n="chat_email_label">Email:</span> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a>
+                    <i class="fab fa-whatsapp"></i> WhatsApp:
+                    <a href="https://wa.me/16154145082" target="_blank">+1 (615) 414-5082</a><br>
+                    <i class="fas fa-envelope"></i> Email:
+                    <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a>
                 </p>
             </div>
             <div class="chat-options">
-                <button onclick="sendQuickChat('tickets')" data-i18n="chat_btn_tickets">Tickets</button>
-                <button onclick="sendQuickChat('travel')" data-i18n="chat_btn_travel">Travel</button>
-                <button onclick="sendQuickChat('hotels')" data-i18n="chat_btn_hotels">Hotels</button>
-                <button onclick="sendQuickChat('payments')" data-i18n="chat_btn_payments">Payments</button>
+                <button onclick="sendQuickChat('tickets')">Tickets</button>
+                <button onclick="sendQuickChat('travel')">Travel</button>
+                <button onclick="sendQuickChat('hotels')">Hotels</button>
+                <button onclick="sendQuickChat('payments')">Payments</button>
                 <button onclick="window.open('https://wa.me/16154145082', '_blank')">
-                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_btn_whatsapp">Chat on WhatsApp</span>
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
                 </button>
             </div>
         </div>
@@ -398,41 +361,45 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4 data-i18n="footer_about">Company</h4>
+                    <h4>Company</h4>
                     <ul>
-                        <li><a href="about.html" data-i18n="footer_about_link">About</a></li>
-                        <li><a href="blog.html" data-i18n="footer_blog">Blog</a></li>
-                        <li><a href="careers.html" data-i18n="footer_careers">Work With Us</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="careers.html">Work With Us</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4 data-i18n="footer_support">Help</h4>
+                    <h4>Help</h4>
                     <ul>
-                        <li><a href="faq.html" data-i18n="footer_faq">FAQ</a></li>
-                        <li><a href="support.html" data-i18n="footer_contact_us">Contact Us</a></li>
-                        <li><a href="#" onclick="toggleLiveChat(); return false;" data-i18n="footer_live_chat">Live Chat</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="support.html">Contact Us</a></li>
+                        <li><a href="#" onclick="toggleLiveChat(); return false;">Live Chat</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4 data-i18n="footer_legal">Legal</h4>
+                    <h4>Legal</h4>
                     <ul>
-                        <li><a href="terms.html" data-i18n="footer_terms">Terms & Conditions</a></li>
-                        <li><a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
-                        <li><a href="cookies.html" data-i18n="footer_cookies">Cookie Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="cookies.html">Cookie Policy</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4 data-i18n="footer_contact">Get in Touch</h4>
+                    <h4>Get in Touch</h4>
                     <div class="footer-contact">
-                        <p><i class="fas fa-envelope"></i> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a></p>
+                        <p><i class="fas fa-envelope"></i>
+                            <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a>
+                        </p>
                         <div class="social-links">
-                            <a href="https://wa.me/16154145082" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                            <a href="https://wa.me/16154145082" target="_blank">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p data-i18n="footer_copyright">© 2026 World Cup Travel Platform. Independent booking assistance service.</p>
+                <p>© 2026 World Cup Travel Platform. Independent booking assistance service.</p>
             </div>
         </div>
     </footer>
@@ -440,5 +407,230 @@
     <script src="translations.js"></script>
     <script src="language.js"></script>
     <script src="script.js"></script>
+    <script>
+        // ===================================
+        // PAYMENTS PAGE — CART AWARE
+        // ===================================
+        let cartBookingIds = [];
+
+        async function initPaymentsPage() {
+            updateNavbar();
+            updateCartIcon();
+
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Get booking IDs from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const bookingsParam = urlParams.get('bookings');
+            const singleBooking = urlParams.get('booking');
+
+            if (bookingsParam) {
+                // Multiple bookings from cart
+                cartBookingIds = bookingsParam.split(',').filter(id => id.trim());
+                await loadCartOrderSummary();
+            } else if (singleBooking) {
+                // Single booking (legacy)
+                cartBookingIds = [singleBooking];
+                await loadCartOrderSummary();
+            } else {
+                // No booking — show general payment info
+                document.getElementById('paymentBookingSummary').style.display = 'none';
+            }
+        }
+
+        async function loadCartOrderSummary() {
+            const token = localStorage.getItem('token');
+            const orderItemsList = document.getElementById('orderItemsList');
+            const orderTotal = document.getElementById('orderTotal');
+
+            if (cartBookingIds.length === 0) {
+                orderItemsList.innerHTML = '<p style="color:#dc2626;">No bookings found.</p>';
+                return;
+            }
+
+            try {
+                // Fetch all bookings
+                const bookingPromises = cartBookingIds.map(id =>
+                    fetch(`${API_URL}/api/bookings/${id}`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    }).then(r => r.json())
+                );
+
+                const results = await Promise.all(bookingPromises);
+                const bookings = results
+                    .filter(r => r.success)
+                    .map(r => r.booking);
+
+                if (bookings.length === 0) {
+                    orderItemsList.innerHTML = '<p style="color:#dc2626;">Could not load booking details.</p>';
+                    return;
+                }
+
+                // Calculate grand total
+                const grandTotal = bookings.reduce((sum, b) => sum + b.totalPrice, 0);
+
+                // Render items
+                const typeIcons = {
+                    ticket: 'fa-ticket-alt',
+                    hotel: 'fa-hotel',
+                    flight: 'fa-plane',
+                    extra: 'fa-gift'
+                };
+
+                orderItemsList.innerHTML = `
+                    <div style="margin-bottom: 15px;">
+                        ${bookings.map(booking => `
+                            <div style="
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                padding: 12px 0;
+                                border-bottom: 1px solid #e5e7eb;
+                                gap: 15px;
+                            ">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="
+                                        width: 40px;
+                                        height: 40px;
+                                        border-radius: 8px;
+                                        background: var(--primary-blue);
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        color: #fff;
+                                        flex-shrink: 0;
+                                    ">
+                                        <i class="fas ${typeIcons[booking.bookingType] || 'fa-receipt'}"></i>
+                                    </div>
+                                    <div>
+                                        <p style="margin:0; font-weight:600; color: var(--text-dark);">
+                                            ${booking.itemName}
+                                        </p>
+                                        <p style="margin:0; font-size:0.8rem; color:#6b7280;">
+                                            Ref: ${booking.bookingReference}
+                                        </p>
+                                    </div>
+                                </div>
+                                <span style="
+                                    font-weight: 800;
+                                    color: #16a34a;
+                                    font-size: 1.1rem;
+                                    white-space: nowrap;
+                                ">$${booking.totalPrice}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                // Show grand total
+                orderTotal.textContent = `Grand Total: $${grandTotal}`;
+                orderTotal.style.display = 'block';
+
+            } catch (error) {
+                console.error('Error loading order summary:', error);
+                orderItemsList.innerHTML = '<p style="color:#dc2626;">Error loading order. Please go back to cart.</p>';
+            }
+        }
+
+        async function submitCartPayment() {
+            const token = localStorage.getItem('token');
+            const transactionId = document.getElementById('paymentTransactionId')?.value.trim();
+            const errorEl = document.getElementById('paymentErrorMsg');
+            const successEl = document.getElementById('paymentSuccessMsg');
+            const submitBtn = document.getElementById('submitPaymentBtn');
+
+            if (errorEl) errorEl.style.display = 'none';
+            if (successEl) successEl.style.display = 'none';
+
+            if (!selectedPaymentMethod) {
+                errorEl.textContent = 'Please select a payment method.';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            if (!paymentProofBase64) {
+                errorEl.textContent = 'Please upload a screenshot of your payment.';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            if (cartBookingIds.length === 0) {
+                errorEl.textContent = 'No bookings found. Please go back to cart.';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+            try {
+                // Submit payment for each booking
+                const paymentPromises = cartBookingIds.map(bookingId =>
+                    fetch(`${API_URL}/api/payments/submit`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            bookingId,
+                            paymentMethod: selectedPaymentMethod,
+                            transactionId,
+                            proofImage: paymentProofBase64
+                        })
+                    }).then(r => r.json())
+                );
+
+                const results = await Promise.all(paymentPromises);
+                const allSuccess = results.every(r => r.success);
+                const references = results
+                    .filter(r => r.success)
+                    .map(r => r.payment.paymentReference)
+                    .join(', ');
+
+                if (allSuccess) {
+                    successEl.innerHTML = `
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Payment proof submitted for all bookings!</strong><br>
+                        References: ${references}<br>
+                        Our team will verify within 24 hours and confirm
+                        all your bookings via email and WhatsApp.
+                    `;
+                    successEl.style.display = 'block';
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Submitted Successfully!';
+
+                    // Clear cart after successful payment
+                    clearCart();
+
+                    setTimeout(() => {
+                        window.location.href = 'account.html';
+                    }, 4000);
+                } else {
+                    const errors = results
+                        .filter(r => !r.success)
+                        .map(r => r.message)
+                        .join(', ');
+                    errorEl.textContent = errors || 'Some payments failed. Please try again.';
+                    errorEl.style.display = 'block';
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Payment Proof';
+                }
+            } catch (error) {
+                console.error('Payment error:', error);
+                errorEl.textContent = 'Network error. Please try again.';
+                errorEl.style.display = 'block';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Payment Proof';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initPaymentsPage();
+        });
+    </script>
 </body>
 </html>
