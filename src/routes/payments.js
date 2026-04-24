@@ -51,6 +51,9 @@ const PAYMENT_DETAILS = {
     }
 };
 
+// @route   GET /api/payments/methods
+// @desc    Get available payment methods
+// @access  Public
 router.get('/methods', (req, res) => {
     res.json({
         success: true,
@@ -58,23 +61,41 @@ router.get('/methods', (req, res) => {
     });
 });
 
+// @route   POST /api/payments/submit
+// @desc    Submit payment proof for one booking
+// @access  Private
 router.post('/submit', protect, async (req, res) => {
     try {
-        const { bookingId, paymentMethod, transactionId, proofImage } = req.body;
+        const {
+            bookingId,
+            paymentMethod,
+            transactionId,
+            proofImage
+        } = req.body;
 
+        // Validate booking
         const booking = await Booking.findById(bookingId);
-
         if (!booking) {
-            return res.status(404).json({ success: false, message: 'Booking not found' });
+            return res.status(404).json({
+                success: false,
+                message: 'Booking not found'
+            });
         }
 
         if (booking.user.toString() !== req.user._id.toString()) {
-            return res.status(403).json({ success: false, message: 'Not authorized' });
+            return res.status(403).json({
+                success: false,
+                message: 'Not authorized'
+            });
         }
 
+        // Validate payment method
         const method = PAYMENT_DETAILS[paymentMethod];
         if (!method) {
-            return res.status(400).json({ success: false, message: 'Invalid payment method' });
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid payment method'
+            });
         }
 
         if (!method.available) {
@@ -84,6 +105,7 @@ router.post('/submit', protect, async (req, res) => {
             });
         }
 
+        // Check if payment already submitted
         const existingPayment = await Payment.findOne({
             booking: bookingId,
             status: { $in: ['pending', 'submitted', 'approved'] }
@@ -96,17 +118,19 @@ router.post('/submit', protect, async (req, res) => {
             });
         }
 
+        // Create payment
         const payment = await Payment.create({
             booking: bookingId,
             user: req.user._id,
             paymentMethod,
             amount: booking.totalPrice,
-            transactionId,
-            proofImage,
+            transactionId: transactionId || null,
+            proofImage: proofImage || null,
             status: 'submitted',
             submittedAt: new Date()
         });
 
+        // Update booking payment status
         booking.paymentStatus = 'pending';
         await booking.save();
 
@@ -124,41 +148,70 @@ router.post('/submit', protect, async (req, res) => {
         });
     } catch (error) {
         console.error('Submit payment error:', error);
-        res.status(500).json({ success: false, message: 'Error submitting payment', error: error.message });
+        res.status(500).json({
+            success: false,
+            message: 'Error submitting payment',
+            error: error.message
+        });
     }
 });
 
+// @route   GET /api/payments/my-payments
+// @desc    Get user payments
+// @access  Private
 router.get('/my-payments', protect, async (req, res) => {
     try {
         const payments = await Payment.find({ user: req.user._id })
-            .populate('booking', 'itemName bookingReference totalPrice bookingType')
+            .populate('booking', 'itemName bookingReference totalPrice bookingType status')
             .sort({ createdAt: -1 });
 
-        res.json({ success: true, count: payments.length, payments });
+        res.json({
+            success: true,
+            count: payments.length,
+            payments
+        });
     } catch (error) {
         console.error('Get payments error:', error);
-        res.status(500).json({ success: false, message: 'Error fetching payments', error: error.message });
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching payments',
+            error: error.message
+        });
     }
 });
 
+// @route   GET /api/payments/admin/all
+// @desc    Get all payments (Admin)
+// @access  Private/Admin
 router.get('/admin/all', protect, admin, async (req, res) => {
     try {
         const { status } = req.query;
         let query = {};
-        if (status) query.status = status;
+        if (status && status !== 'all') query.status = status;
 
         const payments = await Payment.find(query)
-            .populate('user', 'name email whatsapp')
-            .populate('booking', 'itemName bookingReference totalPrice bookingType')
+            .populate('user', 'name email whatsapp country')
+            .populate('booking', 'itemName bookingReference totalPrice bookingType status paymentStatus')
             .sort({ createdAt: -1 });
 
-        res.json({ success: true, count: payments.length, payments });
+        res.json({
+            success: true,
+            count: payments.length,
+            payments
+        });
     } catch (error) {
         console.error('Admin get payments error:', error);
-        res.status(500).json({ success: false, message: 'Error fetching payments', error: error.message });
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching payments',
+            error: error.message
+        });
     }
 });
 
+// @route   PUT /api/payments/admin/:id/approve
+// @desc    Approve payment (Admin)
+// @access  Private/Admin
 router.put('/admin/:id/approve', protect, admin, async (req, res) => {
     try {
         const { adminNotes } = req.body;
@@ -168,33 +221,54 @@ router.put('/admin/:id/approve', protect, admin, async (req, res) => {
             .populate('booking');
 
         if (!payment) {
-            return res.status(404).json({ success: false, message: 'Payment not found' });
+            return res.status(404).json({
+                success: false,
+                message: 'Payment not found'
+            });
         }
 
+        // Update payment
         payment.status = 'approved';
         payment.adminNotes = adminNotes || '';
         payment.reviewedAt = new Date();
         await payment.save();
 
+        // Update booking to confirmed + paid
         await Booking.findByIdAndUpdate(payment.booking._id, {
             paymentStatus: 'paid',
             status: 'confirmed'
         });
 
+        // Send confirmation email
         try {
-            await sendPaymentConfirmation(payment.user, payment.booking, payment);
-            console.log('✅ Payment approval email sent');
+            await sendPaymentConfirmation(
+                payment.user,
+                payment.booking,
+                payment
+            );
+            console.log('✅ Payment approval email sent to:', payment.user.email);
         } catch (emailError) {
             console.error('❌ Email error:', emailError.message);
         }
 
-        res.json({ success: true, message: 'Payment approved!', payment });
+        res.json({
+            success: true,
+            message: 'Payment approved! Booking confirmed.',
+            payment
+        });
     } catch (error) {
         console.error('Approve payment error:', error);
-        res.status(500).json({ success: false, message: 'Error approving payment', error: error.message });
+        res.status(500).json({
+            success: false,
+            message: 'Error approving payment',
+            error: error.message
+        });
     }
 });
 
+// @route   PUT /api/payments/admin/:id/reject
+// @desc    Reject payment (Admin)
+// @access  Private/Admin
 router.put('/admin/:id/reject', protect, admin, async (req, res) => {
     try {
         const { adminNotes } = req.body;
@@ -204,22 +278,35 @@ router.put('/admin/:id/reject', protect, admin, async (req, res) => {
             .populate('booking');
 
         if (!payment) {
-            return res.status(404).json({ success: false, message: 'Payment not found' });
+            return res.status(404).json({
+                success: false,
+                message: 'Payment not found'
+            });
         }
 
+        // Update payment
         payment.status = 'rejected';
         payment.adminNotes = adminNotes || '';
         payment.reviewedAt = new Date();
         await payment.save();
 
+        // Update booking payment status
         await Booking.findByIdAndUpdate(payment.booking._id, {
             paymentStatus: 'failed'
         });
 
-        res.json({ success: true, message: 'Payment rejected.', payment });
+        res.json({
+            success: true,
+            message: 'Payment rejected.',
+            payment
+        });
     } catch (error) {
         console.error('Reject payment error:', error);
-        res.status(500).json({ success: false, message: 'Error rejecting payment', error: error.message });
+        res.status(500).json({
+            success: false,
+            message: 'Error rejecting payment',
+            error: error.message
+        });
     }
 });
 
