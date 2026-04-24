@@ -1,11 +1,17 @@
 import mongoose from 'mongoose';
 
 const paymentSchema = new mongoose.Schema({
-    booking: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Booking',
-        required: true
-    },
+    // Single booking (backward compatible)
+booking: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Booking',
+    default: null
+},
+// Multiple bookings (cart checkout)
+bookings: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Booking'
+}],
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

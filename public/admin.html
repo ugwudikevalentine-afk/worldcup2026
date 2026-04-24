@@ -1394,44 +1394,66 @@
         }
 
         function renderPayments(payments) {
-            const tbody = document.getElementById('paymentsTable');
-            if (!payments || payments.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;">No payments found</td></tr>';
-                return;
-            }
-            tbody.innerHTML = payments.map(p => `
-                <tr>
-                    <td>${p.paymentReference}</td>
-                    <td>${p.user?.name || 'N/A'}<br><small style="color:#ccc;">${p.user?.email || ''}</small></td>
-                    <td>${p.booking?.bookingReference || 'N/A'}<br><small style="color:#ccc;">${p.booking?.itemName || ''}</small></td>
-                    <td>${formatPaymentMethod(p.paymentMethod)}</td>
-                    <td style="color: #ffd700; font-weight: bold;">$${p.amount}</td>
-                    <td>${p.transactionId || 'N/A'}</td>
-                    <td>
-                        ${p.proofImage
-                            ? `<a href="#" onclick="viewPaymentProof('${p.proofImage}')" class="proof-image-link">
-                                <i class="fas fa-image"></i> View Proof
-                               </a>`
-                            : '<span style="color:#666;">No proof</span>'
-                        }
-                    </td>
-                    <td><span class="status-badge status-${p.status}">${p.status}</span></td>
-                    <td>${new Date(p.submittedAt || p.createdAt).toLocaleDateString()}</td>
-                    <td>
-                        <div class="action-btns">
-                            ${p.status === 'submitted' ? `
-                                <button class="btn-approve" onclick="approvePayment('${p._id}')">
-                                    <i class="fas fa-check"></i> Approve
-                                </button>
-                                <button class="btn-reject" onclick="rejectPayment('${p._id}')">
-                                    <i class="fas fa-times"></i> Reject
-                                </button>
-                            ` : `<span style="color: #ccc; font-size: 12px;">${p.status}</span>`}
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
-        }
+    const tbody = document.getElementById('paymentsTable');
+    if (!payments || payments.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;">No payments found</td></tr>';
+        return;
+    }
+    tbody.innerHTML = payments.map(p => {
+        // Show all bookings linked to this payment
+        const bookingsList = p.bookings && p.bookings.length > 0
+            ? p.bookings
+            : (p.booking ? [p.booking] : []);
+
+        const bookingsDisplay = bookingsList.map(b => `
+            <div style="margin-bottom: 5px; padding: 4px 8px; background: rgba(255,215,0,0.1); border-radius: 5px;">
+                <small style="color: #ffd700;">${b.bookingType}</small><br>
+                <span style="font-size: 12px;">${b.itemName}</span><br>
+                <small style="color: #ccc;">Ref: ${b.bookingReference} — $${b.totalPrice}</small>
+            </div>
+        `).join('');
+
+        return `
+            <tr>
+                <td>${p.paymentReference}</td>
+                <td>
+                    ${p.user?.name || 'N/A'}<br>
+                    <small style="color:#ccc;">${p.user?.email || ''}</small><br>
+                    <small style="color:#ccc;">${p.user?.whatsapp || ''}</small>
+                </td>
+                <td style="min-width: 200px;">
+                    ${bookingsDisplay}
+                    <small style="color: #ffd700; font-weight: bold;">${bookingsList.length} booking(s)</small>
+                </td>
+                <td>${formatPaymentMethod(p.paymentMethod)}</td>
+                <td style="color: #ffd700; font-weight: bold; font-size: 16px;">$${p.amount}</td>
+                <td>${p.transactionId || 'N/A'}</td>
+                <td>
+                    ${p.proofImage
+                        ? `<a href="#" onclick="viewPaymentProof('${p.proofImage}')" class="proof-image-link">
+                            <i class="fas fa-image"></i> View Proof
+                           </a>`
+                        : '<span style="color:#666;">No proof</span>'
+                    }
+                </td>
+                <td><span class="status-badge status-${p.status}">${p.status}</span></td>
+                <td>${new Date(p.submittedAt || p.createdAt).toLocaleDateString()}</td>
+                <td>
+                    <div class="action-btns">
+                        ${p.status === 'submitted' ? `
+                            <button class="btn-approve" onclick="approvePayment('${p._id}')">
+                                <i class="fas fa-check"></i> Approve All
+                            </button>
+                            <button class="btn-reject" onclick="rejectPayment('${p._id}')">
+                                <i class="fas fa-times"></i> Reject
+                            </button>
+                        ` : `<span style="color: #ccc; font-size: 12px;">${p.status}</span>`}
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
 
         // ===== PAYMENT ACTIONS =====
         function viewPaymentProof(imageData) {

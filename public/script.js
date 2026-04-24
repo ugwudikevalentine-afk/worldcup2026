@@ -2160,50 +2160,44 @@ async function submitPaymentProof() {
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
 
-    // Determine booking IDs to submit
+    // Get all booking IDs
     const bookingIds = window.cartBookingIds || [paymentBookingId];
 
     try {
-        // Submit payment for each booking
-        const submitPromises = bookingIds.map(bookingId =>
-            fetch(`${API_URL}/api/payments/submit`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    bookingId,
-                    paymentMethod: selectedPaymentMethod,
-                    transactionId: transactionId || null,
-                    proofImage: paymentProofBase64
-                })
-            }).then(r => r.json())
-        );
+        const response = await fetch(`${API_URL}/api/payments/submit`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                bookingIds: bookingIds,
+                paymentMethod: selectedPaymentMethod,
+                transactionId: transactionId || null,
+                proofImage: paymentProofBase64
+            })
+        });
 
-        const results = await Promise.all(submitPromises);
-        const allSuccess = results.every(r => r.success);
-        const firstRef = results[0]?.payment?.paymentReference || 'N/A';
+        const data = await response.json();
 
-        if (allSuccess) {
+        if (data.success) {
             successEl.innerHTML = `
                 <i class="fas fa-check-circle"></i>
-                <strong>Payment proof submitted for all ${bookingIds.length} booking(s)!</strong><br>
-                Reference: ${firstRef}<br>
+                <strong>Payment proof submitted for ${data.payment.bookingCount} booking(s)!</strong><br>
+                Reference: ${data.payment.paymentReference}<br>
                 Our team will verify within 24 hours and confirm via email and WhatsApp.
             `;
             successEl.style.display = 'block';
             submitBtn.innerHTML = '<i class="fas fa-check"></i> Submitted Successfully!';
 
-            // Clear cart after successful submission
+            // Clear cart
             clearCart();
 
             setTimeout(() => {
                 window.location.href = 'account.html';
             }, 4000);
         } else {
-            const failedMsg = results.find(r => !r.success)?.message || 'Error submitting payment.';
-            errorEl.textContent = failedMsg;
+            errorEl.textContent = data.message || 'Error submitting payment.';
             errorEl.style.display = 'block';
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Payment Proof';

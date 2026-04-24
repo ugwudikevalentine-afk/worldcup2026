@@ -51,41 +51,53 @@ const PAYMENT_DETAILS = {
     }
 };
 
-// @route   GET /api/payments/methods
-// @desc    Get available payment methods
-// @access  Public
+// @route GET /api/payments/methods
 router.get('/methods', (req, res) => {
-    res.json({
-        success: true,
-        methods: PAYMENT_DETAILS
-    });
+    res.json({ success: true, methods: PAYMENT_DETAILS });
 });
 
-// @route   POST /api/payments/submit
-// @desc    Submit payment proof for one booking
-// @access  Private
+// @route POST /api/payments/submit
+// @desc Submit payment for one or multiple bookings
 router.post('/submit', protect, async (req, res) => {
     try {
         const {
             bookingId,
+            bookingIds,
             paymentMethod,
             transactionId,
             proofImage
         } = req.body;
 
-        // Validate booking
-        const booking = await Booking.findById(bookingId);
-        if (!booking) {
-            return res.status(404).json({
+        // Determine which bookings this payment covers
+        let allBookingIds = [];
+        if (bookingIds && bookingIds.length > 0) {
+            allBookingIds = bookingIds;
+        } else if (bookingId) {
+            allBookingIds = [bookingId];
+        } else {
+            return res.status(400).json({
                 success: false,
-                message: 'Booking not found'
+                message: 'No booking ID provided'
             });
         }
 
-        if (booking.user.toString() !== req.user._id.toString()) {
+        // Validate all bookings exist and belong to user
+        const bookings = await Booking.find({
+            _id: { $in: allBookingIds },
+            user: req.user._id
+        });
+
+        if (bookings.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'No valid bookings found'
+            });
+        }
+
+        if (bookings.length !== allBookingIds.length) {
             return res.status(403).json({
                 success: false,
-                message: 'Not authorized'
+                message: 'One or more bookings not found or not authorized'
             });
         }
 
@@ -105,43 +117,50 @@ router.post('/submit', protect, async (req, res) => {
             });
         }
 
-        // Check if payment already submitted
+        // Check if payment already exists for any of these bookings
         const existingPayment = await Payment.findOne({
-            booking: bookingId,
+            bookings: { $in: allBookingIds },
             status: { $in: ['pending', 'submitted', 'approved'] }
         });
 
         if (existingPayment) {
             return res.status(400).json({
                 success: false,
-                message: 'Payment already submitted for this booking'
+                message: 'Payment already submitted for one or more of these bookings'
             });
         }
 
-        // Create payment
+        // Calculate total amount
+        const totalAmount = bookings.reduce((sum, b) => sum + b.totalPrice, 0);
+
+        // Create ONE payment for all bookings
         const payment = await Payment.create({
-            booking: bookingId,
+            booking: allBookingIds[0],
+            bookings: allBookingIds,
             user: req.user._id,
             paymentMethod,
-            amount: booking.totalPrice,
+            amount: totalAmount,
             transactionId: transactionId || null,
             proofImage: proofImage || null,
             status: 'submitted',
             submittedAt: new Date()
         });
 
-        // Update booking payment status
-        booking.paymentStatus = 'pending';
-        await booking.save();
+        // Update all bookings payment status
+        await Booking.updateMany(
+            { _id: { $in: allBookingIds } },
+            { paymentStatus: 'pending' }
+        );
 
         res.status(201).json({
             success: true,
-            message: 'Payment proof submitted! Our team will verify within 24 hours.',
+            message: `Payment submitted for ${bookings.length} booking(s)! Our team will verify within 24 hours.`,
             payment: {
                 _id: payment._id,
                 paymentReference: payment.paymentReference,
                 paymentMethod: payment.paymentMethod,
                 amount: payment.amount,
+                bookingCount: bookings.length,
                 status: payment.status,
                 submittedAt: payment.submittedAt
             }
@@ -156,20 +175,15 @@ router.post('/submit', protect, async (req, res) => {
     }
 });
 
-// @route   GET /api/payments/my-payments
-// @desc    Get user payments
-// @access  Private
+// @route GET /api/payments/my-payments
 router.get('/my-payments', protect, async (req, res) => {
     try {
         const payments = await Payment.find({ user: req.user._id })
             .populate('booking', 'itemName bookingReference totalPrice bookingType status')
+            .populate('bookings', 'itemName bookingReference totalPrice bookingType status')
             .sort({ createdAt: -1 });
 
-        res.json({
-            success: true,
-            count: payments.length,
-            payments
-        });
+        res.json({ success: true, count: payments.length, payments });
     } catch (error) {
         console.error('Get payments error:', error);
         res.status(500).json({
@@ -180,9 +194,7 @@ router.get('/my-payments', protect, async (req, res) => {
     }
 });
 
-// @route   GET /api/payments/admin/all
-// @desc    Get all payments (Admin)
-// @access  Private/Admin
+// @route GET /api/payments/admin/all
 router.get('/admin/all', protect, admin, async (req, res) => {
     try {
         const { status } = req.query;
@@ -192,13 +204,10 @@ router.get('/admin/all', protect, admin, async (req, res) => {
         const payments = await Payment.find(query)
             .populate('user', 'name email whatsapp country')
             .populate('booking', 'itemName bookingReference totalPrice bookingType status paymentStatus')
+            .populate('bookings', 'itemName bookingReference totalPrice bookingType status paymentStatus')
             .sort({ createdAt: -1 });
 
-        res.json({
-            success: true,
-            count: payments.length,
-            payments
-        });
+        res.json({ success: true, count: payments.length, payments });
     } catch (error) {
         console.error('Admin get payments error:', error);
         res.status(500).json({
@@ -209,16 +218,15 @@ router.get('/admin/all', protect, admin, async (req, res) => {
     }
 });
 
-// @route   PUT /api/payments/admin/:id/approve
-// @desc    Approve payment (Admin)
-// @access  Private/Admin
+// @route PUT /api/payments/admin/:id/approve
 router.put('/admin/:id/approve', protect, admin, async (req, res) => {
     try {
         const { adminNotes } = req.body;
 
         const payment = await Payment.findById(req.params.id)
             .populate('user', 'name email')
-            .populate('booking');
+            .populate('booking')
+            .populate('bookings');
 
         if (!payment) {
             return res.status(404).json({
@@ -233,27 +241,36 @@ router.put('/admin/:id/approve', protect, admin, async (req, res) => {
         payment.reviewedAt = new Date();
         await payment.save();
 
-        // Update booking to confirmed + paid
-        await Booking.findByIdAndUpdate(payment.booking._id, {
-            paymentStatus: 'paid',
-            status: 'confirmed'
-        });
+        // Confirm ALL linked bookings
+        const bookingIdsToUpdate = payment.bookings && payment.bookings.length > 0
+            ? payment.bookings.map(b => b._id)
+            : [payment.booking._id];
 
-        // Send confirmation email
+        await Booking.updateMany(
+            { _id: { $in: bookingIdsToUpdate } },
+            {
+                paymentStatus: 'paid',
+                status: 'confirmed'
+            }
+        );
+
+        const confirmedCount = bookingIdsToUpdate.length;
+
+        // Send email
         try {
             await sendPaymentConfirmation(
                 payment.user,
-                payment.booking,
+                payment.booking || payment.bookings[0],
                 payment
             );
-            console.log('✅ Payment approval email sent to:', payment.user.email);
+            console.log('✅ Payment approval email sent');
         } catch (emailError) {
             console.error('❌ Email error:', emailError.message);
         }
 
         res.json({
             success: true,
-            message: 'Payment approved! Booking confirmed.',
+            message: `Payment approved! ${confirmedCount} booking(s) confirmed.`,
             payment
         });
     } catch (error) {
@@ -266,16 +283,15 @@ router.put('/admin/:id/approve', protect, admin, async (req, res) => {
     }
 });
 
-// @route   PUT /api/payments/admin/:id/reject
-// @desc    Reject payment (Admin)
-// @access  Private/Admin
+// @route PUT /api/payments/admin/:id/reject
 router.put('/admin/:id/reject', protect, admin, async (req, res) => {
     try {
         const { adminNotes } = req.body;
 
         const payment = await Payment.findById(req.params.id)
             .populate('user', 'name email')
-            .populate('booking');
+            .populate('booking')
+            .populate('bookings');
 
         if (!payment) {
             return res.status(404).json({
@@ -290,10 +306,15 @@ router.put('/admin/:id/reject', protect, admin, async (req, res) => {
         payment.reviewedAt = new Date();
         await payment.save();
 
-        // Update booking payment status
-        await Booking.findByIdAndUpdate(payment.booking._id, {
-            paymentStatus: 'failed'
-        });
+        // Update ALL linked bookings
+        const bookingIdsToUpdate = payment.bookings && payment.bookings.length > 0
+            ? payment.bookings.map(b => b._id)
+            : [payment.booking._id];
+
+        await Booking.updateMany(
+            { _id: { $in: bookingIdsToUpdate } },
+            { paymentStatus: 'failed' }
+        );
 
         res.json({
             success: true,
