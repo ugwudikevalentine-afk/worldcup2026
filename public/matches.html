@@ -9,76 +9,75 @@
 </head>
 <body>
     <!-- NAVBAR -->
-<nav class="navbar">
-    <div class="nav-container">
-        <div class="nav-logo">
-            <i class="fas fa-trophy trophy-icon"></i>
-            <span data-i18n="nav_brand">FIFA World Cup 2026</span>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-trophy trophy-icon"></i>
+                <span data-i18n="nav_brand">FIFA World Cup 2026</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+                <li><a href="matches.html" class="nav-link active" data-i18n="nav_matches">Matches</a></li>
+                <li><a href="travel.html" class="nav-link" data-i18n="nav_travel">Travel</a></li>
+                <li><a href="hotel.html" class="nav-link" data-i18n="nav_hotel">Hotels</a></li>
+                <li><a href="ticket.html" class="nav-link" data-i18n="nav_ticket">Tickets</a></li>
+                <li><a href="extras.html" class="nav-link" data-i18n="nav_extras">Extras</a></li>
+                <li><a href="payments.html" class="nav-link" data-i18n="nav_payments">Payments</a></li>
+                <li><a href="support.html" class="nav-link" data-i18n="nav_support">Support</a></li>
+                <li><a href="faq.html" class="nav-link" data-i18n="nav_faq">FAQ</a></li>
+                <li><a href="account.html" class="nav-link" data-i18n="nav_account">My Account</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="login.html" class="btn-signin" data-i18n="nav_signin">Sign In</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
-        <ul class="nav-menu" id="navMenu">
-            <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
-            <li><a href="index.html#matches" class="nav-link" data-i18n="nav_matches">Matches</a></li>
-            <li><a href="travel.html" class="nav-link" data-i18n="nav_travel">Travel</a></li>
-            <li><a href="hotel.html" class="nav-link" data-i18n="nav_hotel">Hotel</a></li>
-            <li><a href="ticket.html" class="nav-link" data-i18n="nav_ticket">Ticket</a></li>
-            <li><a href="extras.html" class="nav-link" data-i18n="nav_extras">Extras</a></li>
-            <li><a href="payments.html" class="nav-link" data-i18n="nav_payments">Payments</a></li>
-            <li><a href="support.html" class="nav-link" data-i18n="nav_support">Support</a></li>
-            <li><a href="faq.html" class="nav-link" data-i18n="nav_faq">FAQ</a></li>
-            <li><a href="account.html" class="nav-link" data-i18n="nav_account">My Account</a></li>
-        </ul>
-        <div class="nav-auth">
-            <a href="login.html" class="btn-signin" data-i18n="nav_signin">Sign In</a>
-        </div>
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
-</nav>
+    </nav>
 
     <!-- PAGE HERO -->
     <section class="page-hero">
         <div class="container">
             <h1><i class="fas fa-futbol"></i> <span data-i18n="matches_hero_title">World Cup Matches & Fixtures</span></h1>
-            <p data-i18n="matches_hero_subtitle">Browse all matches, view schedules, and book tickets for FIFA World Cup 2026</p>
+            <p data-i18n="matches_hero_subtitle">Browse all matches, schedules, and ticket availability</p>
         </div>
     </section>
 
-<!-- MATCHES SECTION -->
-<section class="page-content">
-    <div class="container">
+    <!-- FILTER SECTION -->
+    <section class="page-content" style="padding-bottom: 20px;">
+        <div class="container">
+            <div class="about-content" style="margin-bottom: 25px;">
+                <h2 style="margin-bottom: 18px;">
+                    <i class="fas fa-filter"></i> Filter Matches
+                </h2>
 
-        <!-- Filter Bar -->
-        <div style="background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);">
-            <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
-                <button class="btn btn-primary" onclick="filterMatchesByStage('')">
-                    <i class="fas fa-list"></i> All Matches
-                </button>
-                <button class="btn btn-gold" onclick="filterMatchesByStage('Group Stage')">
-                    <i class="fas fa-users"></i> Group Stage
-                </button>
-                <button class="btn btn-primary" onclick="filterMatchesByStage('Round of 16')">
-                    <i class="fas fa-16"></i> Round of 16
-                </button>
-                <button class="btn btn-primary" onclick="filterMatchesByStage('Quarter-Final')">
-                    <i class="fas fa-trophy"></i> Quarter Finals
-                </button>
-                <button class="btn btn-primary" onclick="filterMatchesByStage('Semi-Final')">
-                    <i class="fas fa-trophy"></i> Semi Finals
-                </button>
-                <button class="btn btn-primary" onclick="filterMatchesByStage('Final')">
-                    <i class="fas fa-trophy"></i> Final
-                </button>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+                    <button class="btn btn-primary" onclick="filterMatches('all')">All</button>
+                    <button class="btn btn-gold" onclick="filterMatches('Group Stage')">Group Stage</button>
+                    <button class="btn btn-primary" onclick="filterMatches('Round of 16')">Round of 16</button>
+                    <button class="btn btn-primary" onclick="filterMatches('Quarter-Final')">Quarter-Final</button>
+                    <button class="btn btn-primary" onclick="filterMatches('Semi-Final')">Semi-Final</button>
+                    <button class="btn btn-primary" onclick="filterMatches('Third Place')">Third Place</button>
+                    <button class="btn btn-primary" onclick="filterMatches('Final')">Final</button>
+                </div>
             </div>
         </div>
+    </section>
 
-        <!-- Matches Container -->
-        <div id="matchesContainer"></div>
-
-    </div>
-</section>
+    <!-- MATCHES SECTION -->
+    <section class="page-content" style="padding-top: 0;">
+        <div class="container">
+            <div id="matchesContainer">
+                <p style="text-align: center; padding: 40px 0; color: #666;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i><br><br>
+                    <span data-i18n="matches_loading">Loading matches...</span>
+                </p>
+            </div>
+        </div>
+    </section>
 
     <!-- LIVE CHAT FLOATING BUTTON -->
     <button class="live-chat-toggle" id="liveChatToggle" onclick="toggleLiveChat()">
@@ -100,8 +99,12 @@
             <div class="chat-message bot-message">
                 <p data-i18n="chat_greeting">Hi! How can we help you today?</p>
                 <p class="chat-contact-info">
-                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_whatsapp_label">WhatsApp:</span> <a href="https://wa.me/16154145082" target="_blank">+1 (615) 414-5082</a><br>
-                    <i class="fas fa-envelope"></i> <span data-i18n="chat_email_label">Email:</span> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a>
+                    <i class="fab fa-whatsapp"></i>
+                    <span data-i18n="chat_whatsapp_label">WhatsApp:</span>
+                    <a href="https://wa.me/16154145082" target="_blank">+1 (615) 414-5082</a><br>
+                    <i class="fas fa-envelope"></i>
+                    <span data-i18n="chat_email_label">Email:</span>
+                    <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a>
                 </p>
             </div>
             <div class="chat-options">
@@ -110,270 +113,205 @@
                 <button onclick="sendQuickChat('hotels')" data-i18n="chat_btn_hotels">Hotels</button>
                 <button onclick="sendQuickChat('payments')" data-i18n="chat_btn_payments">Payments</button>
                 <button onclick="window.open('https://wa.me/16154145082', '_blank')">
-                    <i class="fab fa-whatsapp"></i> <span data-i18n="chat_btn_whatsapp">Chat on WhatsApp</span>
+                    <i class="fab fa-whatsapp"></i>
+                    <span data-i18n="chat_btn_whatsapp">Chat on WhatsApp</span>
                 </button>
             </div>
         </div>
     </div>
 
-<!-- FOOTER -->
-<footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4 data-i18n="footer_about">About Us</h4>
-                <ul>
-                    <li><a href="about.html" data-i18n="footer_about_link">About</a></li>
-                    <li><a href="blog.html" data-i18n="footer_blog">Blog</a></li>
-                    <li><a href="careers.html" data-i18n="footer_careers">Careers</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4 data-i18n="footer_support">Support</h4>
-                <ul>
-                    <li><a href="faq.html" data-i18n="footer_faq">FAQ</a></li>
-                    <li><a href="support.html" data-i18n="footer_contact_us">Contact Us</a></li>
-                    <li><a href="#" onclick="toggleLiveChat(); return false;" data-i18n="footer_live_chat">Live Chat</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4 data-i18n="footer_legal">Legal</h4>
-                <ul>
-                    <li><a href="terms.html" data-i18n="footer_terms">Terms & Conditions</a></li>
-                    <li><a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
-                    <li><a href="cookies.html" data-i18n="footer_cookies">Cookie Policy</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4 data-i18n="footer_contact">Contact</h4>
-                <div class="footer-contact">
-                    <p><i class="fas fa-envelope"></i> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a></p>
-                    <div class="social-links">
-                        <a href="https://wa.me/16154145082" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 data-i18n="footer_about">About Us</h4>
+                    <ul>
+                        <li><a href="about.html" data-i18n="footer_about_link">About</a></li>
+                        <li><a href="blog.html" data-i18n="footer_blog">Blog</a></li>
+                        <li><a href="careers.html" data-i18n="footer_careers">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_support">Support</h4>
+                    <ul>
+                        <li><a href="faq.html" data-i18n="footer_faq">FAQ</a></li>
+                        <li><a href="support.html" data-i18n="footer_contact_us">Contact Us</a></li>
+                        <li><a href="#" onclick="toggleLiveChat(); return false;" data-i18n="footer_live_chat">Live Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_legal">Legal</h4>
+                    <ul>
+                        <li><a href="terms.html" data-i18n="footer_terms">Terms & Conditions</a></li>
+                        <li><a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
+                        <li><a href="cookies.html" data-i18n="footer_cookies">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer_contact">Contact</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a></p>
+                        <div class="social-links">
+                            <a href="https://wa.me/16154145082" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p data-i18n="footer_copyright">© 2026 World Cup Travel Platform. Independent booking assistance service.</p>
-        </div>
-    </div>
-</footer>
-<script src="translations.js"></script>
-<script src="language.js"></script>
-<script src="script.js"></script>
-<script>
-    let allMatchesData = [];
-
-    async function loadAllMatches() {
-        const container = document.getElementById('matchesContainer');
-        container.innerHTML = `
-            <div style="text-align: center; padding: 40px;">
-                <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--gold);"></i>
-                <p style="margin-top: 15px; color: #666;">Loading matches...</p>
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">© 2026 World Cup Travel Platform. Independent booking assistance service.</p>
             </div>
-        `;
+        </div>
+    </footer>
 
-        try {
-            const response = await fetch(`${API_URL}/api/matches`);
-            const data = await response.json();
+    <script src="translations.js"></script>
+    <script src="language.js"></script>
+    <script src="script.js"></script>
+    <script>
+        const MATCHES_API_URL = 'https://worldcup2026-wf8o.onrender.com';
+        let allMatches = [];
 
-            if (data.success && data.matches.length > 0) {
-                allMatchesData = data.matches;
-                displayAllMatches(data.matches);
-            } else {
+        async function loadMatchesPage() {
+            const container = document.getElementById('matchesContainer');
+
+            container.innerHTML = `
+                <p style="text-align: center; padding: 40px 0; color: #666;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i><br><br>
+                    Loading matches...
+                </p>
+            `;
+
+            try {
+                const response = await fetch(`${MATCHES_API_URL}/api/matches`);
+                const data = await response.json();
+
+                if (data.success && data.matches && data.matches.length > 0) {
+                    allMatches = data.matches;
+                    renderMatches(allMatches);
+                } else {
+                    container.innerHTML = `
+                        <div class="about-content" style="text-align:center;">
+                            <i class="fas fa-calendar-times" style="font-size: 3rem; color: #ccc; margin-bottom: 15px;"></i>
+                            <h2 style="color: var(--primary-blue);">No Matches Available</h2>
+                            <p>Matches will appear here when available.</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading matches:', error);
                 container.innerHTML = `
-                    <div style="text-align: center; padding: 40px;">
-                        <i class="fas fa-futbol" style="font-size: 3rem; color: #ccc;"></i>
-                        <h3 style="color: #666; margin-top: 15px;">No Matches Found</h3>
-                        <p style="color: #999;">Matches will appear here once they are added.</p>
+                    <div class="about-content" style="text-align:center;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #dc3545; margin-bottom: 15px;"></i>
+                        <h2 style="color: var(--primary-blue);">Unable to Load Matches</h2>
+                        <p>Please refresh the page and try again.</p>
                     </div>
                 `;
             }
-        } catch (error) {
-            console.error('Error loading matches:', error);
+        }
+
+        function filterMatches(stage) {
+            if (stage === 'all') {
+                renderMatches(allMatches);
+                return;
+            }
+
+            const filtered = allMatches.filter(match => match.stage === stage);
+            renderMatches(filtered);
+        }
+
+        function renderMatches(matches) {
+            const container = document.getElementById('matchesContainer');
+
+            if (!matches || matches.length === 0) {
+                container.innerHTML = `
+                    <div class="about-content" style="text-align:center;">
+                        <i class="fas fa-search" style="font-size: 3rem; color: #ccc; margin-bottom: 15px;"></i>
+                        <h2 style="color: var(--primary-blue);">No Matches Found</h2>
+                        <p>No matches match this filter.</p>
+                    </div>
+                `;
+                return;
+            }
+
             container.innerHTML = `
-                <div style="text-align: center; padding: 40px;">
-                    <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #ff4444;"></i>
-                    <h3 style="color: #666; margin-top: 15px;">Error Loading Matches</h3>
-                    <p style="color: #999;">Please refresh the page and try again.</p>
+                <div class="content-grid">
+                    ${matches.map(match => createMatchCard(match)).join('')}
                 </div>
             `;
         }
-    }
 
-    function filterMatchesByStage(stage) {
-        if (!stage) {
-            displayAllMatches(allMatchesData);
-        } else {
-            const filtered = allMatchesData.filter(m => m.stage === stage);
-            displayAllMatches(filtered);
-        }
-    }
+        function createMatchCard(match) {
+            const team1Badge = match.team1Badge
+                ? `<img src="${match.team1Badge}" alt="${match.team1}" style="width:40px;height:40px;object-fit:contain;">`
+                : `<i class="fas fa-flag" style="font-size:2rem;color:var(--light-blue);"></i>`;
 
-    function displayAllMatches(matches) {
-        const container = document.getElementById('matchesContainer');
+            const team2Badge = match.team2Badge
+                ? `<img src="${match.team2Badge}" alt="${match.team2}" style="width:40px;height:40px;object-fit:contain;">`
+                : `<i class="fas fa-flag" style="font-size:2rem;color:var(--light-blue);"></i>`;
 
-        if (matches.length === 0) {
-            container.innerHTML = `
-                <div style="text-align: center; padding: 40px;">
-                    <i class="fas fa-search" style="font-size: 3rem; color: #ccc;"></i>
-                    <h3 style="color: #666; margin-top: 15px;">No matches found</h3>
-                </div>
-            `;
-            return;
-        }
+            const statusColor =
+                match.status === 'ongoing' ? '#16a34a' :
+                match.status === 'completed' ? '#6b7280' :
+                match.status === 'cancelled' ? '#dc3545' :
+                '#2563eb';
 
-        // Group by stage
-        const grouped = {};
-        matches.forEach(match => {
-            const stage = match.stage || 'Group Stage';
-            if (!grouped[stage]) grouped[stage] = [];
-            grouped[stage].push(match);
-        });
+            const scoreBlock = (match.score1 !== null && match.score2 !== null)
+                ? `<div style="font-size:1.5rem;font-weight:800;color:var(--gold);">${match.score1} - ${match.score2}</div>`
+                : `<div style="font-size:1.2rem;font-weight:800;color:var(--gold);">VS</div>`;
 
-        const stageOrder = ['Group Stage', 'Round of 16', 'Quarter-Final', 'Semi-Final', 'Third Place', 'Final'];
-
-        let html = '';
-
-        stageOrder.forEach(stage => {
-            if (!grouped[stage]) return;
-
-            html += `
-                <div style="margin-bottom: 30px;">
-                    <h2 style="
-                        color: #fff;
-                        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-                        padding: 15px 20px;
-                        border-radius: 10px;
-                        margin-bottom: 20px;
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                    ">
-                        <i class="fas fa-futbol" style="color: var(--gold);"></i>
-                        ${stage}
+            return `
+                <div class="content-card">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
                         <span style="
-                            background: var(--gold);
-                            color: #000;
-                            padding: 3px 10px;
-                            border-radius: 20px;
-                            font-size: 0.8rem;
-                            margin-left: auto;
-                        ">${grouped[stage].length} matches</span>
-                    </h2>
-                    <div class="content-grid">
-                        ${grouped[stage].map(match => buildMatchCard(match)).join('')}
+                            background:${statusColor};
+                            color:#fff;
+                            padding:4px 10px;
+                            border-radius:20px;
+                            font-size:0.75rem;
+                            font-weight:700;
+                            text-transform:uppercase;
+                        ">${match.status}</span>
+                        <span style="
+                            background:rgba(30,58,138,0.08);
+                            color:var(--primary-blue);
+                            padding:4px 10px;
+                            border-radius:20px;
+                            font-size:0.75rem;
+                            font-weight:700;
+                        ">${match.stage || 'Group Stage'}</span>
                     </div>
+
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px;">
+                        <div style="flex:1;text-align:center;">
+                            ${team1Badge}
+                            <p style="margin-top:8px;font-weight:700;color:var(--primary-blue);">${match.team1}</p>
+                        </div>
+                        <div style="flex:0 0 auto;text-align:center;">
+                            ${scoreBlock}
+                        </div>
+                        <div style="flex:1;text-align:center;">
+                            ${team2Badge}
+                            <p style="margin-top:8px;font-weight:700;color:var(--primary-blue);">${match.team2}</p>
+                        </div>
+                    </div>
+
+                    <p><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> ${match.date}</p>
+                    <p><i class="fas fa-clock"></i> <strong>Time:</strong> ${match.time} UTC</p>
+                    <p><i class="fas fa-map-marker-alt"></i> <strong>Venue:</strong> ${match.stadium}, ${match.city}</p>
+                    <p><i class="fas fa-globe"></i> <strong>Host:</strong> ${match.hostCountry || 'N/A'}</p>
+                    <p><i class="fas fa-ticket-alt"></i> <strong>Tickets:</strong> ${match.tickets_available || 0} available</p>
+                    <p><i class="fas fa-dollar-sign"></i> <strong>From:</strong> <span style="color:var(--gold);font-weight:700;">$${match.ticket_prices?.regular || 150}</span></p>
+
+                    <a href="ticket.html?match=${match._id}" class="btn btn-gold" style="margin-top:15px;width:100%;text-align:center;">
+                        <i class="fas fa-shopping-cart"></i> Book Tickets
+                    </a>
                 </div>
             `;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            loadMatchesPage();
         });
-
-        container.innerHTML = html;
-    }
-
-    function buildMatchCard(match) {
-        const statusColors = {
-            upcoming: '#3b82f6',
-            ongoing: '#16a34a',
-            completed: '#6b7280',
-            cancelled: '#dc2626'
-        };
-
-        const statusColor = statusColors[match.status] || '#3b82f6';
-
-        const scoreDisplay = match.score1 !== null && match.score2 !== null
-            ? `<div style="
-                font-size: 1.5rem;
-                font-weight: 800;
-                color: var(--gold);
-                text-align: center;
-                margin: 10px 0;
-              ">${match.score1} - ${match.score2}</div>`
-            : '';
-
-        const badge1 = match.team1Badge
-            ? `<img src="${match.team1Badge}" alt="${match.team1}" style="width:40px; height:40px; object-fit:contain; margin-bottom: 8px;">`
-            : `<i class="fas fa-flag" style="font-size: 2rem; color: var(--light-blue); margin-bottom: 8px;"></i>`;
-
-        const badge2 = match.team2Badge
-            ? `<img src="${match.team2Badge}" alt="${match.team2}" style="width:40px; height:40px; object-fit:contain; margin-bottom: 8px;">`
-            : `<i class="fas fa-flag" style="font-size: 2rem; color: var(--light-blue); margin-bottom: 8px;"></i>`;
-
-        return `
-            <div class="content-card" style="text-align: center;">
-                <div style="
-                    display: inline-block;
-                    background: ${statusColor};
-                    color: #fff;
-                    padding: 3px 12px;
-                    border-radius: 20px;
-                    font-size: 0.75rem;
-                    font-weight: 600;
-                    text-transform: uppercase;
-                    margin-bottom: 15px;
-                ">${match.status}</div>
-
-                <div style="display: flex; justify-content: space-around; align-items: center; margin-bottom: 15px;">
-                    <div style="flex: 1; text-align: center;">
-                        ${badge1}
-                        <p style="font-weight: 700; color: var(--primary-blue); font-size: 0.95rem;">${match.team1}</p>
-                    </div>
-                    <div style="padding: 0 15px;">
-                        ${scoreDisplay || '<span style="color: var(--gold); font-weight: 800; font-size: 1.2rem;">VS</span>'}
-                    </div>
-                    <div style="flex: 1; text-align: center;">
-                        ${badge2}
-                        <p style="font-weight: 700; color: var(--primary-blue); font-size: 0.95rem;">${match.team2}</p>
-                    </div>
-                </div>
-
-                <p style="color: #6b7280; font-size: 0.85rem; margin: 5px 0;">
-                    <i class="fas fa-calendar" style="color: var(--primary-blue);"></i>
-                    ${match.date} at ${match.time} UTC
-                </p>
-                <p style="color: #6b7280; font-size: 0.85rem; margin: 5px 0;">
-                    <i class="fas fa-map-marker-alt" style="color: var(--primary-blue);"></i>
-                    ${match.stadium}, ${match.city}
-                </p>
-                <p style="color: #6b7280; font-size: 0.85rem; margin: 5px 0;">
-                    <i class="fas fa-globe" style="color: var(--primary-blue);"></i>
-                    ${match.hostCountry}
-                </p>
-
-                ${match.status === 'upcoming' && match.tickets_available > 0 ? `
-                    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
-                        <p style="color: #16a34a; font-size: 0.85rem; margin-bottom: 10px;">
-                            <i class="fas fa-ticket-alt"></i>
-                            ${match.tickets_available} tickets available
-                            — From $${match.ticket_prices?.regular || 150}
-                        </p>
-                        <a href="ticket.html?match=${match._id}" class="btn btn-gold" style="width: 100%; text-align: center; display: block;">
-                            <i class="fas fa-shopping-cart"></i> Book Tickets
-                        </a>
-                    </div>
-                ` : ''}
-
-                ${match.status === 'ongoing' ? `
-                    <div style="
-                        margin-top: 15px;
-                        padding: 8px;
-                        background: #dcfce7;
-                        border-radius: 8px;
-                        color: #16a34a;
-                        font-weight: 700;
-                        font-size: 0.9rem;
-                    ">
-                        🔴 LIVE NOW
-                    </div>
-                ` : ''}
-            </div>
-        `;
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        loadAllMatches();
-    });
-</script>
+    </script>
 </body>
 </html>
