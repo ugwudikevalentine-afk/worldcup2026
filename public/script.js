@@ -1809,17 +1809,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Update navbar based on login status
     updateNavbar();
 
-    // Re-apply translations after navbar update (navbar innerHTML changed)
+    // Re-apply translations after navbar update
     if (typeof applyTranslations === 'function') {
         applyTranslations();
     }
+
+    // Initialize cart
+    initCart();
+
+    // Initialize payment page
+    initPaymentPage();
 
     // Load data from backend
     await loadMatches();
     await loadFlights();
     await loadHotels();
 
-    // Setup flight booking form (if on travel page)
+    // Setup flight booking form
     setupFlightBookingForm();
 
     // Load countdown data
@@ -1838,9 +1844,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load account data if on account page
     loadAccountData();
 
-        // Initialize payment page if on payments page
-    initPaymentPage();
-    
     console.log('✅ FIFA World Cup 2026 - Ready!');
 });
 
@@ -2501,9 +2504,7 @@ function proceedToPayment() {
     window.location.href = `payments.html?bookings=${bookingIds}`;
 }
 
-// Add initCart to DOMContentLoaded
-document.addEventListener('DOMContentLoaded', function() {
-    initCart();
-});
+
+
 
 console.log('✅ World Cup Booking Site - Script Loaded Successfully!');
