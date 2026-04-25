@@ -1861,59 +1861,13 @@ let paymentProofBase64 = null;
 let paymentBookingId = null;
 
 // Initialize payment page
-async function initPaymentPage() {
-    const paymentSection = document.getElementById('paymentMethodsSection');
-    if (!paymentSection) return;
-
-    const token = localStorage.getItem('token');
-    if (!token) {
-        window.location.href = 'login.html';
-        return;
-    }
-
-    const urlParams = new URLSearchParams(window.location.search);
-
-    // Check for multiple bookings from cart
-    const bookingsParam = urlParams.get('bookings');
-    // Check for single booking
-    const bookingParam = urlParams.get('booking');
-
-    if (bookingsParam) {
-        // Multiple bookings from cart
-        const bookingIds = bookingsParam.split(',').filter(id => id.trim() !== '');
-        paymentBookingId = bookingIds[0]; // primary booking ID
-        await loadCartPaymentDetails(bookingIds);
-    } else if (bookingParam) {
-        // Single booking
-        paymentBookingId = bookingParam;
-        await loadPaymentBookingDetails();
-    } else {
-        // Check if cart has items
-        const cart = getCart();
-        if (cart.length > 0) {
-            // Load from cart
-            const bookingIds = cart.map(item => item.bookingId);
-            paymentBookingId = bookingIds[0];
-            await loadCartPaymentDetails(bookingIds);
-        } else {
-            document.getElementById('paymentBookingSummary').innerHTML = `
-                <div class="payment-warning-box">
-                    <i class="fas fa-info-circle"></i>
-                    <p>
-                        <strong>No Booking Selected.</strong><br>
-                        Please go to
-                        <a href="ticket.html" style="color: var(--primary-blue); font-weight: 600;">Tickets</a>,
-                        <a href="hotel.html" style="color: var(--primary-blue); font-weight: 600;">Hotels</a>,
-                        <a href="travel.html" style="color: var(--primary-blue); font-weight: 600;">Flights</a> or
-                        <a href="extras.html" style="color: var(--primary-blue); font-weight: 600;">Extras</a>
-                        to make a booking first.
-                    </p>
-                </div>
-            `;
-            document.getElementById('paymentBookingSummary').style.display = 'block';
-        }
-    }
-}
+const existingPayment = await Payment.findOne({
+    $or: [
+        { bookings: { $in: allBookingIds } },
+        { booking: { $in: allBookingIds } }
+    ],
+    status: { $in: ['pending', 'submitted', 'approved'] }
+});
 
 // Load booking details for payment
 async function loadPaymentBookingDetails() {
@@ -2160,8 +2114,52 @@ async function submitPaymentProof() {
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
 
-    // Get all booking IDs
-    const bookingIds = window.cartBookingIds || [paymentBookingId];
+    // Determine booking IDs — from cart OR single booking
+    let bookingIds = [];
+
+    // Check cart first
+    if (window.cartBookingIds && window.cartBookingIds.length > 0) {
+        bookingIds = window.cartBookingIds;
+    }
+    // Check URL params
+    else {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // Multiple bookings from cart URL
+        const bookingsParam = urlParams.get('bookings');
+        if (bookingsParam) {
+            bookingIds = bookingsParam.split(',').filter(id => id.trim() !== '');
+        }
+
+        // Single booking from direct URL
+        const bookingParam = urlParams.get('booking');
+        if (bookingParam && bookingIds.length === 0) {
+            bookingIds = [bookingParam];
+        }
+    }
+
+    // Last resort — check paymentBookingId variable
+    if (bookingIds.length === 0 && paymentBookingId) {
+        bookingIds = [paymentBookingId];
+    }
+
+    // Still nothing? Check localStorage cart
+    if (bookingIds.length === 0) {
+        const cart = getCart();
+        if (cart.length > 0) {
+            bookingIds = cart.map(item => item.bookingId);
+        }
+    }
+
+    if (bookingIds.length === 0) {
+        errorEl.textContent = 'No bookings found. Please go back and make a booking first.';
+        errorEl.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Payment Proof';
+        return;
+    }
+
+    console.log('Submitting payment for bookings:', bookingIds);
 
     try {
         const response = await fetch(`${API_URL}/api/payments/submit`, {

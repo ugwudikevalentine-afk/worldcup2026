@@ -1440,14 +1440,14 @@
                 <td>${new Date(p.submittedAt || p.createdAt).toLocaleDateString()}</td>
                 <td>
                     <div class="action-btns">
-                        ${p.status === 'submitted' ? `
-                            <button class="btn-approve" onclick="approvePayment('${p._id}')">
-                                <i class="fas fa-check"></i> Approve All
-                            </button>
-                            <button class="btn-reject" onclick="rejectPayment('${p._id}')">
-                                <i class="fas fa-times"></i> Reject
-                            </button>
-                        ` : `<span style="color: #ccc; font-size: 12px;">${p.status}</span>`}
+                       ${p.status === 'submitted' || p.status === 'pending' ? `
+    <button class="btn-approve" onclick="approvePayment('${p._id}')">
+        <i class="fas fa-check"></i> Approve All
+    </button>
+    <button class="btn-reject" onclick="rejectPayment('${p._id}')">
+        <i class="fas fa-times"></i> Reject
+    </button>
+` : `<span style="color: #ccc; font-size: 12px;">${p.status}</span>`}
                     </div>
                 </td>
             </tr>
