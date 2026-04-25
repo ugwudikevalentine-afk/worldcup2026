@@ -1863,14 +1863,7 @@ let selectedPaymentMethod = null;
 let paymentProofBase64 = null;
 let paymentBookingId = null;
 
-// Initialize payment page
-const existingPayment = await Payment.findOne({
-    $or: [
-        { bookings: { $in: allBookingIds } },
-        { booking: { $in: allBookingIds } }
-    ],
-    status: { $in: ['pending', 'submitted', 'approved'] }
-});
+
 
 // Load booking details for payment
 async function loadPaymentBookingDetails() {
