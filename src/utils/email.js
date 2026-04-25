@@ -305,10 +305,96 @@ export const sendWelcomeEmail = async (user) => {
     }
 };
 
+// ===== SEND PAYMENT SUBMITTED EMAIL TO ADMIN =====
+export const sendPaymentSubmittedToAdmin = async (user, payment, bookings) => {
+    try {
+        const adminEmail = process.env.CONTACT_EMAIL || 'worldcupbookinghub@gmail.com';
+
+        const bookingsList = bookings.map(b => `
+            <tr>
+                <td style="padding: 8px; border: 1px solid #ddd;">${b.bookingReference}</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">${b.bookingType}</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">${b.itemName}</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">$${b.totalPrice}</td>
+            </tr>
+        `).join('');
+
+        const emailContent = `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h1 style="color: #1a73e8;">💰 New Payment Submitted!</h1>
+
+                <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ffc107;">
+                    <p style="margin: 0;"><strong>⚠️ Action Required:</strong> A customer has submitted payment proof. Please review and approve/reject in the admin panel.</p>
+                </div>
+
+                <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h2 style="margin-top: 0;">Customer Details:</h2>
+                    <p><strong>Name:</strong> ${user.name}</p>
+                    <p><strong>Email:</strong> ${user.email}</p>
+                    <p><strong>WhatsApp:</strong> ${user.whatsapp || 'N/A'}</p>
+                    <p><strong>Country:</strong> ${user.country || 'N/A'}</p>
+                </div>
+
+                <div style="background: #e3f2fd; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h2 style="margin-top: 0;">Payment Details:</h2>
+                    <p><strong>Payment Reference:</strong> ${payment.paymentReference}</p>
+                    <p><strong>Payment Method:</strong> ${payment.paymentMethod}</p>
+                    <p><strong>Total Amount:</strong> <span style="color: #16a34a; font-size: 1.2rem; font-weight: bold;">$${payment.amount}</span></p>
+                    <p><strong>Transaction ID:</strong> ${payment.transactionId || 'Not provided'}</p>
+                    <p><strong>Submitted At:</strong> ${new Date().toLocaleString()}</p>
+                </div>
+
+                <div style="margin: 20px 0;">
+                    <h2>Bookings Included:</h2>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #1a73e8; color: white;">
+                                <th style="padding: 8px; text-align: left;">Reference</th>
+                                <th style="padding: 8px; text-align: left;">Type</th>
+                                <th style="padding: 8px; text-align: left;">Item</th>
+                                <th style="padding: 8px; text-align: left;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${bookingsList}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="https://worldcupbookinghub.com/admin.html" 
+                       style="background: #1a73e8; color: white; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.1rem;">
+                        🔐 Go to Admin Panel
+                    </a>
+                </div>
+
+                <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+                <p style="color: #666; font-size: 12px;">
+                    FIFA World Cup 2026 Booking Platform — Admin Notification
+                </p>
+            </div>
+        `;
+
+        const result = await resend.emails.send({
+            from: process.env.EMAIL_FROM || 'noreply@worldcupbookinghub.com',
+            to: adminEmail,
+            subject: `💰 New Payment Submitted — $${payment.amount} — ${user.name}`,
+            html: emailContent
+        });
+
+        console.log('✅ Admin payment notification sent:', result);
+        return result;
+    } catch (error) {
+        console.error('❌ Admin payment notification error:', error);
+        throw error;
+    }
+};
+
 export default {
     sendVerificationEmail,
     sendPasswordResetEmail,
     sendBookingConfirmation,
     sendPaymentConfirmation,
-    sendWelcomeEmail
+    sendWelcomeEmail,
+    sendPaymentSubmittedToAdmin
 };

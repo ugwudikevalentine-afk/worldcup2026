@@ -2,7 +2,7 @@ import express from 'express';
 import Payment from '../models/payment.js';
 import Booking from '../models/booking.js';
 import { protect, admin } from '../middleware/auth.js';
-import { sendPaymentConfirmation } from '../utils/email.js';
+import { sendPaymentConfirmation, sendPaymentSubmittedToAdmin } from '../utils/email.js';
 
 const router = express.Router();
 
@@ -151,6 +151,29 @@ router.post('/submit', protect, async (req, res) => {
             { _id: { $in: allBookingIds } },
             { paymentStatus: 'pending' }
         );
+
+        // Send email + WhatsApp to admin
+try {
+    // Get booking details
+    const bookingDocs = await Booking.find({
+        _id: { $in: allBookingIds }
+    });
+
+    // Send email to admin
+    await sendPaymentSubmittedToAdmin(req.user, payment, bookingDocs);
+
+    // Send WhatsApp to admin via Twilio (or just log for now)
+    const whatsappMsg = `💰 NEW PAYMENT SUBMITTED!\n\nCustomer: ${req.user.name}\nEmail: ${req.user.email}\nWhatsApp: ${req.user.whatsapp || 'N/A'}\nMethod: ${paymentMethod}\nAmount: $${booking.totalPrice}\nRef: ${payment.paymentReference}\n\nLogin to approve:\nhttps://worldcupbookinghub.com/admin.html`;
+
+    console.log('📱 WhatsApp notification (manual):', whatsappMsg);
+
+    // TODO: Integrate Twilio for automated WhatsApp
+    // For now we'll use a webhook or manual check
+
+} catch (notifyError) {
+    console.error('❌ Admin notification error:', notifyError.message);
+    // Don't fail the payment submission
+}
 
         res.status(201).json({
             success: true,
