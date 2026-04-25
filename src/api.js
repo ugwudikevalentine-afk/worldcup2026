@@ -206,6 +206,33 @@ router.get('/faq', (req, res) => {
     });
 });
 
+// ===== TEMPORARY CLEANUP ROUTE (DELETE AFTER USE) =====
+router.post('/cleanup-test-data', async (req, res) => {
+    try {
+        const { cleanupKey } = req.body;
+        if (cleanupKey !== 'CLEANUP2026') {
+            return res.status(401).json({ success: false, message: 'Unauthorized' });
+        }
+
+        const Booking = (await import('./models/booking.js')).default;
+        const Payment = (await import('./models/payment.js')).default;
+
+        const deletedBookings = await Booking.deleteMany({});
+        const deletedPayments = await Payment.deleteMany({});
+
+        res.json({
+            success: true,
+            message: 'All test data deleted',
+            deleted: {
+                bookings: deletedBookings.deletedCount,
+                payments: deletedPayments.deletedCount
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 // ===== HEALTH CHECK =====
 router.get('/health', (req, res) => {
     res.json({
