@@ -34,35 +34,22 @@
         .admin-nav { list-style: none; padding: 0; margin: 0; }
         .admin-nav li { margin: 5px 0; }
         .admin-nav a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 20px;
-            color: #fff;
-            text-decoration: none;
-            transition: all 0.3s;
-            border-left: 3px solid transparent;
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 20px; color: #fff; text-decoration: none;
+            transition: all 0.3s; border-left: 3px solid transparent;
         }
-        .admin-nav a:hover,
-        .admin-nav a.active {
+        .admin-nav a:hover, .admin-nav a.active {
             background: rgba(255,215,0,0.1);
-            border-left-color: #ffd700;
-            color: #ffd700;
+            border-left-color: #ffd700; color: #ffd700;
         }
         .admin-nav i { width: 20px; text-align: center; }
         .admin-main {
-            flex: 1;
-            margin-left: 250px;
-            padding: 30px;
-            background: #0a0a15;
-            min-height: 100vh;
+            flex: 1; margin-left: 250px; padding: 30px;
+            background: #0a0a15; min-height: 100vh;
         }
         .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 30px; padding-bottom: 20px;
             border-bottom: 1px solid rgba(255,215,0,0.3);
         }
         .admin-header h1 { color: #ffd700; margin: 0; }
@@ -70,67 +57,46 @@
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 20px; margin-bottom: 30px;
         }
         .stat-card {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border: 2px solid #ffd700;
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
+            border: 2px solid #ffd700; border-radius: 15px;
+            padding: 25px; text-align: center;
         }
         .stat-card i { font-size: 30px; color: #ffd700; margin-bottom: 10px; }
         .stat-card h3 { color: #ffd700; font-size: 32px; margin: 10px 0; }
         .stat-card p { color: #ccc; margin: 0; }
         .admin-section {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border: 2px solid #ffd700;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 30px;
+            border: 2px solid #ffd700; border-radius: 15px;
+            padding: 25px; margin-bottom: 30px;
         }
         .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; padding-bottom: 15px;
             border-bottom: 1px solid rgba(255,215,0,0.3);
         }
         .section-header h2 { color: #ffd700; margin: 0; }
         .btn-add {
             background: linear-gradient(135deg, #28a745 0%, #218838 100%);
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            color: #fff; border: none; padding: 10px 20px;
+            border-radius: 8px; cursor: pointer; font-weight: bold;
+            display: flex; align-items: center; gap: 8px;
         }
         .btn-add:hover { transform: scale(1.05); }
         .data-table { width: 100%; border-collapse: collapse; color: #fff; }
         .data-table th {
-            background: rgba(255,215,0,0.2);
-            color: #ffd700;
-            padding: 12px;
-            text-align: left;
-            font-weight: bold;
+            background: rgba(255,215,0,0.2); color: #ffd700;
+            padding: 12px; text-align: left; font-weight: bold;
         }
         .data-table td {
-            padding: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         .data-table tr:hover { background: rgba(255,215,0,0.05); }
         .status-badge {
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
+            padding: 5px 12px; border-radius: 20px;
+            font-size: 12px; font-weight: bold; text-transform: uppercase;
         }
         .status-pending { background: rgba(255,193,7,0.2); color: #ffc107; }
         .status-confirmed { background: rgba(40,167,69,0.2); color: #28a745; }
@@ -140,169 +106,106 @@
         .status-submitted { background: rgba(255,193,7,0.2); color: #ffc107; }
         .status-approved { background: rgba(40,167,69,0.2); color: #28a745; }
         .status-rejected { background: rgba(220,53,69,0.2); color: #dc3545; }
+        .status-paid { background: rgba(40,167,69,0.2); color: #28a745; }
+        .status-failed { background: rgba(220,53,69,0.2); color: #dc3545; }
         .action-btns { display: flex; gap: 8px; flex-wrap: wrap; }
         .btn-edit {
-            background: #007bff;
-            color: #fff;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
+            background: #007bff; color: #fff; border: none;
+            padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 12px;
         }
         .btn-delete {
-            background: #dc3545;
-            color: #fff;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
+            background: #dc3545; color: #fff; border: none;
+            padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 12px;
         }
         .btn-view {
-            background: #28a745;
-            color: #fff;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
+            background: #28a745; color: #fff; border: none;
+            padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 12px;
         }
         .btn-approve {
             background: linear-gradient(135deg, #28a745 0%, #218838 100%);
-            color: #fff;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
+            color: #fff; border: none; padding: 6px 14px;
+            border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold;
         }
         .btn-reject {
             background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-            color: #fff;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
+            color: #fff; border: none; padding: 6px 14px;
+            border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: bold;
         }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         .admin-loading { text-align: center; padding: 40px; color: #ffd700; }
         .access-denied {
-            text-align: center;
-            padding: 100px 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            text-align: center; padding: 100px 20px; min-height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
         }
         .access-denied i { font-size: 80px; color: #dc3545; margin-bottom: 20px; }
         .access-denied h1 { color: #dc3545; margin-bottom: 15px; }
         .access-denied p { color: #ccc; margin-bottom: 25px; }
         .btn-gold {
             background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #000;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            text-decoration: none;
-            display: inline-block;
+            color: #000; border: none; padding: 12px 25px;
+            border-radius: 8px; cursor: pointer; font-weight: bold;
+            text-decoration: none; display: inline-block;
         }
         .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.8);
+            z-index: 1000; justify-content: center; align-items: center;
         }
         .modal.active { display: flex; }
         .modal-content {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border: 2px solid #ffd700;
-            border-radius: 15px;
-            padding: 30px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
+            border: 2px solid #ffd700; border-radius: 15px;
+            padding: 30px; max-width: 500px; width: 90%;
+            max-height: 80vh; overflow-y: auto;
         }
         .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; padding-bottom: 15px;
             border-bottom: 1px solid rgba(255,215,0,0.3);
         }
         .modal-header h2 { color: #ffd700; margin: 0; }
         .modal-close { background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; color: #ffd700; margin-bottom: 5px; font-weight: bold; }
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid rgba(255,215,0,0.3);
-            border-radius: 8px;
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            font-size: 14px;
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 10px;
+            border: 1px solid rgba(255,215,0,0.3); border-radius: 8px;
+            background: rgba(255,255,255,0.1); color: #fff; font-size: 14px;
         }
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #ffd700;
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: #ffd700;
         }
         .btn-submit {
             background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            color: #000;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-            margin-top: 10px;
+            color: #000; border: none; padding: 12px 25px;
+            border-radius: 8px; cursor: pointer; font-weight: bold;
+            width: 100%; margin-top: 10px;
         }
         .proof-image-link {
-            color: #ffd700;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 12px;
+            color: #ffd700; text-decoration: none;
+            display: flex; align-items: center; gap: 5px; font-size: 12px;
         }
         .proof-image-link:hover { color: #fff; }
+        .payment-booking-item {
+            margin-bottom: 5px; padding: 4px 8px;
+            background: rgba(255,215,0,0.1); border-radius: 5px;
+        }
         @media (max-width: 768px) {
-            .admin-sidebar {
-                width: 60px;
-                padding: 10px 0;
-            }
-            .admin-sidebar .admin-logo h2,
-            .admin-sidebar .admin-logo p,
+            .admin-sidebar { width: 60px; padding: 10px 0; }
+            .admin-sidebar .admin-logo h2, .admin-sidebar .admin-logo p,
             .admin-nav span { display: none; }
             .admin-nav a { justify-content: center; padding: 15px; }
             .admin-main { margin-left: 60px; padding: 15px; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .data-table { font-size: 12px; }
-            .data-table th,
-            .data-table td { padding: 8px 5px; }
+            .data-table th, .data-table td { padding: 8px 5px; }
         }
     </style>
 </head>
 <body>
-        <!-- Access Denied -->
+    <!-- Access Denied -->
     <div id="accessDenied" class="access-denied" style="display: none;">
         <i class="fas fa-shield-alt"></i>
         <h1>Access Denied</h1>
@@ -349,7 +252,7 @@
 
             <!-- ===== DASHBOARD TAB ===== -->
             <div id="dashboard" class="tab-content active">
-                <div class="stats-grid" id="statsGrid">
+                <div class="stats-grid">
                     <div class="stat-card">
                         <i class="fas fa-users"></i>
                         <h3 id="statUsers">0</h3>
@@ -399,16 +302,13 @@
                                 <th>User</th>
                                 <th>Type</th>
                                 <th>Amount</th>
+                                <th>Payment</th>
                                 <th>Status</th>
                                 <th>Date</th>
                             </tr>
                         </thead>
                         <tbody id="recentBookingsTable">
-                            <tr>
-                                <td colspan="6" class="admin-loading">
-                                    <i class="fas fa-spinner fa-spin"></i> Loading...
-                                </td>
-                            </tr>
+                            <tr><td colspan="7" class="admin-loading"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -418,7 +318,7 @@
                     <div class="section-header">
                         <h2><i class="fas fa-exclamation-circle" style="color: #ffc107;"></i> Payments Awaiting Approval</h2>
                         <button class="btn-add" onclick="switchTab('payments')">
-                            <i class="fas fa-eye"></i> View All Payments
+                            <i class="fas fa-eye"></i> View All
                         </button>
                     </div>
                     <table class="data-table">
@@ -426,18 +326,15 @@
                             <tr>
                                 <th>Reference</th>
                                 <th>User</th>
+                                <th>Bookings</th>
                                 <th>Method</th>
                                 <th>Amount</th>
-                                <th>Submitted</th>
+                                <th>Proof</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="pendingPaymentsTable">
-                            <tr>
-                                <td colspan="6" class="admin-loading">
-                                    <i class="fas fa-spinner fa-spin"></i> Loading...
-                                </td>
-                            </tr>
+                            <tr><td colspan="7" class="admin-loading"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -455,6 +352,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>WhatsApp</th>
+                                <th>Country</th>
                                 <th>Role</th>
                                 <th>Status</th>
                                 <th>Joined</th>
@@ -462,11 +360,7 @@
                             </tr>
                         </thead>
                         <tbody id="usersTable">
-                            <tr>
-                                <td colspan="7" class="admin-loading">
-                                    <i class="fas fa-spinner fa-spin"></i> Loading...
-                                </td>
-                            </tr>
+                            <tr><td colspan="8" class="admin-loading"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -493,11 +387,7 @@
                             </tr>
                         </thead>
                         <tbody id="bookingsTable">
-                            <tr>
-                                <td colspan="9" class="admin-loading">
-                                    <i class="fas fa-spinner fa-spin"></i> Loading...
-                                </td>
-                            </tr>
+                            <tr><td colspan="9" class="admin-loading"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -522,9 +412,9 @@
                             <tr>
                                 <th>Reference</th>
                                 <th>User</th>
-                                <th>Booking</th>
+                                <th>Bookings</th>
                                 <th>Method</th>
-                                <th>Amount</th>
+                                <th>Total Amount</th>
                                 <th>Transaction ID</th>
                                 <th>Proof</th>
                                 <th>Status</th>
@@ -533,30 +423,26 @@
                             </tr>
                         </thead>
                         <tbody id="paymentsTable">
-                            <tr>
-                                <td colspan="10" class="admin-loading">
-                                    <i class="fas fa-spinner fa-spin"></i> Loading...
-                                </td>
-                            </tr>
+                            <tr><td colspan="10" class="admin-loading"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <!-- ===== MATCHES TAB ===== -->
-<div id="matches" class="tab-content">
-    <div class="admin-section">
-        <div class="section-header">
-            <h2><i class="fas fa-futbol"></i> All Matches</h2>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-add" onclick="syncMatches()" style="background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);">
-                    <i class="fas fa-sync"></i> Sync TheSportsDB
-                </button>
-                <button class="btn-add" onclick="openModal('addMatch')">
-                    <i class="fas fa-plus"></i> Add Match
-                </button>
-            </div>
-        </div>
+            <div id="matches" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-futbol"></i> All Matches</h2>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn-add" onclick="syncMatches()" style="background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);">
+                                <i class="fas fa-sync"></i> Sync TheSportsDB
+                            </button>
+                            <button class="btn-add" onclick="openModal('addMatch')">
+                                <i class="fas fa-plus"></i> Add Match
+                            </button>
+                        </div>
+                    </div>
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -571,11 +457,7 @@
                             </tr>
                         </thead>
                         <tbody id="matchesTable">
-                            <tr>
-                                <td colspan="8" class="admin-loading">
-                                    <i class="fas fa-spinner fa-spin"></i> Loading...
-                                </td>
-                            </tr>
+                            <tr><td colspan="8" class="admin-loading"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -603,11 +485,7 @@
                             </tr>
                         </thead>
                         <tbody id="hotelsTable">
-                            <tr>
-                                <td colspan="7" class="admin-loading">
-                                    <i class="fas fa-spinner fa-spin"></i> Loading...
-                                </td>
-                            </tr>
+                            <tr><td colspan="7" class="admin-loading"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -636,48 +514,40 @@
                             </tr>
                         </thead>
                         <tbody id="flightsTable">
-                            <tr>
-                                <td colspan="8" class="admin-loading">
-                                    <i class="fas fa-spinner fa-spin"></i> Loading...
-                                </td>
-                            </tr>
+                            <tr><td colspan="8" class="admin-loading"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <!-- ===== EXTRAS TAB ===== -->
-<div id="extras" class="tab-content">
-    <div class="admin-section">
-        <div class="section-header">
-            <h2><i class="fas fa-gift"></i> All Extras</h2>
-            <button class="btn-add" onclick="openModal('addExtra')">
-                <i class="fas fa-plus"></i> Add Extra
-            </button>
-        </div>
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Price</th>
-                    <th>Price Type</th>
-                    <th>Available</th>
-                    <th>Location</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="extrasTable">
-                <tr>
-                    <td colspan="8" class="admin-loading">
-                        <i class="fas fa-spinner fa-spin"></i> Loading...
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+            <div id="extras" class="tab-content">
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-gift"></i> All Extras</h2>
+                        <button class="btn-add" onclick="openModal('addExtra')">
+                            <i class="fas fa-plus"></i> Add Extra
+                        </button>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Price</th>
+                                <th>Price Type</th>
+                                <th>Available</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="extrasTable">
+                            <tr><td colspan="8" class="admin-loading"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
             <!-- ===== CONTACTS TAB ===== -->
             <div id="contacts" class="tab-content">
@@ -698,11 +568,7 @@
                             </tr>
                         </thead>
                         <tbody id="contactsTable">
-                            <tr>
-                                <td colspan="7" class="admin-loading">
-                                    <i class="fas fa-spinner fa-spin"></i> Loading...
-                                </td>
-                            </tr>
+                            <tr><td colspan="7" class="admin-loading"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -863,311 +729,132 @@
         </div>
     </div>
 
-    <!-- Edit Match Modal -->
-<div id="editMatchModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2><i class="fas fa-edit"></i> Edit Match</h2>
-            <button class="modal-close" onclick="closeModal('editMatch')">&times;</button>
+    <!-- Add Extra Modal -->
+    <div id="addExtraModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-gift"></i> Add New Extra</h2>
+                <button class="modal-close" onclick="closeModal('addExtra')">&times;</button>
+            </div>
+            <form id="addExtraForm" onsubmit="submitExtra(event)">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" required placeholder="e.g., Stadium Parking">
+                </div>
+                <div class="form-group">
+                    <label>Type</label>
+                    <select name="type" required>
+                        <option value="">Select Type</option>
+                        <option value="parking">Parking</option>
+                        <option value="car_rental">Car Rental</option>
+                        <option value="tour">Tour</option>
+                        <option value="experience">Experience</option>
+                        <option value="transport">Transport</option>
+                        <option value="merchandise">Merchandise</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" rows="3" required placeholder="Describe this extra..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Price ($)</label>
+                    <input type="number" name="price" required placeholder="e.g., 50">
+                </div>
+                <div class="form-group">
+                    <label>Price Type</label>
+                    <select name="priceType" required>
+                        <option value="per_item">Per Item</option>
+                        <option value="per_person">Per Person</option>
+                        <option value="per_day">Per Day</option>
+                        <option value="flat">Flat Rate</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Duration (optional)</label>
+                    <input type="text" name="duration" placeholder="e.g., 2 hours">
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" name="location" placeholder="e.g., Stadium Entrance">
+                </div>
+                <div class="form-group">
+                    <label>Available Quantity</label>
+                    <input type="number" name="available" required placeholder="e.g., 100">
+                </div>
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-plus"></i> Add Extra
+                </button>
+            </form>
         </div>
-        <form id="editMatchForm" onsubmit="submitEditMatch(event)">
-            <input type="hidden" id="editMatchId">
-            <div class="form-group">
-                <label>Team 1</label>
-                <input type="text" id="editMatchTeam1" required>
-            </div>
-            <div class="form-group">
-                <label>Team 2</label>
-                <input type="text" id="editMatchTeam2" required>
-            </div>
-            <div class="form-group">
-                <label>Date</label>
-                <input type="date" id="editMatchDate" required>
-            </div>
-            <div class="form-group">
-                <label>Time</label>
-                <input type="time" id="editMatchTime" required>
-            </div>
-            <div class="form-group">
-                <label>Stadium</label>
-                <input type="text" id="editMatchStadium" required>
-            </div>
-            <div class="form-group">
-                <label>City</label>
-                <input type="text" id="editMatchCity" required>
-            </div>
-            <div class="form-group">
-                <label>Tickets Available</label>
-                <input type="number" id="editMatchTickets" required>
-            </div>
-            <div class="form-group">
-                <label>VIP Price ($)</label>
-                <input type="number" id="editMatchVip" required>
-            </div>
-            <div class="form-group">
-                <label>Premium Price ($)</label>
-                <input type="number" id="editMatchPremium" required>
-            </div>
-            <div class="form-group">
-                <label>Regular Price ($)</label>
-                <input type="number" id="editMatchRegular" required>
-            </div>
-            <div class="form-group">
-                <label>Status</label>
-                <select id="editMatchStatus">
-                    <option value="upcoming">Upcoming</option>
-                    <option value="ongoing">Ongoing</option>
-                    <option value="completed">Completed</option>
-                    <option value="cancelled">Cancelled</option>
-                </select>
-            </div>
-            <button type="submit" class="btn-submit">
-                <i class="fas fa-save"></i> Save Changes
-            </button>
-        </form>
     </div>
-</div>
 
-<!-- Edit Hotel Modal -->
-<div id="editHotelModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2><i class="fas fa-edit"></i> Edit Hotel</h2>
-            <button class="modal-close" onclick="closeModal('editHotel')">&times;</button>
+    <!-- Edit Extra Modal -->
+    <div id="editExtraModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-edit"></i> Edit Extra</h2>
+                <button class="modal-close" onclick="closeModal('editExtra')">&times;</button>
+            </div>
+            <form id="editExtraForm" onsubmit="submitEditExtra(event)">
+                <input type="hidden" id="editExtraId">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="editExtraName" required>
+                </div>
+                <div class="form-group">
+                    <label>Type</label>
+                    <select id="editExtraType" required>
+                        <option value="parking">Parking</option>
+                        <option value="car_rental">Car Rental</option>
+                        <option value="tour">Tour</option>
+                        <option value="experience">Experience</option>
+                        <option value="transport">Transport</option>
+                        <option value="merchandise">Merchandise</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="editExtraDescription" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Price ($)</label>
+                    <input type="number" id="editExtraPrice" required>
+                </div>
+                <div class="form-group">
+                    <label>Price Type</label>
+                    <select id="editExtraPriceType" required>
+                        <option value="per_item">Per Item</option>
+                        <option value="per_person">Per Person</option>
+                        <option value="per_day">Per Day</option>
+                        <option value="flat">Flat Rate</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Duration (optional)</label>
+                    <input type="text" id="editExtraDuration">
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="editExtraLocation">
+                </div>
+                <div class="form-group">
+                    <label>Available Quantity</label>
+                    <input type="number" id="editExtraAvailable" required>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="editExtraStatus">
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
+            </form>
         </div>
-        <form id="editHotelForm" onsubmit="submitEditHotel(event)">
-            <input type="hidden" id="editHotelId">
-            <div class="form-group">
-                <label>Hotel Name</label>
-                <input type="text" id="editHotelName" required>
-            </div>
-            <div class="form-group">
-                <label>City</label>
-                <input type="text" id="editHotelCity" required>
-            </div>
-            <div class="form-group">
-                <label>Address</label>
-                <input type="text" id="editHotelAddress">
-            </div>
-            <div class="form-group">
-                <label>Rating (1-5)</label>
-                <input type="number" id="editHotelRating" min="1" max="5" step="0.5" required>
-            </div>
-            <div class="form-group">
-                <label>Price Per Night ($)</label>
-                <input type="number" id="editHotelPrice" required>
-            </div>
-            <div class="form-group">
-                <label>Distance to Stadium</label>
-                <input type="text" id="editHotelDistance" required>
-            </div>
-            <div class="form-group">
-                <label>Total Rooms</label>
-                <input type="number" id="editHotelRooms" required>
-            </div>
-            <div class="form-group">
-                <label>Description</label>
-                <textarea id="editHotelDescription" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-                <label>Status</label>
-                <select id="editHotelStatus">
-                    <option value="true">Active</option>
-                    <option value="false">Inactive</option>
-                </select>
-            </div>
-            <button type="submit" class="btn-submit">
-                <i class="fas fa-save"></i> Save Changes
-            </button>
-        </form>
     </div>
-</div>
-
-<!-- Edit Flight Modal -->
-<div id="editFlightModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2><i class="fas fa-edit"></i> Edit Flight</h2>
-            <button class="modal-close" onclick="closeModal('editFlight')">&times;</button>
-        </div>
-        <form id="editFlightForm" onsubmit="submitEditFlight(event)">
-            <input type="hidden" id="editFlightId">
-            <div class="form-group">
-                <label>Airline</label>
-                <input type="text" id="editFlightAirline" required>
-            </div>
-            <div class="form-group">
-                <label>Flight Number</label>
-                <input type="text" id="editFlightNumber" required>
-            </div>
-            <div class="form-group">
-                <label>Departure City</label>
-                <input type="text" id="editFlightDeparture" required>
-            </div>
-            <div class="form-group">
-                <label>Arrival City</label>
-                <input type="text" id="editFlightArrival" required>
-            </div>
-            <div class="form-group">
-                <label>Date</label>
-                <input type="date" id="editFlightDate" required>
-            </div>
-            <div class="form-group">
-                <label>Time</label>
-                <input type="time" id="editFlightTime" required>
-            </div>
-            <div class="form-group">
-                <label>Duration</label>
-                <input type="text" id="editFlightDuration" required placeholder="e.g., 5h 30m">
-            </div>
-            <div class="form-group">
-                <label>Price ($)</label>
-                <input type="number" id="editFlightPrice" required>
-            </div>
-            <div class="form-group">
-                <label>Available Seats</label>
-                <input type="number" id="editFlightSeats" required>
-            </div>
-            <div class="form-group">
-                <label>Status</label>
-                <select id="editFlightStatus">
-                    <option value="true">Active</option>
-                    <option value="false">Inactive</option>
-                </select>
-            </div>
-            <button type="submit" class="btn-submit">
-                <i class="fas fa-save"></i> Save Changes
-            </button>
-        </form>
-    </div>
-</div>
-
-<!-- Add Extra Modal -->
-<div id="addExtraModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2><i class="fas fa-gift"></i> Add New Extra</h2>
-            <button class="modal-close" onclick="closeModal('addExtra')">&times;</button>
-        </div>
-        <form id="addExtraForm" onsubmit="submitExtra(event)">
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" name="name" required placeholder="e.g., Stadium Parking">
-            </div>
-            <div class="form-group">
-                <label>Type</label>
-                <select name="type" required>
-                    <option value="">Select Type</option>
-                    <option value="parking">Parking</option>
-                    <option value="car_rental">Car Rental</option>
-                    <option value="tour">Tour</option>
-                    <option value="experience">Experience</option>
-                    <option value="transport">Transport</option>
-                    <option value="merchandise">Merchandise</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Description</label>
-                <textarea name="description" rows="3" required placeholder="Describe this extra..."></textarea>
-            </div>
-            <div class="form-group">
-                <label>Price ($)</label>
-                <input type="number" name="price" required placeholder="e.g., 50">
-            </div>
-            <div class="form-group">
-                <label>Price Type</label>
-                <select name="priceType" required>
-                    <option value="per_item">Per Item</option>
-                    <option value="per_person">Per Person</option>
-                    <option value="per_day">Per Day</option>
-                    <option value="flat">Flat Rate</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Duration (optional)</label>
-                <input type="text" name="duration" placeholder="e.g., 2 hours">
-            </div>
-            <div class="form-group">
-                <label>Location</label>
-                <input type="text" name="location" placeholder="e.g., Stadium Entrance">
-            </div>
-            <div class="form-group">
-                <label>Available Quantity</label>
-                <input type="number" name="available" required placeholder="e.g., 100">
-            </div>
-            <button type="submit" class="btn-submit">
-                <i class="fas fa-plus"></i> Add Extra
-            </button>
-        </form>
-    </div>
-</div>
-
-<!-- Edit Extra Modal -->
-<div id="editExtraModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2><i class="fas fa-edit"></i> Edit Extra</h2>
-            <button class="modal-close" onclick="closeModal('editExtra')">&times;</button>
-        </div>
-        <form id="editExtraForm" onsubmit="submitEditExtra(event)">
-            <input type="hidden" id="editExtraId">
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" id="editExtraName" required>
-            </div>
-            <div class="form-group">
-                <label>Type</label>
-                <select id="editExtraType" required>
-                    <option value="parking">Parking</option>
-                    <option value="car_rental">Car Rental</option>
-                    <option value="tour">Tour</option>
-                    <option value="experience">Experience</option>
-                    <option value="transport">Transport</option>
-                    <option value="merchandise">Merchandise</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Description</label>
-                <textarea id="editExtraDescription" rows="3" required></textarea>
-            </div>
-            <div class="form-group">
-                <label>Price ($)</label>
-                <input type="number" id="editExtraPrice" required>
-            </div>
-            <div class="form-group">
-                <label>Price Type</label>
-                <select id="editExtraPriceType" required>
-                    <option value="per_item">Per Item</option>
-                    <option value="per_person">Per Person</option>
-                    <option value="per_day">Per Day</option>
-                    <option value="flat">Flat Rate</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Duration (optional)</label>
-                <input type="text" id="editExtraDuration" placeholder="e.g., 2 hours">
-            </div>
-            <div class="form-group">
-                <label>Location</label>
-                <input type="text" id="editExtraLocation">
-            </div>
-            <div class="form-group">
-                <label>Available Quantity</label>
-                <input type="number" id="editExtraAvailable" required>
-            </div>
-            <div class="form-group">
-                <label>Status</label>
-                <select id="editExtraStatus">
-                    <option value="true">Active</option>
-                    <option value="false">Inactive</option>
-                </select>
-            </div>
-            <button type="submit" class="btn-submit">
-                <i class="fas fa-save"></i> Save Changes
-            </button>
-        </form>
-    </div>
-</div>
 
     <!-- View Payment Proof Modal -->
     <div id="viewProofModal" class="modal">
@@ -1182,8 +869,7 @@
             </div>
         </div>
     </div>
-
-    <script>
+        <script>
         // ===================================
         // ADMIN PANEL JAVASCRIPT
         // ===================================
@@ -1236,6 +922,7 @@
                         matches: '<i class="fas fa-futbol"></i> Matches',
                         hotels: '<i class="fas fa-hotel"></i> Hotels',
                         flights: '<i class="fas fa-plane"></i> Flights',
+                        extras: '<i class="fas fa-gift"></i> Extras',
                         contacts: '<i class="fas fa-envelope"></i> Contacts'
                     };
                     document.getElementById('pageTitle').innerHTML = tabNames[tabId];
@@ -1297,7 +984,7 @@
         function renderRecentBookings(bookings) {
             const tbody = document.getElementById('recentBookingsTable');
             if (!bookings || bookings.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No bookings yet</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No bookings yet</td></tr>';
                 return;
             }
             tbody.innerHTML = bookings.map(b => `
@@ -1306,12 +993,14 @@
                     <td>${b.user?.name || 'N/A'}</td>
                     <td>${b.bookingType}</td>
                     <td>$${b.totalPrice}</td>
+                    <td><span class="status-badge status-${b.paymentStatus || 'pending'}">${b.paymentStatus || 'pending'}</span></td>
                     <td><span class="status-badge status-${b.status}">${b.status}</span></td>
                     <td>${new Date(b.createdAt).toLocaleDateString()}</td>
                 </tr>
             `).join('');
         }
-                // ===== PENDING PAYMENTS (Dashboard) =====
+
+        // ===== PENDING PAYMENTS (Dashboard) =====
         async function loadPendingPayments() {
             try {
                 const response = await fetch(`${API_URL}/api/payments/admin/all?status=submitted`, {
@@ -1331,33 +1020,51 @@
         function renderPendingPayments(payments) {
             const tbody = document.getElementById('pendingPaymentsTable');
             if (!payments || payments.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No pending payments 🎉</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No pending payments 🎉</td></tr>';
                 return;
             }
-            tbody.innerHTML = payments.map(p => `
-                <tr>
-                    <td>${p.paymentReference}</td>
-                    <td>${p.user?.name || 'N/A'}<br><small style="color:#ccc;">${p.user?.email || ''}</small></td>
-                    <td>${formatPaymentMethod(p.paymentMethod)}</td>
-                    <td style="color: #ffd700; font-weight: bold;">$${p.amount}</td>
-                    <td>${new Date(p.submittedAt || p.createdAt).toLocaleDateString()}</td>
-                    <td>
-                        <div class="action-btns">
+            tbody.innerHTML = payments.map(p => {
+                const bookingsList = p.bookings && p.bookings.length > 0
+                    ? p.bookings
+                    : (p.booking ? [p.booking] : []);
+
+                const bookingsDisplay = bookingsList.map(b => `
+                    <div class="payment-booking-item">
+                        <small style="color: #ffd700;">${b.bookingType || 'booking'}</small><br>
+                        <span style="font-size: 11px;">${b.itemName || 'N/A'}</span>
+                    </div>
+                `).join('');
+
+                return `
+                    <tr>
+                        <td>${p.paymentReference}</td>
+                        <td>${p.user?.name || 'N/A'}<br><small style="color:#ccc;">${p.user?.email || ''}</small></td>
+                        <td style="min-width: 150px;">
+                            ${bookingsDisplay}
+                            <small style="color: #ffd700;">${bookingsList.length} booking(s)</small>
+                        </td>
+                        <td>${formatPaymentMethod(p.paymentMethod)}</td>
+                        <td style="color: #ffd700; font-weight: bold;">$${p.amount}</td>
+                        <td>
                             ${p.proofImage ? `
                                 <button class="btn-view" onclick="viewPaymentProof('${p.proofImage}')">
-                                    <i class="fas fa-image"></i> Proof
+                                    <i class="fas fa-image"></i> View
                                 </button>
-                            ` : ''}
-                            <button class="btn-approve" onclick="approvePayment('${p._id}')">
-                                <i class="fas fa-check"></i> Approve
-                            </button>
-                            <button class="btn-reject" onclick="rejectPayment('${p._id}')">
-                                <i class="fas fa-times"></i> Reject
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
+                            ` : 'No proof'}
+                        </td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-approve" onclick="approvePayment('${p._id}')">
+                                    <i class="fas fa-check"></i> Approve All
+                                </button>
+                                <button class="btn-reject" onclick="rejectPayment('${p._id}')">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
         // ===== PAYMENTS TAB =====
@@ -1394,66 +1101,67 @@
         }
 
         function renderPayments(payments) {
-    const tbody = document.getElementById('paymentsTable');
-    if (!payments || payments.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;">No payments found</td></tr>';
-        return;
-    }
-    tbody.innerHTML = payments.map(p => {
-        // Show all bookings linked to this payment
-        const bookingsList = p.bookings && p.bookings.length > 0
-            ? p.bookings
-            : (p.booking ? [p.booking] : []);
+            const tbody = document.getElementById('paymentsTable');
+            if (!payments || payments.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;">No payments found</td></tr>';
+                return;
+            }
+            tbody.innerHTML = payments.map(p => {
+                const bookingsList = p.bookings && p.bookings.length > 0
+                    ? p.bookings
+                    : (p.booking ? [p.booking] : []);
 
-        const bookingsDisplay = bookingsList.map(b => `
-            <div style="margin-bottom: 5px; padding: 4px 8px; background: rgba(255,215,0,0.1); border-radius: 5px;">
-                <small style="color: #ffd700;">${b.bookingType}</small><br>
-                <span style="font-size: 12px;">${b.itemName}</span><br>
-                <small style="color: #ccc;">Ref: ${b.bookingReference} — $${b.totalPrice}</small>
-            </div>
-        `).join('');
-
-        return `
-            <tr>
-                <td>${p.paymentReference}</td>
-                <td>
-                    ${p.user?.name || 'N/A'}<br>
-                    <small style="color:#ccc;">${p.user?.email || ''}</small><br>
-                    <small style="color:#ccc;">${p.user?.whatsapp || ''}</small>
-                </td>
-                <td style="min-width: 200px;">
-                    ${bookingsDisplay}
-                    <small style="color: #ffd700; font-weight: bold;">${bookingsList.length} booking(s)</small>
-                </td>
-                <td>${formatPaymentMethod(p.paymentMethod)}</td>
-                <td style="color: #ffd700; font-weight: bold; font-size: 16px;">$${p.amount}</td>
-                <td>${p.transactionId || 'N/A'}</td>
-                <td>
-                    ${p.proofImage
-                        ? `<a href="#" onclick="viewPaymentProof('${p.proofImage}')" class="proof-image-link">
-                            <i class="fas fa-image"></i> View Proof
-                           </a>`
-                        : '<span style="color:#666;">No proof</span>'
-                    }
-                </td>
-                <td><span class="status-badge status-${p.status}">${p.status}</span></td>
-                <td>${new Date(p.submittedAt || p.createdAt).toLocaleDateString()}</td>
-                <td>
-                    <div class="action-btns">
-                       ${p.status === 'submitted' || p.status === 'pending' ? `
-    <button class="btn-approve" onclick="approvePayment('${p._id}')">
-        <i class="fas fa-check"></i> Approve All
-    </button>
-    <button class="btn-reject" onclick="rejectPayment('${p._id}')">
-        <i class="fas fa-times"></i> Reject
-    </button>
-` : `<span style="color: #ccc; font-size: 12px;">${p.status}</span>`}
+                const bookingsDisplay = bookingsList.map(b => `
+                    <div class="payment-booking-item">
+                        <small style="color: #ffd700;">${b.bookingType || 'booking'}</small><br>
+                        <span style="font-size: 11px;">${b.itemName || 'N/A'}</span><br>
+                        <small style="color: #ccc;">Ref: ${b.bookingReference || 'N/A'} — $${b.totalPrice || 0}</small>
                     </div>
-                </td>
-            </tr>
-        `;
-    }).join('');
-}
+                `).join('');
+
+                const canApprove = p.status === 'submitted' || p.status === 'pending';
+
+                return `
+                    <tr>
+                        <td>${p.paymentReference}</td>
+                        <td>
+                            ${p.user?.name || 'N/A'}<br>
+                            <small style="color:#ccc;">${p.user?.email || ''}</small><br>
+                            <small style="color:#ccc;">${p.user?.whatsapp || ''}</small>
+                        </td>
+                        <td style="min-width: 200px;">
+                            ${bookingsDisplay}
+                            <small style="color: #ffd700; font-weight: bold;">${bookingsList.length} booking(s)</small>
+                        </td>
+                        <td>${formatPaymentMethod(p.paymentMethod)}</td>
+                        <td style="color: #ffd700; font-weight: bold; font-size: 16px;">$${p.amount}</td>
+                        <td>${p.transactionId || 'N/A'}</td>
+                        <td>
+                            ${p.proofImage
+                                ? `<a href="#" onclick="viewPaymentProof('${p.proofImage}')" class="proof-image-link">
+                                    <i class="fas fa-image"></i> View Proof
+                                   </a>`
+                                : '<span style="color:#666;">No proof</span>'
+                            }
+                        </td>
+                        <td><span class="status-badge status-${p.status}">${p.status}</span></td>
+                        <td>${new Date(p.submittedAt || p.createdAt).toLocaleDateString()}</td>
+                        <td>
+                            <div class="action-btns">
+                                ${canApprove ? `
+                                    <button class="btn-approve" onclick="approvePayment('${p._id}')">
+                                        <i class="fas fa-check"></i> Approve All
+                                    </button>
+                                    <button class="btn-reject" onclick="rejectPayment('${p._id}')">
+                                        <i class="fas fa-times"></i> Reject
+                                    </button>
+                                ` : `<span style="color: #ccc; font-size: 12px;">${p.status}</span>`}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
 
         // ===== PAYMENT ACTIONS =====
         function viewPaymentProof(imageData) {
@@ -1463,7 +1171,7 @@
 
         async function approvePayment(id) {
             const notes = prompt('Add a note for the customer (optional):') || '';
-            if (!confirm('Approve this payment? This will confirm the booking.')) return;
+            if (!confirm('Approve this payment? This will confirm ALL linked bookings.')) return;
             try {
                 const response = await fetch(`${API_URL}/api/payments/admin/${id}/approve`, {
                     method: 'PUT',
@@ -1475,10 +1183,11 @@
                 });
                 const data = await response.json();
                 if (data.success) {
-                    alert('✅ Payment approved! Booking confirmed. Confirmation email sent.');
+                    alert('✅ Payment approved! All linked bookings confirmed. Email sent to customer.');
                     loadPayments();
                     loadPendingPayments();
                     loadDashboardStats();
+                    loadBookings();
                 } else {
                     alert(data.message || 'Error approving payment');
                 }
@@ -1488,7 +1197,7 @@
         }
 
         async function rejectPayment(id) {
-            const notes = prompt('Reason for rejection (will be noted internally):') || '';
+            const notes = prompt('Reason for rejection (internal note):') || '';
             if (!confirm('Reject this payment?')) return;
             try {
                 const response = await fetch(`${API_URL}/api/payments/admin/${id}/reject`, {
@@ -1512,8 +1221,7 @@
                 alert('Network error');
             }
         }
-
-        // ===== USERS =====
+                // ===== USERS =====
         async function loadUsers() {
             try {
                 const response = await fetch(`${API_URL}/api/admin/users`, {
@@ -1533,6 +1241,7 @@
                     <td>${u.name}</td>
                     <td>${u.email}</td>
                     <td>${u.whatsapp || 'N/A'}</td>
+                    <td>${u.country || 'N/A'}</td>
                     <td><span class="status-badge status-${u.role === 'admin' ? 'confirmed' : 'pending'}">${u.role}</span></td>
                     <td><span class="status-badge status-${u.isActive ? 'active' : 'cancelled'}">${u.isActive ? 'Active' : 'Inactive'}</span></td>
                     <td>${new Date(u.createdAt).toLocaleDateString()}</td>
@@ -1565,26 +1274,33 @@
                 tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;">No bookings yet</td></tr>';
                 return;
             }
-            tbody.innerHTML = bookings.map(b => `
-                <tr>
-                    <td>${b.bookingReference || b._id.slice(-8)}</td>
-                    <td>${b.user?.name || 'N/A'}<br><small style="color:#ccc;">${b.user?.email || ''}</small></td>
-                    <td>${b.bookingType}</td>
-                    <td>${b.itemName}</td>
-                    <td>$${b.totalPrice}</td>
-                    <td><span class="status-badge status-${b.paymentStatus || 'pending'}">${b.paymentStatus || 'pending'}</span></td>
-                    <td><span class="status-badge status-${b.status}">${b.status}</span></td>
-                    <td>${new Date(b.createdAt).toLocaleDateString()}</td>
-                    <td>
-                        <div class="action-btns">
-                            <button class="btn-view" onclick="updateBookingStatus('${b._id}', 'confirmed')"><i class="fas fa-check"></i></button>
-                            <button class="btn-delete" onclick="updateBookingStatus('${b._id}', 'cancelled')"><i class="fas fa-times"></i></button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = bookings.map(b => {
+                const canCancel = b.paymentStatus === 'pending' && b.status === 'pending';
+
+                return `
+                    <tr>
+                        <td>${b.bookingReference || b._id.slice(-8)}</td>
+                        <td>${b.user?.name || 'N/A'}<br><small style="color:#ccc;">${b.user?.email || ''}</small></td>
+                        <td>${b.bookingType}</td>
+                        <td>${b.itemName}</td>
+                        <td>$${b.totalPrice}</td>
+                        <td><span class="status-badge status-${b.paymentStatus || 'pending'}">${b.paymentStatus || 'pending'}</span></td>
+                        <td><span class="status-badge status-${b.status}">${b.status}</span></td>
+                        <td>${new Date(b.createdAt).toLocaleDateString()}</td>
+                        <td>
+                            <div class="action-btns">
+                                ${canCancel ? `
+                                    <button class="btn-view" onclick="updateBookingStatus('${b._id}', 'confirmed')"><i class="fas fa-check"></i></button>
+                                    <button class="btn-delete" onclick="updateBookingStatus('${b._id}', 'cancelled')"><i class="fas fa-times"></i></button>
+                                ` : `<span style="color: #ccc; font-size: 11px;">${b.status}</span>`}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
-                // ===== MATCHES =====
+
+        // ===== MATCHES =====
         async function loadMatches() {
             try {
                 const response = await fetch(`${API_URL}/api/matches`);
@@ -1596,8 +1312,8 @@
         }
 
         function renderMatches(matches) {
-    window.matchesDataAdmin = matches;
-    const tbody = document.getElementById('matchesTable');
+            window.matchesDataAdmin = matches;
+            const tbody = document.getElementById('matchesTable');
             if (!matches || matches.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No matches yet</td></tr>';
                 return;
@@ -1633,8 +1349,8 @@
         }
 
         function renderHotels(hotels) {
-    window.hotelsDataAdmin = hotels;
-    const tbody = document.getElementById('hotelsTable');
+            window.hotelsDataAdmin = hotels;
+            const tbody = document.getElementById('hotelsTable');
             if (!hotels || hotels.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No hotels yet</td></tr>';
                 return;
@@ -1669,8 +1385,8 @@
         }
 
         function renderFlights(flights) {
-    window.flightsDataAdmin = flights;
-    const tbody = document.getElementById('flightsTable');
+            window.flightsDataAdmin = flights;
+            const tbody = document.getElementById('flightsTable');
             if (!flights || flights.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No flights yet</td></tr>';
                 return;
@@ -1688,6 +1404,55 @@
                         <div class="action-btns">
                             <button class="btn-edit" onclick="editFlight('${f._id}')"><i class="fas fa-edit"></i></button>
                             <button class="btn-delete" onclick="deleteFlight('${f._id}')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // ===== EXTRAS =====
+        async function loadExtras() {
+            try {
+                const response = await fetch(`${API_URL}/api/extras`);
+                const data = await response.json();
+                if (data.success) renderExtras(data.extras);
+            } catch (error) {
+                console.error('Error loading extras:', error);
+            }
+        }
+
+        function formatExtraTypeAdmin(type) {
+            switch(type) {
+                case 'parking': return '🅿️ Parking';
+                case 'car_rental': return '🚗 Car Rental';
+                case 'tour': return '🗺️ Tour';
+                case 'experience': return '🎭 Experience';
+                case 'transport': return '🚌 Transport';
+                case 'merchandise': return '👕 Merchandise';
+                default: return type;
+            }
+        }
+
+        function renderExtras(extras) {
+            window.extrasDataAdmin = extras;
+            const tbody = document.getElementById('extrasTable');
+            if (!extras || extras.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No extras yet</td></tr>';
+                return;
+            }
+            tbody.innerHTML = extras.map(e => `
+                <tr>
+                    <td>${e.name}</td>
+                    <td>${formatExtraTypeAdmin(e.type)}</td>
+                    <td>$${e.price}</td>
+                    <td>${e.priceType}</td>
+                    <td>${e.available}</td>
+                    <td>${e.location || 'N/A'}</td>
+                    <td><span class="status-badge status-${e.isActive ? 'active' : 'cancelled'}">${e.isActive ? 'Active' : 'Inactive'}</span></td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-edit" onclick="editExtra('${e._id}')"><i class="fas fa-edit"></i></button>
+                            <button class="btn-delete" onclick="deleteExtra('${e._id}')"><i class="fas fa-trash"></i></button>
                         </div>
                     </td>
                 </tr>
@@ -1730,8 +1495,7 @@
                 </tr>
             `).join('');
         }
-
-        // ===== MODAL FUNCTIONS =====
+                // ===== MODAL FUNCTIONS =====
         function openModal(type) {
             document.getElementById(`${type}Modal`).classList.add('active');
         }
@@ -1773,7 +1537,7 @@
                 });
                 const data = await response.json();
                 if (data.success) {
-                    alert('Match added successfully!');
+                    alert('✅ Match added successfully!');
                     closeModal('addMatch');
                     form.reset();
                     loadMatches();
@@ -1815,7 +1579,7 @@
                 });
                 const data = await response.json();
                 if (data.success) {
-                    alert('Hotel added successfully!');
+                    alert('✅ Hotel added successfully!');
                     closeModal('addHotel');
                     form.reset();
                     loadHotels();
@@ -1856,7 +1620,7 @@
                 });
                 const data = await response.json();
                 if (data.success) {
-                    alert('Flight added successfully!');
+                    alert('✅ Flight added successfully!');
                     closeModal('addFlight');
                     form.reset();
                     loadFlights();
@@ -1867,7 +1631,109 @@
                 alert('Network error');
             }
         }
-                // ===== DELETE FUNCTIONS =====
+
+        async function submitExtra(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+
+            const extraData = {
+                name: formData.get('name'),
+                type: formData.get('type'),
+                description: formData.get('description'),
+                price: parseInt(formData.get('price')),
+                priceType: formData.get('priceType'),
+                duration: formData.get('duration') || null,
+                location: formData.get('location'),
+                available: parseInt(formData.get('available')),
+                isActive: true
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/api/extras`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${adminToken}`
+                    },
+                    body: JSON.stringify(extraData)
+                });
+                const data = await response.json();
+                if (data.success) {
+                    alert('✅ Extra added successfully!');
+                    closeModal('addExtra');
+                    form.reset();
+                    loadExtras();
+                } else {
+                    alert(data.message || 'Error adding extra');
+                }
+            } catch (error) {
+                alert('Network error');
+            }
+        }
+
+        // ===== EDIT FUNCTIONS =====
+        function editExtra(id) {
+            const extra = window.extrasDataAdmin?.find(e => e._id === id);
+            if (!extra) { alert('Extra data not found. Please refresh.'); return; }
+
+            document.getElementById('editExtraId').value = extra._id;
+            document.getElementById('editExtraName').value = extra.name;
+            document.getElementById('editExtraType').value = extra.type;
+            document.getElementById('editExtraDescription').value = extra.description;
+            document.getElementById('editExtraPrice').value = extra.price;
+            document.getElementById('editExtraPriceType').value = extra.priceType;
+            document.getElementById('editExtraDuration').value = extra.duration || '';
+            document.getElementById('editExtraLocation').value = extra.location || '';
+            document.getElementById('editExtraAvailable').value = extra.available;
+            document.getElementById('editExtraStatus').value = extra.isActive ? 'true' : 'false';
+
+            document.getElementById('editExtraModal').classList.add('active');
+        }
+
+        async function submitEditExtra(e) {
+            e.preventDefault();
+            const id = document.getElementById('editExtraId').value;
+
+            const extraData = {
+                name: document.getElementById('editExtraName').value,
+                type: document.getElementById('editExtraType').value,
+                description: document.getElementById('editExtraDescription').value,
+                price: parseInt(document.getElementById('editExtraPrice').value),
+                priceType: document.getElementById('editExtraPriceType').value,
+                duration: document.getElementById('editExtraDuration').value || null,
+                location: document.getElementById('editExtraLocation').value,
+                available: parseInt(document.getElementById('editExtraAvailable').value),
+                isActive: document.getElementById('editExtraStatus').value === 'true'
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/api/extras/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${adminToken}`
+                    },
+                    body: JSON.stringify(extraData)
+                });
+                const data = await response.json();
+                if (data.success) {
+                    alert('✅ Extra updated successfully!');
+                    closeModal('editExtra');
+                    loadExtras();
+                } else {
+                    alert(data.message || 'Error updating extra');
+                }
+            } catch (error) {
+                alert('Network error');
+            }
+        }
+
+        function editMatch(id) { alert('Edit match functionality coming soon!'); }
+        function editHotel(id) { alert('Edit hotel functionality coming soon!'); }
+        function editFlight(id) { alert('Edit flight functionality coming soon!'); }
+
+        // ===== DELETE FUNCTIONS =====
         async function deleteMatch(id) {
             if (!confirm('Are you sure you want to delete this match?')) return;
             try {
@@ -1904,6 +1770,19 @@
                 const data = await response.json();
                 if (data.success) { alert('Flight deleted!'); loadFlights(); }
                 else alert(data.message || 'Error deleting flight');
+            } catch (error) { alert('Network error'); }
+        }
+
+        async function deleteExtra(id) {
+            if (!confirm('Are you sure you want to delete this extra?')) return;
+            try {
+                const response = await fetch(`${API_URL}/api/extras/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${adminToken}` }
+                });
+                const data = await response.json();
+                if (data.success) { alert('Extra deleted!'); loadExtras(); }
+                else alert(data.message || 'Error deleting extra');
             } catch (error) { alert('Network error'); }
         }
 
@@ -1972,355 +1851,33 @@
             } catch (error) { alert('Network error'); }
         }
 
+        // ===== SYNC MATCHES =====
+        async function syncMatches() {
+            if (!confirm('Sync matches from TheSportsDB? This may take a moment.')) return;
+
+            try {
+                const response = await fetch(`${API_URL}/api/matches/sync/thesportsdb`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${adminToken}` }
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    alert(`✅ Sync Complete!\n\nNew matches: ${data.synced}\nUpdated: ${data.updated}\nErrors: ${data.errors}\nTotal from API: ${data.totalFromAPI}`);
+                    loadMatches();
+                    loadDashboardStats();
+                } else {
+                    alert(data.message || 'Sync failed');
+                }
+            } catch (error) {
+                alert('Network error during sync');
+            }
+        }
+
         // ===== UTILITY FUNCTIONS =====
         function replyContact(email) {
             window.open(`mailto:${email}?subject=Re: World Cup 2026 Inquiry`, '_blank');
         }
-
-        // ===== EXTRAS =====
-async function loadExtras() {
-    try {
-        const response = await fetch(`${API_URL}/api/extras`);
-        const data = await response.json();
-        if (data.success) renderExtras(data.extras);
-    } catch (error) {
-        console.error('Error loading extras:', error);
-    }
-}
-
-function renderExtras(extras) {
-    window.extrasDataAdmin = extras;
-    const tbody = document.getElementById('extrasTable');
-    if (!extras || extras.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No extras yet</td></tr>';
-        return;
-    }
-    tbody.innerHTML = extras.map(e => `
-        <tr>
-            <td>${e.name}</td>
-            <td>${formatExtraTypeAdmin(e.type)}</td>
-            <td>$${e.price}</td>
-            <td>${e.priceType}</td>
-            <td>${e.available}</td>
-            <td>${e.location || 'N/A'}</td>
-            <td>
-                <span class="status-badge status-${e.isActive ? 'active' : 'cancelled'}">
-                    ${e.isActive ? 'Active' : 'Inactive'}
-                </span>
-            </td>
-            <td>
-                <div class="action-btns">
-                    <button class="btn-edit" onclick="editExtra('${e._id}')">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="btn-delete" onclick="deleteExtra('${e._id}')">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </td>
-        </tr>
-    `).join('');
-}
-
-function formatExtraTypeAdmin(type) {
-    switch(type) {
-        case 'parking': return '🅿️ Parking';
-        case 'car_rental': return '🚗 Car Rental';
-        case 'tour': return '🗺️ Tour';
-        case 'experience': return '🎭 Experience';
-        case 'transport': return '🚌 Transport';
-        case 'merchandise': return '👕 Merchandise';
-        default: return type;
-    }
-}
-
-async function submitExtra(e) {
-    e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
-
-    const extraData = {
-        name: formData.get('name'),
-        type: formData.get('type'),
-        description: formData.get('description'),
-        price: parseInt(formData.get('price')),
-        priceType: formData.get('priceType'),
-        duration: formData.get('duration') || null,
-        location: formData.get('location'),
-        available: parseInt(formData.get('available')),
-        isActive: true
-    };
-
-    try {
-        const response = await fetch(`${API_URL}/api/extras`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${adminToken}`
-            },
-            body: JSON.stringify(extraData)
-        });
-        const data = await response.json();
-        if (data.success) {
-            alert('✅ Extra added successfully!');
-            closeModal('addExtra');
-            form.reset();
-            loadExtras();
-        } else {
-            alert(data.message || 'Error adding extra');
-        }
-    } catch (error) {
-        alert('Network error');
-    }
-}
-
-function editExtra(id) {
-    const extra = window.extrasDataAdmin?.find(e => e._id === id);
-    if (!extra) { alert('Extra data not found. Please refresh.'); return; }
-
-    document.getElementById('editExtraId').value = extra._id;
-    document.getElementById('editExtraName').value = extra.name;
-    document.getElementById('editExtraType').value = extra.type;
-    document.getElementById('editExtraDescription').value = extra.description;
-    document.getElementById('editExtraPrice').value = extra.price;
-    document.getElementById('editExtraPriceType').value = extra.priceType;
-    document.getElementById('editExtraDuration').value = extra.duration || '';
-    document.getElementById('editExtraLocation').value = extra.location || '';
-    document.getElementById('editExtraAvailable').value = extra.available;
-    document.getElementById('editExtraStatus').value = extra.isActive ? 'true' : 'false';
-
-    document.getElementById('editExtraModal').classList.add('active');
-}
-
-async function submitEditExtra(e) {
-    e.preventDefault();
-    const id = document.getElementById('editExtraId').value;
-
-    const extraData = {
-        name: document.getElementById('editExtraName').value,
-        type: document.getElementById('editExtraType').value,
-        description: document.getElementById('editExtraDescription').value,
-        price: parseInt(document.getElementById('editExtraPrice').value),
-        priceType: document.getElementById('editExtraPriceType').value,
-        duration: document.getElementById('editExtraDuration').value || null,
-        location: document.getElementById('editExtraLocation').value,
-        available: parseInt(document.getElementById('editExtraAvailable').value),
-        isActive: document.getElementById('editExtraStatus').value === 'true'
-    };
-
-    try {
-        const response = await fetch(`${API_URL}/api/extras/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${adminToken}`
-            },
-            body: JSON.stringify(extraData)
-        });
-        const data = await response.json();
-        if (data.success) {
-            alert('✅ Extra updated successfully!');
-            closeModal('editExtra');
-            loadExtras();
-        } else {
-            alert(data.message || 'Error updating extra');
-        }
-    } catch (error) {
-        alert('Network error');
-    }
-}
-
-async function deleteExtra(id) {
-    if (!confirm('Are you sure you want to delete this extra?')) return;
-    try {
-        const response = await fetch(`${API_URL}/api/extras/${id}`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${adminToken}` }
-        });
-        const data = await response.json();
-        if (data.success) { alert('Extra deleted!'); loadExtras(); }
-        else alert(data.message || 'Error deleting extra');
-    } catch (error) { alert('Network error'); }
-}
-
-      // ===== EDIT MATCH =====
-function editMatch(id) {
-    const match = window.matchesDataAdmin?.find(m => m._id === id);
-    if (!match) { alert('Match data not found. Please refresh.'); return; }
-
-    document.getElementById('editMatchId').value = match._id;
-    document.getElementById('editMatchTeam1').value = match.team1;
-    document.getElementById('editMatchTeam2').value = match.team2;
-    document.getElementById('editMatchDate').value = match.date;
-    document.getElementById('editMatchTime').value = match.time;
-    document.getElementById('editMatchStadium').value = match.stadium;
-    document.getElementById('editMatchCity').value = match.city;
-    document.getElementById('editMatchTickets').value = match.tickets_available;
-    document.getElementById('editMatchVip').value = match.ticket_prices?.vip || 500;
-    document.getElementById('editMatchPremium').value = match.ticket_prices?.premium || 300;
-    document.getElementById('editMatchRegular').value = match.ticket_prices?.regular || 150;
-    document.getElementById('editMatchStatus').value = match.status;
-
-    document.getElementById('editMatchModal').classList.add('active');
-}
-
-async function submitEditMatch(e) {
-    e.preventDefault();
-    const id = document.getElementById('editMatchId').value;
-
-    const matchData = {
-        team1: document.getElementById('editMatchTeam1').value,
-        team2: document.getElementById('editMatchTeam2').value,
-        date: document.getElementById('editMatchDate').value,
-        time: document.getElementById('editMatchTime').value,
-        stadium: document.getElementById('editMatchStadium').value,
-        city: document.getElementById('editMatchCity').value,
-        tickets_available: parseInt(document.getElementById('editMatchTickets').value),
-        ticket_prices: {
-            vip: parseInt(document.getElementById('editMatchVip').value),
-            premium: parseInt(document.getElementById('editMatchPremium').value),
-            regular: parseInt(document.getElementById('editMatchRegular').value)
-        },
-        status: document.getElementById('editMatchStatus').value
-    };
-
-    try {
-        const response = await fetch(`${API_URL}/api/admin/matches/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${adminToken}`
-            },
-            body: JSON.stringify(matchData)
-        });
-        const data = await response.json();
-        if (data.success) {
-            alert('✅ Match updated successfully!');
-            closeModal('editMatch');
-            loadMatches();
-        } else {
-            alert(data.message || 'Error updating match');
-        }
-    } catch (error) {
-        alert('Network error');
-    }
-}
-
-// ===== EDIT HOTEL =====
-function editHotel(id) {
-    const hotel = window.hotelsDataAdmin?.find(h => h._id === id);
-    if (!hotel) { alert('Hotel data not found. Please refresh.'); return; }
-
-    document.getElementById('editHotelId').value = hotel._id;
-    document.getElementById('editHotelName').value = hotel.name;
-    document.getElementById('editHotelCity').value = hotel.city;
-    document.getElementById('editHotelAddress').value = hotel.address || '';
-    document.getElementById('editHotelRating').value = hotel.rating;
-    document.getElementById('editHotelPrice').value = hotel.price_per_night;
-    document.getElementById('editHotelDistance').value = hotel.distance_to_stadium;
-    document.getElementById('editHotelRooms').value = hotel.rooms;
-    document.getElementById('editHotelDescription').value = hotel.description || '';
-    document.getElementById('editHotelStatus').value = hotel.isActive ? 'true' : 'false';
-
-    document.getElementById('editHotelModal').classList.add('active');
-}
-
-async function submitEditHotel(e) {
-    e.preventDefault();
-    const id = document.getElementById('editHotelId').value;
-
-    const hotelData = {
-        name: document.getElementById('editHotelName').value,
-        city: document.getElementById('editHotelCity').value,
-        address: document.getElementById('editHotelAddress').value,
-        rating: parseFloat(document.getElementById('editHotelRating').value),
-        price_per_night: parseInt(document.getElementById('editHotelPrice').value),
-        distance_to_stadium: document.getElementById('editHotelDistance').value,
-        rooms: parseInt(document.getElementById('editHotelRooms').value),
-        description: document.getElementById('editHotelDescription').value,
-        isActive: document.getElementById('editHotelStatus').value === 'true'
-    };
-
-    try {
-        const response = await fetch(`${API_URL}/api/admin/hotels/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${adminToken}`
-            },
-            body: JSON.stringify(hotelData)
-        });
-        const data = await response.json();
-        if (data.success) {
-            alert('✅ Hotel updated successfully!');
-            closeModal('editHotel');
-            loadHotels();
-        } else {
-            alert(data.message || 'Error updating hotel');
-        }
-    } catch (error) {
-        alert('Network error');
-    }
-}
-
-// ===== EDIT FLIGHT =====
-function editFlight(id) {
-    const flight = window.flightsDataAdmin?.find(f => f._id === id);
-    if (!flight) { alert('Flight data not found. Please refresh.'); return; }
-
-    document.getElementById('editFlightId').value = flight._id;
-    document.getElementById('editFlightAirline').value = flight.airline;
-    document.getElementById('editFlightNumber').value = flight.flightNumber;
-    document.getElementById('editFlightDeparture').value = flight.departure;
-    document.getElementById('editFlightArrival').value = flight.arrival;
-    document.getElementById('editFlightDate').value = flight.date;
-    document.getElementById('editFlightTime').value = flight.time;
-    document.getElementById('editFlightDuration').value = flight.duration;
-    document.getElementById('editFlightPrice').value = flight.price;
-    document.getElementById('editFlightSeats').value = flight.seats;
-    document.getElementById('editFlightStatus').value = flight.isActive ? 'true' : 'false';
-
-    document.getElementById('editFlightModal').classList.add('active');
-}
-
-async function submitEditFlight(e) {
-    e.preventDefault();
-    const id = document.getElementById('editFlightId').value;
-
-    const flightData = {
-        airline: document.getElementById('editFlightAirline').value,
-        flightNumber: document.getElementById('editFlightNumber').value,
-        departure: document.getElementById('editFlightDeparture').value,
-        arrival: document.getElementById('editFlightArrival').value,
-        date: document.getElementById('editFlightDate').value,
-        time: document.getElementById('editFlightTime').value,
-        duration: document.getElementById('editFlightDuration').value,
-        price: parseInt(document.getElementById('editFlightPrice').value),
-        seats: parseInt(document.getElementById('editFlightSeats').value),
-        isActive: document.getElementById('editFlightStatus').value === 'true'
-    };
-
-    try {
-        const response = await fetch(`${API_URL}/api/admin/flights/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${adminToken}`
-            },
-            body: JSON.stringify(flightData)
-        });
-        const data = await response.json();
-        if (data.success) {
-            alert('✅ Flight updated successfully!');
-            closeModal('editFlight');
-            loadFlights();
-        } else {
-            alert(data.message || 'Error updating flight');
-        }
-    } catch (error) {
-        alert('Network error');
-    }
-}
 
         function adminLogout() {
             if (confirm('Are you sure you want to logout?')) {
@@ -2329,36 +1886,7 @@ async function submitEditFlight(e) {
                 window.location.href = 'login.html';
             }
         }
-async function syncMatches() {
-    if (!confirm('Sync matches from TheSportsDB? This may take a moment.')) return;
 
-    const btn = event.target;
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Syncing...';
-
-    try {
-        const response = await fetch(`${API_URL}/api/matches/sync/thesportsdb`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${adminToken}`
-            }
-        });
-        const data = await response.json();
-
-        if (data.success) {
-            alert(`✅ Sync Complete!\n\nNew matches: ${data.synced}\nUpdated: ${data.updated}\nErrors: ${data.errors}\nTotal from API: ${data.totalFromAPI}`);
-            loadMatches();
-            loadDashboardStats();
-        } else {
-            alert(data.message || 'Sync failed');
-        }
-    } catch (error) {
-        alert('Network error during sync');
-    }
-
-    btn.disabled = false;
-    btn.innerHTML = '<i class="fas fa-sync"></i> Sync TheSportsDB';
-}
         // ===== INITIALIZE =====
         document.addEventListener('DOMContentLoaded', initAdmin);
     </script>
