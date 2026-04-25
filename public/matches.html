@@ -6,6 +6,150 @@
     <title>Matches - FIFA World Cup 2026</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .filter-bar {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .filter-bar h3 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        .filter-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 15px;
+            align-items: end;
+        }
+        .filter-group label {
+            display: block;
+            color: var(--primary-blue);
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+        }
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            background: #fff;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-filter {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .btn-filter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30,58,138,0.3);
+        }
+        .btn-clear-filter {
+            padding: 10px 15px;
+            background: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .btn-clear-filter:hover {
+            background: var(--primary-blue);
+            color: #fff;
+        }
+        .stage-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e5e7eb;
+        }
+        .stage-pill {
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 2px solid #e5e7eb;
+            background: #fff;
+            color: var(--text-dark);
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .stage-pill:hover,
+        .stage-pill.active {
+            background: var(--primary-blue);
+            color: #fff;
+            border-color: var(--primary-blue);
+        }
+        .stage-pill.active {
+            background: var(--gold);
+            color: var(--primary-blue);
+            border-color: var(--gold);
+        }
+        .results-info {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .results-count {
+            background: var(--primary-blue);
+            color: #fff;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .match-status-live {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        @media (max-width: 768px) {
+            .filter-row {
+                grid-template-columns: 1fr 1fr;
+            }
+            .filter-buttons {
+                grid-column: 1 / -1;
+            }
+        }
+        @media (max-width: 480px) {
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- NAVBAR -->
@@ -27,16 +171,15 @@
                 <li><a href="faq.html" class="nav-link" data-i18n="nav_faq">FAQ</a></li>
                 <li><a href="account.html" class="nav-link" data-i18n="nav_account">My Account</a></li>
             </ul>
-           <!-- REPLACE WITH THIS: -->
-<div class="nav-auth">
-    <div class="cart-nav-item">
-        <a href="cart.html" class="cart-nav-link" title="Cart">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-count">0</span>
-        </a>
-    </div>
-    <a href="login.html" class="btn-signin" data-i18n="nav_signin">Sign In</a>
-</div>
+            <div class="nav-auth">
+                <div class="cart-nav-item">
+                    <a href="cart.html" class="cart-nav-link" title="Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+                <a href="login.html" class="btn-signin" data-i18n="nav_signin">Sign In</a>
+            </div>
             <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
@@ -49,49 +192,84 @@
     <section class="page-hero">
         <div class="container">
             <h1><i class="fas fa-futbol"></i> World Cup Matches & Fixtures</h1>
-<p>Browse all matches, schedules, and ticket availability</p>
+            <p>Browse all matches, schedules, and book tickets for FIFA World Cup 2026</p>
         </div>
     </section>
 
-    <!-- FILTER SECTION -->
-    <section class="page-content" style="padding-bottom: 20px;">
+    <!-- FILTER + MATCHES -->
+    <section class="page-content">
         <div class="container">
-            <div class="about-content" style="margin-bottom: 25px;">
-                <h2 style="margin-bottom: 18px;">
-                    <i class="fas fa-filter"></i> Filter Matches
-                </h2>
 
-                <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
-                    <button class="btn btn-primary" onclick="filterMatches('all')">All</button>
-                    <button class="btn btn-gold" onclick="filterMatches('Group Stage')">Group Stage</button>
-                    <button class="btn btn-primary" onclick="filterMatches('Round of 16')">Round of 16</button>
-                    <button class="btn btn-primary" onclick="filterMatches('Quarter-Final')">Quarter-Final</button>
-                    <button class="btn btn-primary" onclick="filterMatches('Semi-Final')">Semi-Final</button>
-                    <button class="btn btn-primary" onclick="filterMatches('Third Place')">Third Place</button>
-                    <button class="btn btn-primary" onclick="filterMatches('Final')">Final</button>
+            <!-- FILTER BAR -->
+            <div class="filter-bar">
+                <h3><i class="fas fa-filter"></i> Filter Matches</h3>
+
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label><i class="fas fa-globe"></i> Host Country</label>
+                        <select id="filterCountry">
+                            <option value="">All Countries</option>
+                            <option value="USA">🇺🇸 USA</option>
+                            <option value="Canada">🇨🇦 Canada</option>
+                            <option value="Mexico">🇲🇽 Mexico</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label><i class="fas fa-calendar"></i> Date</label>
+                        <input type="date" id="filterDate">
+                    </div>
+                    <div class="filter-group">
+                        <label><i class="fas fa-search"></i> Search Team</label>
+                        <input type="text" id="filterTeam" placeholder="e.g. Brazil, France...">
+                    </div>
+                    <div class="filter-buttons">
+                        <button class="btn-filter" onclick="applyFilters()">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                        <button class="btn-clear-filter" onclick="clearFilters()">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stage Pills -->
+                <div class="stage-pills">
+                    <span class="stage-pill active" onclick="filterByStage('', this)">All Stages</span>
+                    <span class="stage-pill" onclick="filterByStage('Group Stage', this)">Group Stage</span>
+                    <span class="stage-pill" onclick="filterByStage('Round of 16', this)">Round of 16</span>
+                    <span class="stage-pill" onclick="filterByStage('Quarter-Final', this)">Quarter-Final</span>
+                    <span class="stage-pill" onclick="filterByStage('Semi-Final', this)">Semi-Final</span>
+                    <span class="stage-pill" onclick="filterByStage('Third Place', this)">Third Place</span>
+                    <span class="stage-pill" onclick="filterByStage('Final', this)">⭐ Final</span>
                 </div>
             </div>
+
+            <!-- Results Info -->
+            <div class="results-info" id="resultsInfo" style="display:none;">
+                <i class="fas fa-info-circle"></i>
+                Showing <span class="results-count" id="resultsCount">0</span> matches
+                <span id="resultsFilter"></span>
+            </div>
+
+            <!-- Matches Container -->
+            <div id="matchesContainer">
+                <div style="text-align: center; padding: 60px;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2.5rem; color: var(--gold);"></i>
+                    <p style="margin-top: 15px; color: #6b7280;">Loading matches...</p>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <!-- MATCHES SECTION -->
-    <section class="page-content" style="padding-top: 0;">
-        <div class="container">
-            <div id="matchesContainer">
-                <p style="text-align: center; padding: 40px 0; color: #666;">
-                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i><br><br>
-                    <span data-i18n="matches_loading">Loading matches...</span>
-                </p>
-            </div>
-        </div>
-    </section>
+    <!-- FLOATING CART BUTTON -->
+    <a href="cart.html" class="floating-cart-btn" id="floatingCartBtn">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="floating-cart-count" id="floatingCartCount">0</span>
+    </a>
 
     <!-- LIVE CHAT FLOATING BUTTON -->
-    <!-- FLOATING CART BUTTON -->
-<a href="cart.html" class="floating-cart-btn" id="floatingCartBtn">
-    <i class="fas fa-shopping-cart"></i>
-    <span class="floating-cart-count" id="floatingCartCount">0</span>
-</a>
+    <button class="live-chat-toggle" id="liveChatToggle" onclick="toggleLiveChat()">
         <i class="fas fa-comments"></i>
     </button>
 
@@ -100,7 +278,7 @@
         <div class="live-chat-header">
             <div class="live-chat-title">
                 <i class="fas fa-headset"></i>
-                <span data-i18n="chat_title">Live Chat</span>
+                <span>Support Chat</span>
             </div>
             <button class="live-chat-close" onclick="toggleLiveChat()">
                 <i class="fas fa-times"></i>
@@ -108,24 +286,21 @@
         </div>
         <div class="live-chat-body" id="liveChatBody">
             <div class="chat-message bot-message">
-                <p data-i18n="chat_greeting">Hi! How can we help you today?</p>
+                <p>Hi! How can we help you today?</p>
                 <p class="chat-contact-info">
                     <i class="fab fa-whatsapp"></i>
-                    <span data-i18n="chat_whatsapp_label">WhatsApp:</span>
                     <a href="https://wa.me/16154145082" target="_blank">+1 (615) 414-5082</a><br>
                     <i class="fas fa-envelope"></i>
-                    <span data-i18n="chat_email_label">Email:</span>
                     <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a>
                 </p>
             </div>
             <div class="chat-options">
-                <button onclick="sendQuickChat('tickets')" data-i18n="chat_btn_tickets">Tickets</button>
-                <button onclick="sendQuickChat('travel')" data-i18n="chat_btn_travel">Travel</button>
-                <button onclick="sendQuickChat('hotels')" data-i18n="chat_btn_hotels">Hotels</button>
-                <button onclick="sendQuickChat('payments')" data-i18n="chat_btn_payments">Payments</button>
+                <button onclick="sendQuickChat('tickets')">Tickets</button>
+                <button onclick="sendQuickChat('travel')">Travel</button>
+                <button onclick="sendQuickChat('hotels')">Hotels</button>
+                <button onclick="sendQuickChat('payments')">Payments</button>
                 <button onclick="window.open('https://wa.me/16154145082', '_blank')">
-                    <i class="fab fa-whatsapp"></i>
-                    <span data-i18n="chat_btn_whatsapp">Chat on WhatsApp</span>
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
                 </button>
             </div>
         </div>
@@ -136,41 +311,45 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4 data-i18n="footer_about">About Us</h4>
+                    <h4>Company</h4>
                     <ul>
-                        <li><a href="about.html" data-i18n="footer_about_link">About</a></li>
-                        <li><a href="blog.html" data-i18n="footer_blog">Blog</a></li>
-                        <li><a href="careers.html" data-i18n="footer_careers">Careers</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="careers.html">Work With Us</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4 data-i18n="footer_support">Support</h4>
+                    <h4>Help</h4>
                     <ul>
-                        <li><a href="faq.html" data-i18n="footer_faq">FAQ</a></li>
-                        <li><a href="support.html" data-i18n="footer_contact_us">Contact Us</a></li>
-                        <li><a href="#" onclick="toggleLiveChat(); return false;" data-i18n="footer_live_chat">Live Chat</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="support.html">Contact Us</a></li>
+                        <li><a href="#" onclick="toggleLiveChat(); return false;">Live Chat</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4 data-i18n="footer_legal">Legal</h4>
+                    <h4>Legal</h4>
                     <ul>
-                        <li><a href="terms.html" data-i18n="footer_terms">Terms & Conditions</a></li>
-                        <li><a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
-                        <li><a href="cookies.html" data-i18n="footer_cookies">Cookie Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="cookies.html">Cookie Policy</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4 data-i18n="footer_contact">Contact</h4>
+                    <h4>Get in Touch</h4>
                     <div class="footer-contact">
-                        <p><i class="fas fa-envelope"></i> <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a></p>
+                        <p><i class="fas fa-envelope"></i>
+                            <a href="mailto:worldcupbookinghub@gmail.com">worldcupbookinghub@gmail.com</a>
+                        </p>
                         <div class="social-links">
-                            <a href="https://wa.me/16154145082" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                            <a href="https://wa.me/16154145082" target="_blank">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p data-i18n="footer_copyright">© 2026 World Cup Travel Platform. Independent booking assistance service.</p>
+                <p>© 2026 World Cup Travel Platform. Independent booking assistance service.</p>
             </div>
         </div>
     </footer>
@@ -179,21 +358,22 @@
     <script src="language.js"></script>
     <script src="script.js"></script>
     <script>
-        const MATCHES_API_URL = 'https://worldcup2026-wf8o.onrender.com';
+        const MATCHES_API = 'https://worldcup2026-wf8o.onrender.com';
         let allMatches = [];
+        let activeStageFilter = '';
 
+        // ===== LOAD MATCHES =====
         async function loadMatchesPage() {
             const container = document.getElementById('matchesContainer');
-
             container.innerHTML = `
-                <p style="text-align: center; padding: 40px 0; color: #666;">
-                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem;"></i><br><br>
-                    Loading matches...
-                </p>
+                <div style="text-align: center; padding: 60px;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2.5rem; color: var(--gold);"></i>
+                    <p style="margin-top: 15px; color: #6b7280;">Loading matches...</p>
+                </div>
             `;
 
             try {
-                const response = await fetch(`${MATCHES_API_URL}/api/matches`);
+                const response = await fetch(`${MATCHES_API}/api/matches`);
                 const data = await response.json();
 
                 if (data.success && data.matches && data.matches.length > 0) {
@@ -202,8 +382,8 @@
                 } else {
                     container.innerHTML = `
                         <div class="about-content" style="text-align:center;">
-                            <i class="fas fa-calendar-times" style="font-size: 3rem; color: #ccc; margin-bottom: 15px;"></i>
-                            <h2 style="color: var(--primary-blue);">No Matches Available</h2>
+                            <i class="fas fa-calendar-times" style="font-size: 3rem; color: #ccc;"></i>
+                            <h2 style="color: var(--primary-blue); margin-top: 15px;">No Matches Available</h2>
                             <p>Matches will appear here when available.</p>
                         </div>
                     `;
@@ -212,73 +392,243 @@
                 console.error('Error loading matches:', error);
                 container.innerHTML = `
                     <div class="about-content" style="text-align:center;">
-                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #dc3545; margin-bottom: 15px;"></i>
-                        <h2 style="color: var(--primary-blue);">Unable to Load Matches</h2>
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #dc3545;"></i>
+                        <h2 style="color: var(--primary-blue); margin-top: 15px;">Unable to Load Matches</h2>
                         <p>Please refresh the page and try again.</p>
                     </div>
                 `;
             }
         }
 
-        function filterMatches(stage) {
-            if (stage === 'all') {
-                renderMatches(allMatches);
-                return;
+        // ===== APPLY FILTERS =====
+        function applyFilters() {
+            const country = document.getElementById('filterCountry').value;
+            const date = document.getElementById('filterDate').value;
+            const team = document.getElementById('filterTeam').value.toLowerCase().trim();
+
+            let filtered = allMatches;
+
+            if (country) {
+                filtered = filtered.filter(m => m.hostCountry === country);
             }
 
-            const filtered = allMatches.filter(match => match.stage === stage);
-            renderMatches(filtered);
+            if (date) {
+                filtered = filtered.filter(m => m.date === date);
+            }
+
+            if (team) {
+                filtered = filtered.filter(m =>
+                    m.team1.toLowerCase().includes(team) ||
+                    m.team2.toLowerCase().includes(team)
+                );
+            }
+
+            if (activeStageFilter) {
+                filtered = filtered.filter(m => m.stage === activeStageFilter);
+            }
+
+            renderMatches(filtered, true);
         }
 
-        function renderMatches(matches) {
+        // ===== FILTER BY STAGE PILL =====
+        function filterByStage(stage, el) {
+            // Update active pill
+            document.querySelectorAll('.stage-pill').forEach(p => p.classList.remove('active'));
+            el.classList.add('active');
+
+            activeStageFilter = stage;
+            applyFilters();
+        }
+
+        // ===== CLEAR FILTERS =====
+        function clearFilters() {
+            document.getElementById('filterCountry').value = '';
+            document.getElementById('filterDate').value = '';
+            document.getElementById('filterTeam').value = '';
+            activeStageFilter = '';
+
+            document.querySelectorAll('.stage-pill').forEach(p => p.classList.remove('active'));
+            document.querySelector('.stage-pill').classList.add('active');
+
+            document.getElementById('resultsInfo').style.display = 'none';
+            renderMatches(allMatches);
+        }
+
+        // ===== RENDER MATCHES =====
+        function renderMatches(matches, showCount = false) {
             const container = document.getElementById('matchesContainer');
+            const resultsInfo = document.getElementById('resultsInfo');
+
+            if (showCount || activeStageFilter) {
+                resultsInfo.style.display = 'flex';
+                document.getElementById('resultsCount').textContent = matches.length;
+                document.getElementById('resultsFilter').textContent =
+                    activeStageFilter ? `in ${activeStageFilter}` : '';
+            } else {
+                resultsInfo.style.display = 'none';
+            }
 
             if (!matches || matches.length === 0) {
                 container.innerHTML = `
                     <div class="about-content" style="text-align:center;">
-                        <i class="fas fa-search" style="font-size: 3rem; color: #ccc; margin-bottom: 15px;"></i>
-                        <h2 style="color: var(--primary-blue);">No Matches Found</h2>
-                        <p>No matches match this filter.</p>
+                        <i class="fas fa-search" style="font-size: 3rem; color: #ccc;"></i>
+                        <h2 style="color: var(--primary-blue); margin-top: 15px;">No Matches Found</h2>
+                        <p>Try different filters or <button onclick="clearFilters()" style="background:none; border:none; color: var(--primary-blue); font-weight:600; cursor:pointer; font-size:1rem;">clear all filters</button></p>
                     </div>
                 `;
                 return;
             }
 
-            container.innerHTML = `
-                <div class="content-grid">
-                    ${matches.map(match => createMatchCard(match)).join('')}
-                </div>
-            `;
+            // Group by stage
+            const stageOrder = ['Group Stage', 'Round of 16', 'Quarter-Final', 'Semi-Final', 'Third Place', 'Final'];
+            const grouped = {};
+
+            matches.forEach(match => {
+                const stage = match.stage || 'Group Stage';
+                if (!grouped[stage]) grouped[stage] = [];
+                grouped[stage].push(match);
+            });
+
+            let html = '';
+
+            stageOrder.forEach(stage => {
+                if (!grouped[stage]) return;
+
+                html += `
+                    <div style="margin-bottom: 35px;">
+                        <div style="
+                            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+                            color: #fff;
+                            padding: 15px 20px;
+                            border-radius: 10px;
+                            margin-bottom: 20px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                        ">
+                            <h2 style="margin: 0; font-size: 1.2rem; display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-futbol" style="color: var(--gold);"></i>
+                                ${stage}
+                            </h2>
+                            <span style="
+                                background: var(--gold);
+                                color: var(--primary-blue);
+                                padding: 4px 12px;
+                                border-radius: 20px;
+                                font-size: 0.8rem;
+                                font-weight: 700;
+                            ">${grouped[stage].length} match(es)</span>
+                        </div>
+                        <div class="content-grid">
+                            ${grouped[stage].map(match => createMatchCard(match)).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+
+            // Start countdowns
+            matches.forEach(match => {
+                if (match.status === 'upcoming') {
+                    startMatchCountdown(match);
+                }
+            });
         }
 
+        // ===== CREATE MATCH CARD =====
         function createMatchCard(match) {
+            const statusColors = {
+                upcoming: '#2563eb',
+                ongoing: '#16a34a',
+                completed: '#6b7280',
+                cancelled: '#dc2626'
+            };
+
+            const statusColor = statusColors[match.status] || '#2563eb';
+
             const team1Badge = match.team1Badge
-                ? `<img src="${match.team1Badge}" alt="${match.team1}" style="width:40px;height:40px;object-fit:contain;">`
-                : `<i class="fas fa-flag" style="font-size:2rem;color:var(--light-blue);"></i>`;
+                ? `<img src="${match.team1Badge}" alt="${match.team1}" style="width:40px;height:40px;object-fit:contain;margin-bottom:8px;">`
+                : `<i class="fas fa-flag" style="font-size:2rem;color:var(--light-blue);margin-bottom:8px;display:block;"></i>`;
 
             const team2Badge = match.team2Badge
-                ? `<img src="${match.team2Badge}" alt="${match.team2}" style="width:40px;height:40px;object-fit:contain;">`
-                : `<i class="fas fa-flag" style="font-size:2rem;color:var(--light-blue);"></i>`;
+                ? `<img src="${match.team2Badge}" alt="${match.team2}" style="width:40px;height:40px;object-fit:contain;margin-bottom:8px;">`
+                : `<i class="fas fa-flag" style="font-size:2rem;color:var(--light-blue);margin-bottom:8px;display:block;"></i>`;
 
-            const statusColor =
-                match.status === 'ongoing' ? '#16a34a' :
-                match.status === 'completed' ? '#6b7280' :
-                match.status === 'cancelled' ? '#dc3545' :
-                '#2563eb';
-
-            const scoreBlock = (match.score1 !== null && match.score2 !== null)
+            const scoreBlock = (match.score1 !== null && match.score2 !== null && match.status === 'completed')
                 ? `<div style="font-size:1.5rem;font-weight:800;color:var(--gold);">${match.score1} - ${match.score2}</div>`
-                : `<div style="font-size:1.2rem;font-weight:800;color:var(--gold);">VS</div>`;
+                : match.status === 'ongoing'
+                ? `<div style="font-size:0.85rem;font-weight:800;color:#16a34a;" class="match-status-live">🔴 LIVE</div>`
+                : `<div style="font-size:1.1rem;font-weight:800;color:var(--gold);">VS</div>`;
+
+            const countdownId = `countdown-${match._id}`;
+
+            const countdownSection = match.status === 'upcoming' ? `
+                <div id="${countdownId}" style="
+                    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+                    border-radius: 10px;
+                    padding: 12px;
+                    margin: 12px 0;
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 8px;
+                    text-align: center;
+                ">
+                    <div>
+                        <span class="cd-days" style="display:block;font-size:1.3rem;font-weight:800;color:#fff;">--</span>
+                        <span style="font-size:0.65rem;color:var(--gold);text-transform:uppercase;letter-spacing:1px;">Days</span>
+                    </div>
+                    <div>
+                        <span class="cd-hours" style="display:block;font-size:1.3rem;font-weight:800;color:#fff;">--</span>
+                        <span style="font-size:0.65rem;color:var(--gold);text-transform:uppercase;letter-spacing:1px;">Hours</span>
+                    </div>
+                    <div>
+                        <span class="cd-mins" style="display:block;font-size:1.3rem;font-weight:800;color:#fff;">--</span>
+                        <span style="font-size:0.65rem;color:var(--gold);text-transform:uppercase;letter-spacing:1px;">Mins</span>
+                    </div>
+                    <div>
+                        <span class="cd-secs" style="display:block;font-size:1.3rem;font-weight:800;color:#fff;">--</span>
+                        <span style="font-size:0.65rem;color:var(--gold);text-transform:uppercase;letter-spacing:1px;">Secs</span>
+                    </div>
+                </div>
+            ` : '';
+
+            const ticketSection = match.status === 'upcoming' && match.tickets_available > 0 ? `
+                <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #e5e7eb;">
+                    <p style="color: ${match.tickets_available < 50 ? '#f59e0b' : '#16a34a'}; font-size: 0.85rem; margin-bottom: 8px;">
+                        <i class="fas fa-ticket-alt"></i>
+                        ${match.tickets_available < 50 ? `⚠️ Only ${match.tickets_available} left!` : `${match.tickets_available} tickets available`}
+                        — From $${match.ticket_prices?.regular || 150}
+                    </p>
+                    <a href="ticket.html?match=${match._id}" class="btn btn-gold" style="width:100%;text-align:center;display:block;">
+                        <i class="fas fa-shopping-cart"></i> Book Tickets
+                    </a>
+                </div>
+            ` : match.status === 'upcoming' && match.tickets_available === 0 ? `
+                <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #e5e7eb;">
+                    <p style="color: #dc2626; font-size: 0.85rem; text-align: center; font-weight: 700;">
+                        <i class="fas fa-times-circle"></i> SOLD OUT
+                    </p>
+                </div>
+            ` : match.status === 'ongoing' ? `
+                <div style="margin-top: 12px; background: #dcfce7; border-radius: 8px; padding: 10px; text-align: center; color: #16a34a; font-weight: 700;">
+                    🔴 Match In Progress
+                </div>
+            ` : match.status === 'completed' ? `
+                <div style="margin-top: 12px; background: #f3f4f6; border-radius: 8px; padding: 10px; text-align: center; color: #6b7280;">
+                    <i class="fas fa-flag-checkered"></i> Match Completed
+                </div>
+            ` : '';
 
             return `
                 <div class="content-card">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
                         <span style="
                             background:${statusColor};
                             color:#fff;
                             padding:4px 10px;
                             border-radius:20px;
-                            font-size:0.75rem;
+                            font-size:0.72rem;
                             font-weight:700;
                             text-transform:uppercase;
                         ">${match.status}</span>
@@ -287,40 +637,87 @@
                             color:var(--primary-blue);
                             padding:4px 10px;
                             border-radius:20px;
-                            font-size:0.75rem;
+                            font-size:0.72rem;
                             font-weight:700;
                         ">${match.stage || 'Group Stage'}</span>
                     </div>
 
-                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px;">
                         <div style="flex:1;text-align:center;">
                             ${team1Badge}
-                            <p style="margin-top:8px;font-weight:700;color:var(--primary-blue);">${match.team1}</p>
+                            <p style="font-weight:700;color:var(--primary-blue);font-size:0.9rem;margin:0;">${match.team1}</p>
                         </div>
-                        <div style="flex:0 0 auto;text-align:center;">
+                        <div style="flex:0;text-align:center;min-width:50px;">
                             ${scoreBlock}
                         </div>
                         <div style="flex:1;text-align:center;">
                             ${team2Badge}
-                            <p style="margin-top:8px;font-weight:700;color:var(--primary-blue);">${match.team2}</p>
+                            <p style="font-weight:700;color:var(--primary-blue);font-size:0.9rem;margin:0;">${match.team2}</p>
                         </div>
                     </div>
 
-                    <p><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> ${match.date}</p>
-                    <p><i class="fas fa-clock"></i> <strong>Time:</strong> ${match.time} UTC</p>
-                    <p><i class="fas fa-map-marker-alt"></i> <strong>Venue:</strong> ${match.stadium}, ${match.city}</p>
-                    <p><i class="fas fa-globe"></i> <strong>Host:</strong> ${match.hostCountry || 'N/A'}</p>
-                    <p><i class="fas fa-ticket-alt"></i> <strong>Tickets:</strong> ${match.tickets_available || 0} available</p>
-                    <p><i class="fas fa-dollar-sign"></i> <strong>From:</strong> <span style="color:var(--gold);font-weight:700;">$${match.ticket_prices?.regular || 150}</span></p>
+                    <p style="color:#6b7280;font-size:0.82rem;margin:4px 0;">
+                        <i class="fas fa-calendar-alt" style="color:var(--primary-blue);"></i>
+                        ${match.date} at ${match.time} UTC
+                    </p>
+                    <p style="color:#6b7280;font-size:0.82rem;margin:4px 0;">
+                        <i class="fas fa-map-marker-alt" style="color:var(--primary-blue);"></i>
+                        ${match.stadium}, ${match.city}
+                    </p>
+                    <p style="color:#6b7280;font-size:0.82rem;margin:4px 0;">
+                        <i class="fas fa-globe" style="color:var(--primary-blue);"></i>
+                        ${match.hostCountry || 'N/A'}
+                        ${match.group ? `— Group ${match.group}` : ''}
+                    </p>
 
-                    <a href="ticket.html?match=${match._id}" class="btn btn-gold" style="margin-top:15px;width:100%;text-align:center;">
-                        <i class="fas fa-shopping-cart"></i> Book Tickets
-                    </a>
+                    ${countdownSection}
+                    ${ticketSection}
                 </div>
             `;
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
+        // ===== MATCH COUNTDOWN =====
+        function startMatchCountdown(match) {
+            const countdownEl = document.getElementById(`countdown-${match._id}`);
+            if (!countdownEl) return;
+
+            const matchTime = new Date(`${match.date}T${match.time}:00Z`);
+
+            function update() {
+                const now = new Date();
+                const diff = matchTime - now;
+
+                if (diff <= 0) {
+                    countdownEl.innerHTML = `
+                        <div style="grid-column: 1/-1; color: var(--gold); font-weight: 700; font-size: 0.9rem;">
+                            🔴 Match has started!
+                        </div>
+                    `;
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const mins = Math.floor((diff / (1000 * 60)) % 60);
+                const secs = Math.floor((diff / 1000) % 60);
+
+                const daysEl = countdownEl.querySelector('.cd-days');
+                const hoursEl = countdownEl.querySelector('.cd-hours');
+                const minsEl = countdownEl.querySelector('.cd-mins');
+                const secsEl = countdownEl.querySelector('.cd-secs');
+
+                if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+                if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+                if (minsEl) minsEl.textContent = String(mins).padStart(2, '0');
+                if (secsEl) secsEl.textContent = String(secs).padStart(2, '0');
+            }
+
+            update();
+            setInterval(update, 1000);
+        }
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', function() {
             loadMatchesPage();
         });
     </script>
