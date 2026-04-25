@@ -1807,18 +1807,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // Update navbar based on login status
-    updateNavbar();
+    if (typeof updateNavbar === 'function') updateNavbar();
 
     // Re-apply translations after navbar update
-    if (typeof applyTranslations === 'function') {
-        applyTranslations();
-    }
+    if (typeof applyTranslations === 'function') applyTranslations();
 
     // Initialize cart
-    initCart();
+    if (typeof initCart === 'function') initCart();
 
     // Initialize payment page
-    initPaymentPage();
+    if (typeof initPaymentPage === 'function') initPaymentPage();
 
     // Load data from backend
     await loadMatches();
@@ -1826,7 +1824,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadHotels();
 
     // Setup flight booking form
-    setupFlightBookingForm();
+    if (typeof setupFlightBookingForm === 'function') setupFlightBookingForm();
 
     // Load countdown data
     await loadWorldCupConfig();
@@ -1834,15 +1832,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     startCountdowns();
 
     // Setup forms
-    setupLoginValidation();
-    setupRegisterValidation();
-    setupEmailVerification();
-    setupForgotPasswordForm();
-    setupContactForm();
-    setupFaqAccordion();
+    if (typeof setupLoginValidation === 'function') setupLoginValidation();
+    if (typeof setupRegisterValidation === 'function') setupRegisterValidation();
+    if (typeof setupEmailVerification === 'function') setupEmailVerification();
+    if (typeof setupForgotPasswordForm === 'function') setupForgotPasswordForm();
+    if (typeof setupContactForm === 'function') setupContactForm();
+    if (typeof setupFaqAccordion === 'function') setupFaqAccordion();
 
     // Load account data if on account page
-    loadAccountData();
+    if (typeof loadAccountData === 'function') loadAccountData();
 
     console.log('✅ FIFA World Cup 2026 - Ready!');
 });
