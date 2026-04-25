@@ -2436,11 +2436,11 @@ async function submitPaymentProof() {
             successEl.style.display = 'block';
             submitBtn.innerHTML = '<i class="fas fa-check"></i> Submitted Successfully!';
 
-            clearCart();
+           clearCart();
 
-            setTimeout(() => {
-                window.location.href = 'account.html';
-            }, 4000);
+setTimeout(() => {
+    window.location.href = `payment-receipt.html?ref=${data.payment.paymentReference}`;
+}, 3000);
         } else {
             errorEl.textContent = data.message || 'Error submitting payment.';
             errorEl.style.display = 'block';
