@@ -856,6 +856,216 @@
         </div>
     </div>
 
+    <!-- Edit Match Modal -->
+<div id="editMatchModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-futbol"></i> Edit Match</h2>
+            <button class="modal-close" onclick="closeModal('editMatch')">&times;</button>
+        </div>
+        <form id="editMatchForm" onsubmit="submitEditMatch(event)">
+            <input type="hidden" id="editMatchId">
+            <div class="form-group">
+                <label>Team 1</label>
+                <input type="text" id="editMatchTeam1" required>
+            </div>
+            <div class="form-group">
+                <label>Team 2</label>
+                <input type="text" id="editMatchTeam2" required>
+            </div>
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" id="editMatchDate" required>
+            </div>
+            <div class="form-group">
+                <label>Time</label>
+                <input type="time" id="editMatchTime" required>
+            </div>
+            <div class="form-group">
+                <label>Stadium</label>
+                <input type="text" id="editMatchStadium" required>
+            </div>
+            <div class="form-group">
+                <label>City</label>
+                <input type="text" id="editMatchCity" required>
+            </div>
+            <div class="form-group">
+                <label>Host Country</label>
+                <select id="editMatchHostCountry">
+                    <option value="USA">USA</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Mexico">Mexico</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Stage</label>
+                <select id="editMatchStage">
+                    <option value="Group Stage">Group Stage</option>
+                    <option value="Round of 16">Round of 16</option>
+                    <option value="Quarter-Final">Quarter-Final</option>
+                    <option value="Semi-Final">Semi-Final</option>
+                    <option value="Third Place">Third Place</option>
+                    <option value="Final">Final</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Tickets Available</label>
+                <input type="number" id="editMatchTickets" required>
+            </div>
+            <div class="form-group">
+                <label>VIP Price ($)</label>
+                <input type="number" id="editMatchVip" required>
+            </div>
+            <div class="form-group">
+                <label>Premium Price ($)</label>
+                <input type="number" id="editMatchPremium" required>
+            </div>
+            <div class="form-group">
+                <label>Regular Price ($)</label>
+                <input type="number" id="editMatchRegular" required>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select id="editMatchStatus">
+                    <option value="upcoming">Upcoming</option>
+                    <option value="ongoing">Ongoing</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-save"></i> Save Changes
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Hotel Modal -->
+<div id="editHotelModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-hotel"></i> Edit Hotel</h2>
+            <button class="modal-close" onclick="closeModal('editHotel')">&times;</button>
+        </div>
+        <form id="editHotelForm" onsubmit="submitEditHotel(event)">
+            <input type="hidden" id="editHotelId">
+            <div class="form-group">
+                <label>Hotel Name</label>
+                <input type="text" id="editHotelName" required>
+            </div>
+            <div class="form-group">
+                <label>City</label>
+                <input type="text" id="editHotelCity" required>
+            </div>
+            <div class="form-group">
+                <label>Country</label>
+                <input type="text" id="editHotelCountry" required>
+            </div>
+            <div class="form-group">
+                <label>Address</label>
+                <input type="text" id="editHotelAddress">
+            </div>
+            <div class="form-group">
+                <label>Rating (1-5)</label>
+                <input type="number" id="editHotelRating" min="1" max="5" step="0.5" required>
+            </div>
+            <div class="form-group">
+                <label>Price Per Night ($)</label>
+                <input type="number" id="editHotelPrice" required>
+            </div>
+            <div class="form-group">
+                <label>Distance to Stadium</label>
+                <input type="text" id="editHotelDistance">
+            </div>
+            <div class="form-group">
+                <label>Total Rooms</label>
+                <input type="number" id="editHotelRooms" required>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="editHotelDescription" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select id="editHotelStatus">
+                    <option value="true">Active</option>
+                    <option value="false">Inactive</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-save"></i> Save Changes
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Flight Modal -->
+<div id="editFlightModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-plane"></i> Edit Flight</h2>
+            <button class="modal-close" onclick="closeModal('editFlight')">&times;</button>
+        </div>
+        <form id="editFlightForm" onsubmit="submitEditFlight(event)">
+            <input type="hidden" id="editFlightId">
+            <div class="form-group">
+                <label>Airline</label>
+                <input type="text" id="editFlightAirline" required>
+            </div>
+            <div class="form-group">
+                <label>Flight Number</label>
+                <input type="text" id="editFlightNumber" required>
+            </div>
+            <div class="form-group">
+                <label>Departure City</label>
+                <input type="text" id="editFlightDeparture" required>
+            </div>
+            <div class="form-group">
+                <label>Arrival City</label>
+                <input type="text" id="editFlightArrival" required>
+            </div>
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" id="editFlightDate" required>
+            </div>
+            <div class="form-group">
+                <label>Time</label>
+                <input type="time" id="editFlightTime" required>
+            </div>
+            <div class="form-group">
+                <label>Duration</label>
+                <input type="text" id="editFlightDuration" placeholder="e.g. 5h 30m">
+            </div>
+            <div class="form-group">
+                <label>Price ($)</label>
+                <input type="number" id="editFlightPrice" required>
+            </div>
+            <div class="form-group">
+                <label>Available Seats</label>
+                <input type="number" id="editFlightSeats" required>
+            </div>
+            <div class="form-group">
+                <label>Class</label>
+                <select id="editFlightClass">
+                    <option value="economy">Economy</option>
+                    <option value="business">Business</option>
+                    <option value="first">First</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select id="editFlightStatus">
+                    <option value="true">Active</option>
+                    <option value="false">Inactive</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-save"></i> Save Changes
+            </button>
+        </form>
+    </div>
+</div>
+
     <!-- View Payment Proof Modal -->
     <div id="viewProofModal" class="modal">
         <div class="modal-content" style="max-width: 700px;">
@@ -1729,9 +1939,192 @@
             }
         }
 
-        function editMatch(id) { alert('Edit match functionality coming soon!'); }
-        function editHotel(id) { alert('Edit hotel functionality coming soon!'); }
-        function editFlight(id) { alert('Edit flight functionality coming soon!'); }
+       // ===== EDIT MATCH =====
+function editMatch(id) {
+    const match = window.matchesDataAdmin?.find(m => m._id === id);
+    if (!match) { alert('Match data not found. Please refresh.'); return; }
+
+    document.getElementById('editMatchId').value = match._id;
+    document.getElementById('editMatchTeam1').value = match.team1;
+    document.getElementById('editMatchTeam2').value = match.team2;
+    document.getElementById('editMatchDate').value = match.date;
+    document.getElementById('editMatchTime').value = match.time;
+    document.getElementById('editMatchStadium').value = match.stadium;
+    document.getElementById('editMatchCity').value = match.city;
+    document.getElementById('editMatchHostCountry').value = match.hostCountry || 'USA';
+    document.getElementById('editMatchStage').value = match.stage || 'Group Stage';
+    document.getElementById('editMatchTickets').value = match.tickets_available;
+    document.getElementById('editMatchVip').value = match.ticket_prices?.vip || 500;
+    document.getElementById('editMatchPremium').value = match.ticket_prices?.premium || 300;
+    document.getElementById('editMatchRegular').value = match.ticket_prices?.regular || 150;
+    document.getElementById('editMatchStatus').value = match.status;
+
+    document.getElementById('editMatchModal').classList.add('active');
+}
+
+async function submitEditMatch(e) {
+    e.preventDefault();
+    const id = document.getElementById('editMatchId').value;
+
+    const matchData = {
+        team1: document.getElementById('editMatchTeam1').value,
+        team2: document.getElementById('editMatchTeam2').value,
+        date: document.getElementById('editMatchDate').value,
+        time: document.getElementById('editMatchTime').value,
+        stadium: document.getElementById('editMatchStadium').value,
+        city: document.getElementById('editMatchCity').value,
+        hostCountry: document.getElementById('editMatchHostCountry').value,
+        stage: document.getElementById('editMatchStage').value,
+        tickets_available: parseInt(document.getElementById('editMatchTickets').value),
+        ticket_prices: {
+            vip: parseInt(document.getElementById('editMatchVip').value),
+            premium: parseInt(document.getElementById('editMatchPremium').value),
+            regular: parseInt(document.getElementById('editMatchRegular').value)
+        },
+        status: document.getElementById('editMatchStatus').value
+    };
+
+    try {
+        const response = await fetch(`${API_URL}/api/admin/matches/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${adminToken}`
+            },
+            body: JSON.stringify(matchData)
+        });
+        const data = await response.json();
+        if (data.success) {
+            alert('✅ Match updated successfully!');
+            closeModal('editMatch');
+            loadMatches();
+        } else {
+            alert(data.message || 'Error updating match');
+        }
+    } catch (error) {
+        alert('Network error');
+    }
+}
+
+// ===== EDIT HOTEL =====
+function editHotel(id) {
+    const hotel = window.hotelsDataAdmin?.find(h => h._id === id);
+    if (!hotel) { alert('Hotel data not found. Please refresh.'); return; }
+
+    document.getElementById('editHotelId').value = hotel._id;
+    document.getElementById('editHotelName').value = hotel.name;
+    document.getElementById('editHotelCity').value = hotel.city;
+    document.getElementById('editHotelCountry').value = hotel.country || 'USA';
+    document.getElementById('editHotelAddress').value = hotel.address || '';
+    document.getElementById('editHotelRating').value = hotel.rating;
+    document.getElementById('editHotelPrice').value = hotel.price_per_night;
+    document.getElementById('editHotelDistance').value = hotel.distance_to_stadium || '';
+    document.getElementById('editHotelRooms').value = hotel.rooms;
+    document.getElementById('editHotelDescription').value = hotel.description || '';
+    document.getElementById('editHotelStatus').value = hotel.isActive ? 'true' : 'false';
+
+    document.getElementById('editHotelModal').classList.add('active');
+}
+
+async function submitEditHotel(e) {
+    e.preventDefault();
+    const id = document.getElementById('editHotelId').value;
+
+    const hotelData = {
+        name: document.getElementById('editHotelName').value,
+        city: document.getElementById('editHotelCity').value,
+        country: document.getElementById('editHotelCountry').value,
+        address: document.getElementById('editHotelAddress').value,
+        rating: parseFloat(document.getElementById('editHotelRating').value),
+        price_per_night: parseInt(document.getElementById('editHotelPrice').value),
+        distance_to_stadium: document.getElementById('editHotelDistance').value,
+        rooms: parseInt(document.getElementById('editHotelRooms').value),
+        description: document.getElementById('editHotelDescription').value,
+        isActive: document.getElementById('editHotelStatus').value === 'true'
+    };
+
+    try {
+        const response = await fetch(`${API_URL}/api/admin/hotels/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${adminToken}`
+            },
+            body: JSON.stringify(hotelData)
+        });
+        const data = await response.json();
+        if (data.success) {
+            alert('✅ Hotel updated successfully!');
+            closeModal('editHotel');
+            loadHotels();
+        } else {
+            alert(data.message || 'Error updating hotel');
+        }
+    } catch (error) {
+        alert('Network error');
+    }
+}
+
+// ===== EDIT FLIGHT =====
+function editFlight(id) {
+    const flight = window.flightsDataAdmin?.find(f => f._id === id);
+    if (!flight) { alert('Flight data not found. Please refresh.'); return; }
+
+    document.getElementById('editFlightId').value = flight._id;
+    document.getElementById('editFlightAirline').value = flight.airline;
+    document.getElementById('editFlightNumber').value = flight.flightNumber;
+    document.getElementById('editFlightDeparture').value = flight.departure;
+    document.getElementById('editFlightArrival').value = flight.arrival;
+    document.getElementById('editFlightDate').value = flight.date;
+    document.getElementById('editFlightTime').value = flight.time;
+    document.getElementById('editFlightDuration').value = flight.duration || '';
+    document.getElementById('editFlightPrice').value = flight.price;
+    document.getElementById('editFlightSeats').value = flight.seats;
+    document.getElementById('editFlightClass').value = flight.class || 'economy';
+    document.getElementById('editFlightStatus').value = flight.isActive ? 'true' : 'false';
+
+    document.getElementById('editFlightModal').classList.add('active');
+}
+
+async function submitEditFlight(e) {
+    e.preventDefault();
+    const id = document.getElementById('editFlightId').value;
+
+    const flightData = {
+        airline: document.getElementById('editFlightAirline').value,
+        flightNumber: document.getElementById('editFlightNumber').value,
+        departure: document.getElementById('editFlightDeparture').value,
+        arrival: document.getElementById('editFlightArrival').value,
+        date: document.getElementById('editFlightDate').value,
+        time: document.getElementById('editFlightTime').value,
+        duration: document.getElementById('editFlightDuration').value,
+        price: parseInt(document.getElementById('editFlightPrice').value),
+        seats: parseInt(document.getElementById('editFlightSeats').value),
+        class: document.getElementById('editFlightClass').value,
+        isActive: document.getElementById('editFlightStatus').value === 'true'
+    };
+
+    try {
+        const response = await fetch(`${API_URL}/api/admin/flights/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${adminToken}`
+            },
+            body: JSON.stringify(flightData)
+        });
+        const data = await response.json();
+        if (data.success) {
+            alert('✅ Flight updated successfully!');
+            closeModal('editFlight');
+            loadFlights();
+        } else {
+            alert(data.message || 'Error updating flight');
+        }
+    } catch (error) {
+        alert('Network error');
+    }
+}
 
         // ===== DELETE FUNCTIONS =====
         async function deleteMatch(id) {
