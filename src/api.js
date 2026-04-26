@@ -206,6 +206,33 @@ router.get('/faq', (req, res) => {
     });
 });
 
+// ===== CLEAR HOTELS AND FLIGHTS =====
+router.post('/clear-hotels-flights', async (req, res) => {
+    try {
+        const { seedKey } = req.body;
+        if (seedKey !== 'CLEAR2026') {
+            return res.status(401).json({ success: false, message: 'Unauthorized' });
+        }
+
+        const Hotel = (await import('./models/hotel.js')).default;
+        const Flight = (await import('./models/flight.js')).default;
+
+        const deletedHotels = await Hotel.deleteMany({});
+        const deletedFlights = await Flight.deleteMany({});
+
+        res.json({
+            success: true,
+            message: 'Hotels and flights cleared!',
+            deleted: {
+                hotels: deletedHotels.deletedCount,
+                flights: deletedFlights.deletedCount
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 // ===== HEALTH CHECK =====
 router.get('/health', (req, res) => {
     res.json({
