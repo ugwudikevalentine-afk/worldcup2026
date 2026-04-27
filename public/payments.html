@@ -108,7 +108,7 @@
             </h2>
 
             <!-- CashApp -->
-            <div class="payment-method-card" onclick="selectPaymentMethod('cashapp')">
+            <div class="payment-method-card" onclick="selectPaymentMethod('cashapp', this)">
                 <div class="payment-method-header">
                     <div class="payment-method-icon cashapp-icon">
                         <i class="fas fa-dollar-sign"></i>
@@ -122,7 +122,7 @@
             </div>
 
             <!-- Bitcoin -->
-            <div class="payment-method-card" onclick="selectPaymentMethod('bitcoin')">
+            <div class="payment-method-card" onclick="selectPaymentMethod('bitcoin', this)">
                 <div class="payment-method-header">
                     <div class="payment-method-icon bitcoin-icon">
                         <i class="fab fa-bitcoin"></i>
@@ -136,7 +136,7 @@
             </div>
 
             <!-- USDT TRC20 -->
-            <div class="payment-method-card" onclick="selectPaymentMethod('usdt_trc20')">
+            <div class="payment-method-card" onclick="selectPaymentMethod('usdt_trc20', this)">
                 <div class="payment-method-header">
                     <div class="payment-method-icon usdt-icon">
                         <i class="fas fa-coins"></i>
@@ -149,36 +149,35 @@
                 </div>
             </div>
 
-           <!-- ✅ REPLACE WITH THESE TWO CARDS -->
+            <!-- Bank Transfer SoFi -->
+            <div class="payment-method-card" onclick="selectPaymentMethod('bank_sofi', this)">
+                <div class="payment-method-header">
+                    <div class="payment-method-icon bank-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="payment-method-name">
+                        <h3>Bank Transfer (SoFi)</h3>
+                        <p>ACH Transfer — SoFi Bank</p>
+                    </div>
+                    <i class="fas fa-chevron-right" style="color: #9ca3af;"></i>
+                </div>
+            </div>
 
-<!-- Bank Transfer - SoFi -->
-<div class="payment-method-card" onclick="selectPaymentMethod('bank_sofi')">
-    <div class="payment-method-header">
-        <div class="payment-method-icon bank-icon">
-            <i class="fas fa-university"></i>
-        </div>
-        <div class="payment-method-name">
-            <h3>Bank Transfer (SoFi)</h3>
-            <p>ACH Transfer — SoFi Bank</p>
-        </div>
-        <i class="fas fa-chevron-right" style="color: #9ca3af;"></i>
-    </div>
-</div>
+            <!-- Bank Transfer Chime -->
+            <div class="payment-method-card" onclick="selectPaymentMethod('bank_chime', this)">
+                <div class="payment-method-header">
+                    <div class="payment-method-icon bank-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="payment-method-name">
+                        <h3>Bank Transfer (Chime)</h3>
+                        <p>ACH Transfer — Chime Bank</p>
+                    </div>
+                    <i class="fas fa-chevron-right" style="color: #9ca3af;"></i>
+                </div>
+            </div>
 
-<!-- Bank Transfer - Chime -->
-<div class="payment-method-card" onclick="selectPaymentMethod('bank_chime')">
-    <div class="payment-method-header">
-        <div class="payment-method-icon bank-icon">
-            <i class="fas fa-university"></i>
-        </div>
-        <div class="payment-method-name">
-            <h3>Bank Transfer (Chime)</h3>
-            <p>ACH Transfer — Chime Bank</p>
-        </div>
-        <i class="fas fa-chevron-right" style="color: #9ca3af;"></i>
-    </div>
-</div>
-             <!-- PAYMENT DETAILS BOX -->
+            <!-- PAYMENT DETAILS BOX -->
             <div class="payment-details-box" id="paymentDetailsBox">
 
                 <!-- CashApp Details -->
@@ -267,151 +266,155 @@
                     </div>
                 </div>
 
+                <!-- Bank Transfer SoFi Details -->
+                <div id="details-bank_sofi" class="payment-method-details" style="display:none;">
+                    <h3 style="color: var(--gold); margin-bottom: 20px;">
+                        <i class="fas fa-university"></i> Bank Transfer — SoFi Bank
+                    </h3>
+
+                    <div class="payment-warning-box" style="background: rgba(255,255,255,0.1); border-color: var(--gold);">
+                        <i class="fas fa-info-circle" style="color: var(--gold);"></i>
+                        <p style="color: #fff;">
+                            Transfer the exact amount to the bank account below.
+                            Include your <strong style="color: var(--gold);">booking reference</strong>
+                            in the transfer memo/notes field.
+                        </p>
+                    </div>
+
+                    <div class="bank-details-grid">
+
+                        <div class="bank-detail-row">
+                            <span class="bank-detail-label">
+                                <i class="fas fa-landmark"></i> Bank Name
+                            </span>
+                            <div class="wallet-address-box">
+                                <span style="color:#fff;">SoFi Bank</span>
+                                <button class="copy-btn" onclick="copyPaymentAddress('SoFi Bank')">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bank-detail-row">
+                            <span class="bank-detail-label">
+                                <i class="fas fa-user"></i> Account Name
+                            </span>
+                            <div class="wallet-address-box">
+                                <span style="color:#fff;">Patricia Gray</span>
+                                <button class="copy-btn" onclick="copyPaymentAddress('Patricia Gray')">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bank-detail-row">
+                            <span class="bank-detail-label">
+                                <i class="fas fa-hashtag"></i> Routing Number
+                            </span>
+                            <div class="wallet-address-box">
+                                <span style="color:#fff;">031101334</span>
+                                <button class="copy-btn" onclick="copyPaymentAddress('031101334')">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bank-detail-row">
+                            <span class="bank-detail-label">
+                                <i class="fas fa-credit-card"></i> Account Number
+                            </span>
+                            <div class="wallet-address-box">
+                                <span style="color:#fff;">411057596092</span>
+                                <button class="copy-btn" onclick="copyPaymentAddress('411057596092')">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <p style="color: #9ca3af; font-size: 0.85rem; margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                        <i class="fas fa-clock" style="color: var(--gold);"></i>
+                        Bank transfers may take 1–3 business days to process.
+                    </p>
+                </div>
+
+                <!-- Bank Transfer Chime Details -->
+                <div id="details-bank_chime" class="payment-method-details" style="display:none;">
+                    <h3 style="color: var(--gold); margin-bottom: 20px;">
+                        <i class="fas fa-university"></i> Bank Transfer — Chime Bank
+                    </h3>
+
+                    <div class="payment-warning-box" style="background: rgba(255,255,255,0.1); border-color: var(--gold);">
+                        <i class="fas fa-info-circle" style="color: var(--gold);"></i>
+                        <p style="color: #fff;">
+                            Transfer the exact amount to the bank account below.
+                            Include your <strong style="color: var(--gold);">booking reference</strong>
+                            in the transfer memo/notes field.
+                        </p>
+                    </div>
+
+                    <div class="bank-details-grid">
+
+                        <div class="bank-detail-row">
+                            <span class="bank-detail-label">
+                                <i class="fas fa-landmark"></i> Bank Name
+                            </span>
+                            <div class="wallet-address-box">
+                                <span style="color:#fff;">Chime Bank</span>
+                                <button class="copy-btn" onclick="copyPaymentAddress('Chime Bank')">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bank-detail-row">
+                            <span class="bank-detail-label">
+                                <i class="fas fa-user"></i> Account Name
+                            </span>
+                            <div class="wallet-address-box">
+                                <span style="color:#fff;">Patricia Gray</span>
+                                <button class="copy-btn" onclick="copyPaymentAddress('Patricia Gray')">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bank-detail-row">
+                            <span class="bank-detail-label">
+                                <i class="fas fa-hashtag"></i> Routing Number
+                            </span>
+                            <div class="wallet-address-box">
+                                <span style="color:#fff;">103100195</span>
+                                <button class="copy-btn" onclick="copyPaymentAddress('103100195')">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bank-detail-row">
+                            <span class="bank-detail-label">
+                                <i class="fas fa-credit-card"></i> Account Number
+                            </span>
+                            <div class="wallet-address-box">
+                                <span style="color:#fff;">346895145728517</span>
+                                <button class="copy-btn" onclick="copyPaymentAddress('346895145728517')">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <p style="color: #9ca3af; font-size: 0.85rem; margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                        <i class="fas fa-clock" style="color: var(--gold);"></i>
+                        Bank transfers may take 1–3 business days to process.
+                    </p>
+                </div>
+
             </div>
+            <!-- END PAYMENT DETAILS BOX -->
 
-<!-- Bank Transfer - SoFi Details -->
-<div id="details-bank_sofi" class="payment-method-details" style="display:none;">
-    <h3><i class="fas fa-university"></i> Bank Transfer — SoFi Bank</h3>
-
-    <div class="payment-warning-box">
-        <i class="fas fa-info-circle"></i>
-        <p>Transfer the exact amount to the account below. Include your 
-        booking reference in the memo/notes field.</p>
-    </div>
-
-    <div class="bank-details-grid">
-
-        <div class="bank-detail-row">
-            <span class="bank-detail-label">
-                <i class="fas fa-landmark"></i> Bank Name
-            </span>
-            <div class="wallet-address-box">
-                <span>SoFi Bank</span>
-                <button class="copy-btn" 
-                    onclick="copyPaymentAddress('SoFi Bank')">
-                    <i class="fas fa-copy"></i> Copy
-                </button>
-            </div>
-        </div>
-
-        <div class="bank-detail-row">
-            <span class="bank-detail-label">
-                <i class="fas fa-user"></i> Account Name
-            </span>
-            <div class="wallet-address-box">
-                <span>Patricia Gray</span>
-                <button class="copy-btn" 
-                    onclick="copyPaymentAddress('Patricia Gray')">
-                    <i class="fas fa-copy"></i> Copy
-                </button>
-            </div>
-        </div>
-
-        <div class="bank-detail-row">
-            <span class="bank-detail-label">
-                <i class="fas fa-hashtag"></i> Routing Number
-            </span>
-            <div class="wallet-address-box">
-                <span>031101334</span>
-                <button class="copy-btn" 
-                    onclick="copyPaymentAddress('031101334')">
-                    <i class="fas fa-copy"></i> Copy
-                </button>
-            </div>
-        </div>
-
-        <div class="bank-detail-row">
-            <span class="bank-detail-label">
-                <i class="fas fa-credit-card"></i> Account Number
-            </span>
-            <div class="wallet-address-box">
-                <span>411057596092</span>
-                <button class="copy-btn" 
-                    onclick="copyPaymentAddress('411057596092')">
-                    <i class="fas fa-copy"></i> Copy
-                </button>
-            </div>
-        </div>
-
-    </div>
-
-    <p class="bank-transfer-note">
-        <i class="fas fa-clock"></i>
-        Bank transfers may take 1–3 business days to process.
-    </p>
-</div>
-
-<!-- Bank Transfer - Chime Details -->
-<div id="details-bank_chime" class="payment-method-details" style="display:none;">
-    <h3><i class="fas fa-university"></i> Bank Transfer — Chime Bank</h3>
-
-    <div class="payment-warning-box">
-        <i class="fas fa-info-circle"></i>
-        <p>Transfer the exact amount to the account below. Include your 
-        booking reference in the memo/notes field.</p>
-    </div>
-
-    <div class="bank-details-grid">
-
-        <div class="bank-detail-row">
-            <span class="bank-detail-label">
-                <i class="fas fa-landmark"></i> Bank Name
-            </span>
-            <div class="wallet-address-box">
-                <span>Chime Bank</span>
-                <button class="copy-btn" 
-                    onclick="copyPaymentAddress('Chime Bank')">
-                    <i class="fas fa-copy"></i> Copy
-                </button>
-            </div>
-        </div>
-
-        <div class="bank-detail-row">
-            <span class="bank-detail-label">
-                <i class="fas fa-user"></i> Account Name
-            </span>
-            <div class="wallet-address-box">
-                <span>Patricia Gray</span>
-                <button class="copy-btn" 
-                    onclick="copyPaymentAddress('Patricia Gray')">
-                    <i class="fas fa-copy"></i> Copy
-                </button>
-            </div>
-        </div>
-
-        <div class="bank-detail-row">
-            <span class="bank-detail-label">
-                <i class="fas fa-hashtag"></i> Routing Number
-            </span>
-            <div class="wallet-address-box">
-                <span>103100195</span>
-                <button class="copy-btn" 
-                    onclick="copyPaymentAddress('103100195')">
-                    <i class="fas fa-copy"></i> Copy
-                </button>
-            </div>
-        </div>
-
-        <div class="bank-detail-row">
-            <span class="bank-detail-label">
-                <i class="fas fa-credit-card"></i> Account Number
-            </span>
-            <div class="wallet-address-box">
-                <span>346895145728517</span>
-                <button class="copy-btn" 
-                    onclick="copyPaymentAddress('346895145728517')">
-                    <i class="fas fa-copy"></i> Copy
-                </button>
-            </div>
-        </div>
-
-    </div>
-
-    <p class="bank-transfer-note">
-        <i class="fas fa-clock"></i>
-        Bank transfers may take 1–3 business days to process.
-    </p>
-</div>
             <!-- PROOF UPLOAD SECTION -->
             <div id="proofSection" class="proof-section">
 
