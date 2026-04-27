@@ -36,8 +36,7 @@ const PAYMENT_DETAILS = {
         routingNumber: process.env.BANK1_ROUTING || '031101334',
         accountNumber: process.env.BANK1_ACCOUNT || '411057596092',
         instructions: 'Transfer exact amount to SoFi bank account.',
-        available: false,
-        unavailableMessage: 'Bank transfer is currently down. Please use another payment method.'
+        available: true,
     },
     bank_chime: {
         name: 'Bank Transfer (Chime)',
@@ -46,8 +45,7 @@ const PAYMENT_DETAILS = {
         routingNumber: process.env.BANK2_ROUTING || '103100195',
         accountNumber: process.env.BANK2_ACCOUNT || '346895145728517',
         instructions: 'Transfer exact amount to Chime bank account.',
-        available: false,
-        unavailableMessage: 'Bank transfer is currently down. Please use another payment method.'
+        available: true,
     }
 };
 
