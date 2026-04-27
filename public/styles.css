@@ -3227,22 +3227,3 @@ body {
         height: 56px;
     }
 }
-/* Bank Transfer Detail Rows */
-.bank-details-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 15px;
-}
-
-.bank-detail-row {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.bank-detail-label {
-    color: var(--gold);
-    font-weight: 600;
-    font-size: 0.9rem;
-}
