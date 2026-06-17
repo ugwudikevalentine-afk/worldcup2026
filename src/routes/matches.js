@@ -342,7 +342,7 @@ router.delete('/:id', protect, admin, async (req, res) => {
 // @route   POST /api/matches/sync/thesportsdb
 // @desc    Sync matches from TheSportsDB API
 // @access  Private/Admin
-router.post('/sync/thesportsdb', protect, admin, async (req, res) => {
+router.post('/sync/apifootball', protect, admin, async (req, res) => {
     try {
         console.log('🔄 Manual sync triggered by admin...');
 
@@ -425,7 +425,7 @@ router.post('/sync/thesportsdb', protect, admin, async (req, res) => {
 // @access  Private/Admin
 router.get('/sync/status', protect, admin, async (req, res) => {
     try {
-        const lastSynced = await Match.findOne({ source: 'thesportsdb' })
+      const lastSynced = await Match.findOne({ source: 'apifootball' })
             .sort({ lastSynced: -1 })
             .select('lastSynced');
 

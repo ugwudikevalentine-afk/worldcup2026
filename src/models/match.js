@@ -101,10 +101,10 @@ const matchSchema = new mongoose.Schema({
         sparse: true
     },
     source: {
-        type: String,
-        enum: ['manual', 'thesportsdb'],
-        default: 'manual'
-    },
+    type: String,
+    enum: ['manual', 'thesportsdb', 'apifootball'],
+    default: 'manual'
+},
     lastSynced: {
         type: Date,
         default: null

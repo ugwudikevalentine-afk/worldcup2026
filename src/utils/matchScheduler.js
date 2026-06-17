@@ -9,7 +9,7 @@ const matchScheduler = {
         console.log('⚽ Match scheduler started');
 
         // ============================
-        // JOB 1: Sync from TheSportsDB every 6 hours
+        // JOB 1: Sync from API-Football every 6 hours
         // ============================
         cron.schedule('0 */6 * * *', async () => {
             console.log('🔄 [CRON] Running 6-hour match sync...');
@@ -43,7 +43,7 @@ const matchScheduler = {
             const events = await sportsDbService.getWorldCupEvents();
 
             if (!events || events.length === 0) {
-                console.log('   ℹ️ No WC 2026 events on TheSportsDB yet');
+                console.log('   ℹ️ No WC 2026 events on API-Football yet');
                 return { synced: 0, updated: 0 };
             }
 
@@ -53,10 +53,11 @@ const matchScheduler = {
             for (const event of events) {
                 const matchData = sportsDbService.convertToOurFormat(event);
 
-                const existing = await Match.findOne({ externalId: matchData.externalId });
+                const existing = await Match.findOne({
+                    externalId: matchData.externalId
+                });
 
                 if (existing) {
-                    // Only update if something actually changed
                     const hasChanges =
                         existing.status !== matchData.status ||
                         existing.score1 !== matchData.score1 ||
@@ -100,7 +101,6 @@ const matchScheduler = {
             const now = new Date();
             const today = now.toISOString().split('T')[0];
 
-            // Find today's matches that are upcoming or ongoing
             const todayMatches = await Match.find({
                 date: today,
                 status: { $in: ['upcoming', 'ongoing'] }
@@ -112,28 +112,29 @@ const matchScheduler = {
                 const matchTime = new Date(`${match.date}T${match.time}:00Z`);
                 const diffMinutes = (now - matchTime) / (1000 * 60);
 
-                // Match should have started (0-120 min ago) → mark as ongoing
+                // Mark as ongoing if match started
                 if (diffMinutes >= 0 && diffMinutes <= 120 && match.status === 'upcoming') {
                     await Match.findByIdAndUpdate(match._id, { status: 'ongoing' });
                     console.log(`   🔴 LIVE: ${match.team1} vs ${match.team2}`);
                 }
 
-                // Match should be over (130+ min ago) → try to get final score
+                // Try to get final score after match ends
                 if (diffMinutes > 130 && match.status === 'ongoing') {
                     if (match.externalId) {
-                        const eventData = await sportsDbService.getEventById(match.externalId);
+                        // ✅ CHANGED: handle new API-Football response format
+                        const fixture = await sportsDbService.getEventById(match.externalId);
+                        const scoreData = sportsDbService.extractScoreFromEvent(fixture);
 
-                        if (eventData && eventData.intHomeScore !== null) {
+                        if (scoreData && scoreData.intHomeScore !== null) {
                             await Match.findByIdAndUpdate(match._id, {
                                 status: 'completed',
-                                score1: parseInt(eventData.intHomeScore),
-                                score2: parseInt(eventData.intAwayScore),
+                                score1: scoreData.intHomeScore,
+                                score2: scoreData.intAwayScore,
                                 lastSynced: new Date()
                             });
-                            console.log(`   ✅ FINAL: ${match.team1} ${eventData.intHomeScore}-${eventData.intAwayScore} ${match.team2}`);
+                            console.log(`   ✅ FINAL: ${match.team1} ${scoreData.intHomeScore}-${scoreData.intAwayScore} ${match.team2}`);
                         }
                     } else {
-                        // No external ID, just mark as completed after 3 hours
                         if (diffMinutes > 180) {
                             await Match.findByIdAndUpdate(match._id, { status: 'completed' });
                             console.log(`   ⏹️ ENDED: ${match.team1} vs ${match.team2} (no score data)`);
@@ -142,7 +143,7 @@ const matchScheduler = {
                 }
             }
         } catch (error) {
-            // Silent fail for live checks - don't spam logs
+            // Silent fail for live checks
         }
     },
 
@@ -166,16 +167,13 @@ const matchScheduler = {
                 const matchTime = new Date(`${match.date}T${match.time}:00Z`);
                 const diffHours = (matchTime - now) / (1000 * 60 * 60);
 
-                // 24 hours before
                 if (diffHours <= 24 && diffHours > 23 && !match.notifications.dayBefore) {
                     await Match.findByIdAndUpdate(match._id, {
                         'notifications.dayBefore': true
                     });
                     console.log(`   🔔 24h: ${match.team1} vs ${match.team2} tomorrow!`);
-                    // TODO: Send email/push notifications to users who booked this match
                 }
 
-                // 1 hour before
                 if (diffHours <= 1 && diffHours > 0.5 && !match.notifications.hourBefore) {
                     await Match.findByIdAndUpdate(match._id, {
                         'notifications.hourBefore': true
@@ -183,7 +181,6 @@ const matchScheduler = {
                     console.log(`   🔔 1h: ${match.team1} vs ${match.team2} starting soon!`);
                 }
 
-                // Match starting now
                 if (diffHours <= 0 && diffHours > -0.1 && !match.notifications.matchStart) {
                     await Match.findByIdAndUpdate(match._id, {
                         'notifications.matchStart': true
@@ -192,7 +189,7 @@ const matchScheduler = {
                 }
             }
         } catch (error) {
-            // Silent fail for notification checks
+            // Silent fail
         }
     }
 };

@@ -2244,29 +2244,29 @@ async function submitEditFlight(e) {
             } catch (error) { alert('Network error'); }
         }
 
-        // ===== SYNC MATCHES =====
-        async function syncMatches() {
-            if (!confirm('Sync matches from TheSportsDB? This may take a moment.')) return;
+    
+       // ===== SYNC MATCHES =====
+async function syncMatches() {
+    if (!confirm('Sync matches from API-Football? This may take a moment.')) return;
 
-            try {
-                const response = await fetch(`${API_URL}/api/matches/sync/thesportsdb`, {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${adminToken}` }
-                });
-                const data = await response.json();
+    try {
+        const response = await fetch(`${API_URL}/api/matches/sync/apifootball`, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${adminToken}` }
+        });
+        const data = await response.json();
 
-                if (data.success) {
-                    alert(`✅ Sync Complete!\n\nNew matches: ${data.synced}\nUpdated: ${data.updated}\nErrors: ${data.errors}\nTotal from API: ${data.totalFromAPI}`);
-                    loadMatches();
-                    loadDashboardStats();
-                } else {
-                    alert(data.message || 'Sync failed');
-                }
-            } catch (error) {
-                alert('Network error during sync');
-            }
+        if (data.success) {
+            alert(`✅ Sync Complete!\n\nNew matches: ${data.synced}\nUpdated: ${data.updated}\nErrors: ${data.errors}\nTotal from API: ${data.totalFromAPI}`);
+            loadMatches();
+            loadDashboardStats();
+        } else {
+            alert(data.message || 'Sync failed');
         }
-
+    } catch (error) {
+        alert('Network error during sync');
+    }
+}
         // ===== UTILITY FUNCTIONS =====
         function replyContact(email) {
             window.open(`mailto:${email}?subject=Re: World Cup 2026 Inquiry`, '_blank');
