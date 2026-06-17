@@ -2247,10 +2247,10 @@ async function submitEditFlight(e) {
     
        // ===== SYNC MATCHES =====
 async function syncMatches() {
-    if (!confirm('Sync matches from API-Football? This may take a moment.')) return;
+    if (!confirm('Sync matches from ESPN? This may take a moment.')) return;
 
     try {
-        const response = await fetch(`${API_URL}/api/matches/sync/apifootball`, {
+        const response = await fetch(`${API_URL}/api/matches/sync/espn`, {
             method: 'POST',
             headers: { 'Authorization': `Bearer ${adminToken}` }
         });
