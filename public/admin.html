@@ -1509,6 +1509,39 @@
                 `;
             }).join('');
         }
+// ===================================
+// 🌍 TIMEZONE HELPERS (for admin panel)
+// ===================================
+function formatMatchDateLocal(dateStr, timeStr) {
+    if (!dateStr || !timeStr) return dateStr || 'TBD';
+    try {
+        const utcDateTime = new Date(`${dateStr}T${timeStr}:00Z`);
+        if (isNaN(utcDateTime)) return dateStr;
+        return utcDateTime.toLocaleDateString(undefined, {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+    } catch (e) {
+        return dateStr;
+    }
+}
+
+function formatMatchTimeLocal(dateStr, timeStr) {
+    if (!dateStr || !timeStr) return timeStr || 'TBD';
+    try {
+        const utcDateTime = new Date(`${dateStr}T${timeStr}:00Z`);
+        if (isNaN(utcDateTime)) return timeStr;
+        return utcDateTime.toLocaleTimeString(undefined, {
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZoneName: 'short'
+        });
+    } catch (e) {
+        return timeStr;
+    }
+}
 
         // ===== MATCHES =====
         async function loadMatches() {
