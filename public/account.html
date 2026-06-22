@@ -916,7 +916,7 @@ function getBookingDetails(booking) {
         details = `
             <p><i class="fas fa-futbol"></i> ${booking.match.team1} vs ${booking.match.team2}</p>
             <p><i class="fas fa-map-marker-alt"></i> ${booking.match.stadium}, ${booking.match.city}</p>
-            <p><i class="fas fa-calendar"></i> ${formatBookingDate(booking.match.date)} at ${booking.match.time}</p>
+            <p><i class="fas fa-calendar"></i> ${formatMatchDateTimeLocal(booking.match.date, booking.match.time)}</p>
         `;
     } else if (booking.itemDetails) {
         const d = booking.itemDetails;

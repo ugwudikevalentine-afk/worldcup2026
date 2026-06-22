@@ -7,6 +7,88 @@
 const API_URL = 'https://worldcup2026-wf8o.onrender.com';
 
 // ===================================
+// 🌍 TIMEZONE HELPERS - AUTO LOCAL TIME
+// ===================================
+// Converts UTC date/time from database into user's local timezone
+
+function getUserTimezone() {
+    try {
+        return Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch (e) {
+        return 'UTC';
+    }
+}
+
+// Date only — "Sat, Jun 21, 2026"
+function formatMatchDateLocal(dateStr, timeStr) {
+    if (!dateStr || !timeStr) return dateStr || 'TBD';
+    try {
+        const utcDateTime = new Date(`${dateStr}T${timeStr}:00Z`);
+        if (isNaN(utcDateTime)) return dateStr;
+        return utcDateTime.toLocaleDateString(undefined, {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+    } catch (e) {
+        return dateStr;
+    }
+}
+
+// Time only with timezone — "9:00 PM EST"
+function formatMatchTimeLocal(dateStr, timeStr) {
+    if (!dateStr || !timeStr) return timeStr || 'TBD';
+    try {
+        const utcDateTime = new Date(`${dateStr}T${timeStr}:00Z`);
+        if (isNaN(utcDateTime)) return timeStr;
+        return utcDateTime.toLocaleTimeString(undefined, {
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZoneName: 'short'
+        });
+    } catch (e) {
+        return timeStr;
+    }
+}
+
+// Full datetime — "Sat, Jun 21, 2026, 9:00 PM EST"
+function formatMatchDateTimeLocal(dateStr, timeStr) {
+    if (!dateStr || !timeStr) return `${dateStr || ''} ${timeStr || ''}`.trim();
+    try {
+        const utcDateTime = new Date(`${dateStr}T${timeStr}:00Z`);
+        if (isNaN(utcDateTime)) return `${dateStr} ${timeStr}`;
+        return utcDateTime.toLocaleString(undefined, {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZoneName: 'short'
+        });
+    } catch (e) {
+        return `${dateStr} ${timeStr}`;
+    }
+}
+
+// For booking dates (no time) — "Jun 21, 2026"
+function formatBookingDateLocal(dateStr) {
+    if (!dateStr) return 'N/A';
+    try {
+        const date = new Date(dateStr);
+        if (isNaN(date)) return dateStr;
+        return date.toLocaleDateString(undefined, {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+    } catch (e) {
+        return dateStr;
+    }
+}
+
+// ===================================
 // TOGGLE PASSWORD VISIBILITY
 // ===================================
 function togglePassword(fieldId) {
@@ -836,8 +918,8 @@ function displayMatches(matches) {
                 <span class="team">${match.team2}</span>
             </div>
             <div class="match-info">
-                <p><i class="fas fa-calendar"></i> ${match.date}</p>
-                <p><i class="fas fa-clock"></i> ${match.time} UTC</p>
+<p><i class="fas fa-calendar"></i> ${formatMatchDateLocal(match.date, match.time)}</p>
+<p><i class="fas fa-clock"></i> ${formatMatchTimeLocal(match.date, match.time)}</p>
                 <p><i class="fas fa-map-marker-alt"></i> ${match.stadium}, ${match.city}</p>
             </div>
             <div class="match-tickets">
@@ -1515,7 +1597,7 @@ async function loadNextMatch() {
 
             if (teamsEl) teamsEl.textContent = `${data.match.team1} vs ${data.match.team2}`;
             if (stadiumEl) stadiumEl.textContent = data.match.stadium;
-            if (dateEl) dateEl.textContent = `${data.match.date} at ${data.match.time} UTC`;
+            if (dateEl) dateEl.textContent = formatMatchDateTimeLocal(data.match.date, data.match.time);
         }
     } catch (error) {
         console.error('❌ Error loading next match:', error);

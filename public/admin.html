@@ -1531,8 +1531,8 @@
             tbody.innerHTML = matches.map(m => `
                 <tr>
                     <td>${m.team1} vs ${m.team2}</td>
-                    <td>${m.date}</td>
-                    <td>${m.time}</td>
+                  <td>${formatMatchDateLocal(m.date, m.time)}</td>
+<td>${formatMatchTimeLocal(m.date, m.time)}</td>
                     <td>${m.stadium}</td>
                     <td>${m.city}</td>
                     <td>${m.tickets_available}</td>
